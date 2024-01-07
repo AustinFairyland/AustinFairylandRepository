@@ -12,4 +12,4 @@ pip install twine -i https://pypi.tuna.tsinghua.edu.cn/simple
 pip install --upgrade twine -i https://pypi.tuna.tsinghua.edu.cn/simple
 twine upload --repository testpypi dist/*
 
-rm -rf austin_module_daily.egg-info build dist
+rm -rf *.egg-info build dist

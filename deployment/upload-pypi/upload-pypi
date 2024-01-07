@@ -12,5 +12,5 @@ pip install twine
 pip install --upgrade twine
 twine upload dist/*
 
-rm -rf austin_module_daily.egg-info build dist
+rm -rf *.egg-info build dist
 
