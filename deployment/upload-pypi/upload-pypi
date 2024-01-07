@@ -1,0 +1,16 @@
+#!/bin/bash
+# @File: upload-pypi
+# @Editor: PyCharm
+# @Author: Austin (From Chengdu.China) https://fairy.host
+# @HomePage: https://github.com/AustinFairyland
+# @OperatingSystem: Windows 11 Professional Workstation 23H2 Canary Channel
+# @CreatedTime: 2024-01-07
+
+deployment/upload-pypi/build-package
+cp deployment/upload-pypi/config/.pypirc ~/.pypirc
+pip install twine 
+pip install --upgrade twine
+twine upload dist/*
+
+rm -rf austin_module_daily.egg-info build dist
+
