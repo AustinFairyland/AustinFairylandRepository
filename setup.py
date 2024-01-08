@@ -29,7 +29,7 @@ name = "PyFairyland"
 major_number = 0
 sub_number = 0
 stage_number = 1
-revise_number = 1
+revise_number = 3
 
 # leng desctiption
 with open("README.md", "r", encoding="utf-8") as fh:
@@ -52,6 +52,7 @@ beta_version = ".".join((release_version, "".join(("beta", revise_after))))
 setuptools.setup(
     name=name,
     fullname="".join((name, release_version)),
+    keywords=["fairyland", "Fairyland", "pyfairyland", "PyFairyland", "fairy", "Fairy"],
     version=alpha_version,
     author="Austin D",
     author_email="fairylandhost@outlook.com",
