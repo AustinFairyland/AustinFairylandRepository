@@ -28,8 +28,8 @@ name = "PyFairyland"
 # version
 major_number = 0
 sub_number = 0
-stage_number = 1
-revise_number = 4
+stage_number = 2
+revise_number = 8
 
 # leng desctiption
 with open("README.md", "r", encoding="utf-8") as fh:
@@ -44,7 +44,9 @@ date_number = datetime.now().date().__str__().replace("-", "")
 revise_after = "-".join((revise_number.__str__(), date_number))
 
 # version: (release_version, test_version, alpha_version, beta_version)
-release_version = ".".join((major_number.__str__(), sub_number.__str__(), stage_number.__str__()))
+release_version = ".".join(
+    (major_number.__str__(), sub_number.__str__(), stage_number.__str__())
+)
 test_version = ".".join((release_version, "".join(("rc", revise_after))))
 alpha_version = ".".join((release_version, "".join(("alpha", revise_after))))
 beta_version = ".".join((release_version, "".join(("beta", revise_after))))
@@ -68,8 +70,10 @@ setuptools.setup(
         "Natural Language :: Chinese (Simplified)",
         "Operating System :: Microsoft :: Windows :: Windows 11",
         "Topic :: Software Development :: Version Control :: Git",
-        "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)"
+        "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
     ],
     python_requires=">=3.7",
-
+    install_requires=[
+        "loguru"
+    ]
 )

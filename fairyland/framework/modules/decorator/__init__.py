@@ -19,8 +19,8 @@ warnings.filterwarnings("ignore")
 if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-from ._source import TimeDecorators
-from ._source import MethodDecorators
+from ._decorator import TimeDecorators
+from ._decorator import MethodDecorators
 
 __all__: list = [
     "TimeDecorators",
