@@ -22,4 +22,5 @@ if platform.system() == 'Windows':
 import setuptools
 
 if __name__ == '__main__':
-    print(setuptools.find_packages())
+    for i in setuptools.find_packages():
+        print(i)
