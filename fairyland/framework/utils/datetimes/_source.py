@@ -21,6 +21,8 @@ warnings.filterwarnings("ignore")
 if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
+from typing import Union, Any, Callable
+from types import FunctionType, MethodType
 
 from datetime import datetime
 import time
@@ -70,7 +72,7 @@ class DateTimeUtils:
         return result
 
     @staticmethod
-    def timestamp_dt(fmt: str = None) -> int:
+    def timestamp_dt(fmt: Union[str, None] = None) -> int:
         """
         Datetime to timestamps
         @param fmt: At least 14-bits of time and date: String
@@ -97,7 +99,9 @@ class DateTimeUtils:
         return results
 
     @staticmethod
-    def datetime_ts(timestamp: int | str = None, fmt: str = "%Y-%m-%d %H:%M:%S"):
+    def datetime_ts(
+        timestamp: Union[int, str, float, None] = None, fmt: str = "%Y-%m-%d %H:%M:%S"
+    ):
         """
         Timestamps to fmt datetime
         @param timestamp: timestamps: Integer | String

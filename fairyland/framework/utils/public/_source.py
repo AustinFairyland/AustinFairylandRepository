@@ -9,6 +9,9 @@
 """
 from __future__ import annotations
 
+from typing import Union, Any, Callable
+from types import FunctionType, MethodType
+
 import os
 import sys
 import warnings
@@ -54,23 +57,23 @@ class PublicUtils:
         return results
 
     @staticmethod
-    def data_list():
-        results = list()
+    def data_list() -> list[Any]:
+        results: list[Any] = []
         return results
 
     @staticmethod
     def data_tuple():
-        results = tuple()
+        results: tuple[Any] = ()
         return results
 
     @staticmethod
     def data_set():
-        results = set()
+        results: set[Any] = set()
         return results
 
     @staticmethod
     def data_dict():
-        results = dict()
+        results: dict[Any, Any] = {}
         return results
 
     @staticmethod

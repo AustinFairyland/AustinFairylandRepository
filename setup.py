@@ -77,7 +77,9 @@ setuptools.setup(
         "loguru",
         "pymysql",
         "psycopg2",
+        "redis",
         "sshtunnel",
         "django",
+        "django-stubs",
     ],
 )

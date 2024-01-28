@@ -25,8 +25,6 @@ from dotenv import load_dotenv
 from redis import ConnectionPool
 from redis import Redis
 
-from modules.journals import Journal
-
 load_dotenv()
 
 

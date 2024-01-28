@@ -24,9 +24,6 @@ from redis import Redis
 from rediscluster import RedisCluster
 from rediscluster.connection import ClusterConnectionPool
 
-from modules.inheritance import Base
-
-
 class RedisStandaloneToolsClass(Base):
     """Redis Single Node Tool Class"""
 
