@@ -30,6 +30,8 @@ from fairyland.framework.modules.journal import Journal
 
 
 class DjangoLoguruMiddleware:
+    """Django Logginf Middleware"""
+
     def __init__(self, function: Union[FunctionType, MethodType]):
         self.__function = function
 
