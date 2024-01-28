@@ -29,7 +29,7 @@ name = "PyFairyland"
 major_number = 0
 sub_number = 0
 stage_number = 2
-revise_number = 9
+revise_number = 10
 
 # leng desctiption
 with open("README.md", "r", encoding="utf-8") as fh:
@@ -74,6 +74,10 @@ setuptools.setup(
     ],
     python_requires=">=3.7",
     install_requires=[
-        "loguru"
-    ]
+        "loguru",
+        "pymysql",
+        "psycopg2",
+        "sshtunnel",
+        "django",
+    ],
 )
