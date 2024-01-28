@@ -22,8 +22,10 @@ if platform.system() == "Windows":
 
 from . import journal
 from . import decorator
+from . import middleware
 
 __all__: list = [
     "journal",
     "decorator",
+    "middleware",
 ]

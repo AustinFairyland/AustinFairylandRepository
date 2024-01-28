@@ -20,7 +20,9 @@ warnings.filterwarnings("ignore")
 if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-from typing import Union, Any, overload
+import typing
+import types
+from typing import Union, Any, Callable
 import pymysql
 import psycopg2
 from sshtunnel import SSHTunnelForwarder
@@ -56,10 +58,12 @@ class BaseDataSource:
         self.__connect: Union[
             pymysql.connections.Connection,
             psycopg2.extensions.connection,
+            None,
         ]
         self.__cursor: Union[
             pymysql.cursors.Cursor,
             psycopg2.extensions.cursor,
+            None,
         ]
         # self._init_connect()
 

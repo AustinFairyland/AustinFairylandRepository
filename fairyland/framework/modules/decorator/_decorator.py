@@ -10,6 +10,7 @@
 from __future__ import annotations
 
 import sys
+import types
 import warnings
 import platform
 import asyncio
