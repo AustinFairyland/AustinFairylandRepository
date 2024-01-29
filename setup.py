@@ -28,8 +28,8 @@ name = "PyFairyland"
 # version
 major_number = 0
 sub_number = 0
-stage_number = 2
-revise_number = 15
+stage_number = 3
+revise_number = 19
 
 # leng desctiption
 with open("README.md", "r", encoding="utf-8") as fh:
@@ -56,7 +56,7 @@ setuptools.setup(
     name=name,
     fullname="".join((name, release_version)),
     keywords=["fairyland", "Fairyland", "pyfairyland", "PyFairyland", "fairy", "Fairy"],
-    version=alpha_version,
+    version=test_version,
     author="Austin D",
     author_email="fairylandhost@outlook.com",
     description="Austin personally developed Python library.",
@@ -79,8 +79,6 @@ setuptools.setup(
         "loguru",
         "pymysql",
         "psycopg2-binary",
-        "redis",
-        "sshtunnel",
         "django",
         "django-stubs",
     ],
