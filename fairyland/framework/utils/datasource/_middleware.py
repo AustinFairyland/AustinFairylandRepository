@@ -1,11 +1,11 @@
 # coding: utf8
 """ 
-@File: __init__.py
+@File: _middleware.py
 @Editor: PyCharm
 @Author: Austin (From Chengdu.China) https://fairy.host
 @HomePage: https://github.com/AustinFairyland
 @OperatingSystem: Windows 11 Professional Workstation 23H2 Canary Channel
-@CreatedTime: 2024-01-28
+@CreatedTime: 2024-01-29
 """
 from __future__ import annotations
 
@@ -20,11 +20,8 @@ warnings.filterwarnings("ignore")
 if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-from typing import Union, Any, Callable
-from types import FunctionType, MethodType
+import typing
+import types
 
-from . import django_configuration
+from fairyland.framework.modules.journal import Journal
 
-__all__: list = [
-    "django_configuration",
-]
