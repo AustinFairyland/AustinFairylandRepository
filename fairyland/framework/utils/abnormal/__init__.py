@@ -1,11 +1,11 @@
 # coding: utf8
-"""
+""" 
 @ File: __init__.py
 @ Editor: PyCharm
 @ Author: Austin (From Chengdu.China) https://fairy.host
 @ HomePage: https://github.com/AustinFairyland
-@ OS: Linux Ubuntu 22.04.4 Kernel 6.2.0-36-generic 
-@ CreatedTime: 2024/1/7
+@ OS: Windows 11 Professional Workstation 22H2
+@ CreatedTime: 2023-09-11
 """
 from __future__ import annotations
 
@@ -19,10 +19,14 @@ warnings.filterwarnings("ignore")
 if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-__version__ = "0.0.1"
+from ._exceptional import ProjectError
+from ._exceptional import ParameterError
+from ._exceptional import ReadFileError
+from ._exceptional import DataSourceError
 
-from . import framework
-
-__all__: list = [
-    "framework",
+__all__ = [
+    "ProjectError",
+    "ParameterError",
+    "ReadFileError",
+    "DataSourceError",
 ]

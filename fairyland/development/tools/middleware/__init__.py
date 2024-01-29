@@ -1,14 +1,15 @@
 # coding: utf8
 """ 
-@File: test.py
+@File: __init__.py
 @Editor: PyCharm
 @Author: Austin (From Chengdu.China) https://fairy.host
 @HomePage: https://github.com/AustinFairyland
 @OperatingSystem: Windows 11 Professional Workstation 23H2 Canary Channel
-@CreatedTime: 2024-01-07
+@CreatedTime: 2023-10-12
 """
 from __future__ import annotations
 
+import os
 import sys
 import warnings
 import platform
@@ -19,8 +20,11 @@ warnings.filterwarnings('ignore')
 if platform.system() == 'Windows':
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-import setuptools
+import time
+import random
 
-if __name__ == '__main__':
-    for i in setuptools.find_packages():
-        print(i)
+from .redis import RedisStandaloneToolsClass
+
+__all__ = [
+    'RedisStandaloneToolsClass'
+]
