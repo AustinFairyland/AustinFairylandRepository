@@ -41,7 +41,7 @@ class DjangoLoguruMiddleware:
             response: HttpResponse = self.__function(request, *args, **kwargs)
         except Exception as error:
             Journal.error(error)
-            Journal.error(f"Unhandled exception: {error}\n{traceback.format_exc()}")
+            Journal.error(f"{traceback.format_exc()}")
             raise
         return response
 
@@ -125,5 +125,5 @@ class DjangoLoguruMiddleware:
 
         Journal.info(__end)
 
-    def process_exception(self, request, exception):
-        Journal.error(f"Unhandled exception: {exception}\n{traceback.format_exc()}")
+    # def process_exception(self, request, exception):
+    #     Journal.error(f"Unhandled exception: {exception}\n{traceback.format_exc()}")
