@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import os
 import sys
+import typing
 import warnings
 import platform
 import asyncio
@@ -20,30 +21,29 @@ warnings.filterwarnings("ignore")
 if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
+import types
+import typing
+
 from typing import Union, Any, Callable
 from types import FunctionType, MethodType
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
+from django.utils.deprecation import MiddlewareMixin
 import traceback
 
 from fairyland.framework.modules.journal import Journal
 
 
-class DjangoLoguruMiddleware:
-    """Django Logginf Middleware"""
+class DjangoLoguruMiddleware(MiddlewareMixin):
+    """Django Logging Middleware"""
 
-    def __init__(self, function: Union[FunctionType, MethodType]):
-        self.__function = function
+    def __init__(self, get_response: Union[HttpResponse, None]):
+        super().__init__(get_response=get_response)
 
-    def __call__(self, request: HttpRequest, *args: Any, **kwargs: Any):
-        try:
-            self.__request_logs(request)
-            response: HttpResponse = self.__function(request, *args, **kwargs)
-        except Exception as error:
-            Journal.error(error)
-            Journal.error(f"{traceback.format_exc()}")
-            raise
-        return response
+    # def __call__(self, request: HttpRequest, *args: Any, **kwargs: Any):
+    #     self.__request_logs(request)
+    #     response: HttpResponse = self.__function(request, *args, **kwargs)
+    #     return response
 
     def __request_logs(self, request: HttpRequest):
         __start = f"===== API: {request.path_info} ====="
@@ -125,5 +125,8 @@ class DjangoLoguruMiddleware:
 
         Journal.info(__end)
 
-    # def process_exception(self, request, exception):
-    #     Journal.error(f"Unhandled exception: {exception}\n{traceback.format_exc()}")
+    def process_request(self, request: HttpRequest):
+        self.__request_logs(request)
+
+    def process_response(self, request: HttpRequest, response: HttpResponse):
+        return response
