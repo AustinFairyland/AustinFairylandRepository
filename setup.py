@@ -29,7 +29,7 @@ name = "PyFairyland"
 major_number = 0
 sub_number = 0
 stage_number = 3
-revise_number = 31
+revise_number = 32
 
 # leng desctiption
 with open("README.md", "r", encoding="utf-8") as fh:
@@ -76,7 +76,7 @@ setuptools.setup(
         "python-dotenv",
         "loguru",
         "pymysql",
-        # "psycopg2-binary",
+        "psycopg2-binary",
         "django",
         "django-stubs",
     ],
