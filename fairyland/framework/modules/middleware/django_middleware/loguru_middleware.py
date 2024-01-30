@@ -29,7 +29,7 @@ from types import FunctionType, MethodType
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
 from django.utils.deprecation import MiddlewareMixin
-import traceback
+import json
 
 from fairyland.framework.modules.journal import Journal
 
@@ -80,23 +80,12 @@ class DjangoLoguruMiddleware(MiddlewareMixin):
             __request_bodydata = request.body.decode()
             __line_sep = "..." if not __request_bodydata else "\n"
             if __content_type.split(";")[0] == "multipart/form-data":
-                Journal.trace(
-                    f"Payload multipart/form-data: {__request_parameters.dict()}"
-                )
+                Journal.trace(f"Payload multipart/form-data: {__request_parameters.dict()}")
             elif __content_type == "application/x-www-form-urlencoded":
-                __payload_data = {
-                    k: v
-                    for k, v in (
-                        pair.split("=") for pair in __request_bodydata.split("&")
-                    )
-                }
-                Journal.trace(
-                    f"Payload application/x-www-form-urlencoded: {__payload_data}"
-                )
+                __payload_data = {k: v for k, v in (pair.split("=") for pair in __request_bodydata.split("&"))}
+                Journal.trace(f"Payload application/x-www-form-urlencoded: {__payload_data}")
             elif __content_type == "text/plain":
-                Journal.trace(
-                    "".join(("Payload text/plain: ", __line_sep, __request_bodydata))
-                )
+                Journal.trace("".join(("Payload text/plain: ", __line_sep, __request_bodydata)))
             elif __content_type == "application/javascript":
                 Journal.trace(
                     "".join(
@@ -108,19 +97,11 @@ class DjangoLoguruMiddleware(MiddlewareMixin):
                     )
                 )
             elif __content_type == "text/html":
-                Journal.trace(
-                    "".join(("Payload text/html: ", __line_sep, __request_bodydata))
-                )
+                Journal.trace("".join(("Payload text/html: ", __line_sep, __request_bodydata)))
             elif __content_type == "application/xml":
-                Journal.trace(
-                    "".join(
-                        ("Payload application/xml: ", __line_sep, __request_bodydata)
-                    )
-                )
+                Journal.trace("".join(("Payload application/xml: ", __line_sep, __request_bodydata)))
             elif __content_type == "application/json":
-                Journal.trace(
-                    f"Payload application/json: {json.loads(__request_bodydata)}"
-                )
+                Journal.trace(f"Payload application/json: {json.loads(__request_bodydata)}")
             Journal.trace(f"Payload file-stream: {request.FILES}")
 
         Journal.info(__end)

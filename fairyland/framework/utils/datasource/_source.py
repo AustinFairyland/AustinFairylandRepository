@@ -66,9 +66,7 @@ class BaseDataSource:
         ]
         # self._init_connect()
 
-    def _connect(
-        self, default: bool = False
-    ) -> Union[pymysql.connections.Connection, psycopg2.extensions.connection]:
+    def _connect(self, default: bool = False) -> Union[pymysql.connections.Connection, psycopg2.extensions.connection]:
         """
         Initialize datasource connection.
             初始化连接
@@ -207,9 +205,7 @@ class BaseDataSource:
             elif isinstance(query, (tuple, list, set)):
                 results_list = []
                 for query_str, query_parameters in zip(query, parameters):
-                    Journal.trace(
-                        self.__trace_sql_statement(query_str, query_parameters)
-                    )
+                    Journal.trace(self.__trace_sql_statement(query_str, query_parameters))
                     if _DATASOURCE == "MySQL":
                         self.__cursor.execute(query=query_str, args=query_parameters)
                     elif _DATASOURCE == "PostgreSQL":
@@ -242,11 +238,7 @@ class BaseDataSource:
         @return: Execution result. | 执行结果
         @rtype: Depends on the SQL operation
         """
-        if (
-            not isinstance(sql, str)
-            and isinstance(sql, (list, tuple, set))
-            and not parameters
-        ):
+        if not isinstance(sql, str) and isinstance(sql, (list, tuple, set)) and not parameters:
             parameters = tuple([None for _ in range(len(sql))])
         return self.__operation(query=sql, parameters=parameters)
 
