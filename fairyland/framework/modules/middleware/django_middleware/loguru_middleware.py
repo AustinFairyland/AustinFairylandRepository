@@ -87,15 +87,7 @@ class DjangoLoguruMiddleware(MiddlewareMixin):
             elif __content_type == "text/plain":
                 Journal.trace("".join(("Payload text/plain: ", __line_sep, __request_bodydata)))
             elif __content_type == "application/javascript":
-                Journal.trace(
-                    "".join(
-                        (
-                            "Payload application/javascript: ",
-                            __line_sep,
-                            __request_bodydata,
-                        )
-                    )
-                )
+                Journal.trace("".join(("Payload application/javascript: ", __line_sep, __request_bodydata)))
             elif __content_type == "text/html":
                 Journal.trace("".join(("Payload text/html: ", __line_sep, __request_bodydata)))
             elif __content_type == "application/xml":

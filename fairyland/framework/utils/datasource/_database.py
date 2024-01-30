@@ -24,6 +24,7 @@ if platform.system() == "Windows":
 import typing
 import types
 from typing import Union, Any, Callable, overload, List, Tuple, Dict
+from types import NoneType
 from abc import ABC, abstractmethod
 import pymysql
 from pymysql.connections import Connection
@@ -34,6 +35,8 @@ from fairyland.framework.utils.abnormal import SQLExecutionError
 
 
 class BaseDataSourceUtils(ABC):
+    """BaseDataSourceUtils"""
+
     def __init__(
         self,
         host: str = "127.0.0.1",
@@ -105,6 +108,8 @@ class BaseDataSourceUtils(ABC):
         """
         Close the database cursor.
             关闭数据库游标。
+        @return: None
+        @rtype: NoneType
         """
         if self.cursor:
             self.cursor.close()
@@ -115,6 +120,8 @@ class BaseDataSourceUtils(ABC):
         """
         Close the database connection.
             关闭数据库连接。
+        @return: None
+        @rtype: NoneType
         """
         if self.connection:
             self.connection.close()
@@ -125,6 +132,8 @@ class BaseDataSourceUtils(ABC):
         """
         Reconnect to the database.
             重连数据库。
+        @return: None
+        @rtype: NoneType
         """
         if self.connection and not self.cursor:
             Journal.warning("Database is connected.")
@@ -140,28 +149,40 @@ class BaseDataSourceUtils(ABC):
         """
         Completely close the database connection and cursor.
             完全关闭数据库连接和游标。
+        @return: None
+        @rtype: NoneType
         """
-        if self.cursor:
-            self.__close_cursor()
         if self.connection:
             self.__close_connect()
-        Journal.warning("Database has been disconnected the all.")
+        if self.cursor:
+            self.__close_cursor()
+        Journal.warning("Database has been disconnected completely.")
 
-    def __trace_sql_statement(self, statement, parameters) -> str:
+    def __trace_sql_statement(self, statement: str, parameters: Union[tuple, list, None]) -> str:
         """
-        Generate and return a debug SQL statements.
-            生成并返回调试SQL语句。
-        @param statement: SQL statements statements. | SQL查询语句
+        Generate and return a debug SQL statement with parameters.
+            生成并返回带参数的调试SQL语句。
+        @param statement: SQL statement. SQL查询语句
         @type statement: str
-        @param parameters: SQL statements parameters. | SQL查询参数
-        @type parameters: Union[tuple, list, dict, None]
-        @return: Debug information. | 调试信息
+        @param parameters: SQL statement parameters. SQL查询参数
+        @type parameters: Union[tuple, list, None]
+        @return: Debug information. 调试信息
         @rtype: str
         """
         return f"SQL Statement -> {statement} | Parameters -> {parameters}"
 
     @abstractmethod
     def execute(self, statement: str, parameters: Union[str, tuple, list, None] = None) -> None:
+        """
+        Execute a SQL statement with optional parameters.
+            执行带有可选参数的 SQL 语句。
+        @param statement: SQL statement to be executed. SQL待执行语句。
+        @type statement: str
+        @param parameters: Parameters to be substituted into the SQL statement. Default is None. 要替换到SQL语句中的参数。默认为None。
+        @type parameters: Union[str, tuple, list, None]
+        @return: None
+        @rtype: NoneType
+        """
         self.cursor.execute(query=statement, args=parameters)
 
     def __operation(
@@ -174,9 +195,9 @@ class BaseDataSourceUtils(ABC):
             执行 SQL 操作。
         @param statements: SQL statement(s). SQL语句
         @type statements: Union[str, tuple, list, set]
-        @param parameters: SQL parameters. | SQL参数
+        @param parameters: SQL parameters. SQL参数
         @type parameters: Union[tuple, list, dict, None]
-        @return: Operation result. | 操作结果
+        @return: Operation result. 操作结果
         @rtype: Depends on the SQL operation
         """
         try:
@@ -187,17 +208,18 @@ class BaseDataSourceUtils(ABC):
                 results = self.cursor.fetchall()
             elif isinstance(statements, (tuple, list, set)):
                 results_list = []
-                for query_str, query_parameters in zip(statements, parameters):
-                    Journal.trace(self.__trace_sql_statement(query_str, query_parameters))
-                    self.execute(statement=statements, parameters=parameters)
+                for sql_statements, statements_parameters in zip(statements, parameters):
+                    Journal.trace(self.__trace_sql_statement(sql_statements, statements_parameters))
+                    self.execute(statement=sql_statements, parameters=statements_parameters)
                     results_list.append(self.cursor.fetchall())
             else:
                 raise TypeError("Wrong SQL statements type.")
             self.connection.commit()
         except Exception as error:
-            Journal.debug("Failed to execute the rollback")
+            # Provide more context information when logging an error
+            Journal.warning("Failed to execute the rollback after an error occurred.")
             self.connection.rollback()
-            Journal.error(error)
+            Journal.error(f"Error occurred during SQL operation: {error}")
             raise
         finally:
             self.__close_cursor()
@@ -226,6 +248,8 @@ class BaseDataSourceUtils(ABC):
         """
         Close the database connection and cursor.
             关闭数据库连接和游标。
+        @return: None
+        @rtype: NoneType
         """
         self.__close()
 
