@@ -41,3 +41,9 @@ class ReadFileError(ProjectError):
 class DataSourceError(ProjectError):
     def __init__(self, message: str = "Data source error."):
         super().__init__(message=message)
+
+
+class SQLExecutionError(ProjectError):
+
+    def __init__(self, message: str = "SQL exection error."):
+        super().__init__(message=message)

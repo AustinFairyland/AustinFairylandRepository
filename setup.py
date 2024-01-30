@@ -28,8 +28,8 @@ name = "PyFairyland"
 # version
 major_number = 0
 sub_number = 0
-stage_number = 2
-revise_number = 15
+stage_number = 3
+revise_number = 30
 
 # leng desctiption
 with open("README.md", "r", encoding="utf-8") as fh:
@@ -44,9 +44,7 @@ date_number = datetime.now().date().__str__().replace("-", "")
 revise_after = "-".join((revise_number.__str__(), date_number))
 
 # version: (release_version, test_version, alpha_version, beta_version)
-release_version = ".".join(
-    (major_number.__str__(), sub_number.__str__(), stage_number.__str__())
-)
+release_version = ".".join((major_number.__str__(), sub_number.__str__(), stage_number.__str__()))
 test_version = ".".join((release_version, "".join(("rc", revise_after))))
 alpha_version = ".".join((release_version, "".join(("alpha", revise_after))))
 beta_version = ".".join((release_version, "".join(("beta", revise_after))))
@@ -56,7 +54,7 @@ setuptools.setup(
     name=name,
     fullname="".join((name, release_version)),
     keywords=["fairyland", "Fairyland", "pyfairyland", "PyFairyland", "fairy", "Fairy"],
-    version=alpha_version,
+    version=test_version,
     author="Austin D",
     author_email="fairylandhost@outlook.com",
     description="Austin personally developed Python library.",
@@ -78,9 +76,7 @@ setuptools.setup(
         "python-dotenv",
         "loguru",
         "pymysql",
-        "psycopg2-binary",
-        "redis",
-        "sshtunnel",
+        # "psycopg2-binary",
         "django",
         "django-stubs",
     ],

@@ -89,9 +89,7 @@ class DateTimeUtils:
                     data_string[10:12],
                     data_string[12:14],
                 )
-                results = (
-                    datetime.strptime(fmt, "%Y-%m-%d %H:%M:%S").timestamp().__int__()
-                )
+                results = datetime.strptime(fmt, "%Y-%m-%d %H:%M:%S").timestamp().__int__()
             else:
                 raise ParameterError
         else:
@@ -99,9 +97,7 @@ class DateTimeUtils:
         return results
 
     @staticmethod
-    def datetime_ts(
-        timestamp: Union[int, str, float, None] = None, fmt: str = "%Y-%m-%d %H:%M:%S"
-    ):
+    def datetime_ts(timestamp: Union[int, str, float, None] = None, fmt: str = "%Y-%m-%d %H:%M:%S"):
         """
         Timestamps to fmt datetime
         @param timestamp: timestamps: Integer | String

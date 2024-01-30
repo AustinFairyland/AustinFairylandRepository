@@ -24,4 +24,3 @@ import typing
 import types
 
 from fairyland.framework.modules.journal import Journal
-

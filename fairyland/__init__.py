@@ -19,8 +19,6 @@ warnings.filterwarnings("ignore")
 if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-__version__ = "0.0.1"
-
 from . import framework
 
 __all__: list = [

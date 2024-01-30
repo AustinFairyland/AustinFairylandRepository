@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import os
 import sys
+import typing
 import warnings
 import platform
 import asyncio
@@ -20,30 +21,29 @@ warnings.filterwarnings("ignore")
 if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
+import types
+import typing
+
 from typing import Union, Any, Callable
 from types import FunctionType, MethodType
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
-import traceback
+from django.utils.deprecation import MiddlewareMixin
+import json
 
 from fairyland.framework.modules.journal import Journal
 
 
-class DjangoLoguruMiddleware:
-    """Django Logginf Middleware"""
+class DjangoLoguruMiddleware(MiddlewareMixin):
+    """Django Logging Middleware"""
 
-    def __init__(self, function: Union[FunctionType, MethodType]):
-        self.__function = function
+    def __init__(self, get_response: Union[HttpResponse, None]):
+        super().__init__(get_response=get_response)
 
-    def __call__(self, request: HttpRequest, *args: Any, **kwargs: Any):
-        try:
-            self.__request_logs(request)
-            response: HttpResponse = self.__function(request, *args, **kwargs)
-        except Exception as error:
-            Journal.error(error)
-            Journal.error(f"Unhandled exception: {error}\n{traceback.format_exc()}")
-            raise
-        return response
+    # def __call__(self, request: HttpRequest, *args: Any, **kwargs: Any):
+    #     self.__request_logs(request)
+    #     response: HttpResponse = self.__function(request, *args, **kwargs)
+    #     return response
 
     def __request_logs(self, request: HttpRequest):
         __start = f"===== API: {request.path_info} ====="
@@ -80,50 +80,26 @@ class DjangoLoguruMiddleware:
             __request_bodydata = request.body.decode()
             __line_sep = "..." if not __request_bodydata else "\n"
             if __content_type.split(";")[0] == "multipart/form-data":
-                Journal.trace(
-                    f"Payload multipart/form-data: {__request_parameters.dict()}"
-                )
+                Journal.trace(f"Payload multipart/form-data: {__request_parameters.dict()}")
             elif __content_type == "application/x-www-form-urlencoded":
-                __payload_data = {
-                    k: v
-                    for k, v in (
-                        pair.split("=") for pair in __request_bodydata.split("&")
-                    )
-                }
-                Journal.trace(
-                    f"Payload application/x-www-form-urlencoded: {__payload_data}"
-                )
+                __payload_data = {k: v for k, v in (pair.split("=") for pair in __request_bodydata.split("&"))}
+                Journal.trace(f"Payload application/x-www-form-urlencoded: {__payload_data}")
             elif __content_type == "text/plain":
-                Journal.trace(
-                    "".join(("Payload text/plain: ", __line_sep, __request_bodydata))
-                )
+                Journal.trace("".join(("Payload text/plain: ", __line_sep, __request_bodydata)))
             elif __content_type == "application/javascript":
-                Journal.trace(
-                    "".join(
-                        (
-                            "Payload application/javascript: ",
-                            __line_sep,
-                            __request_bodydata,
-                        )
-                    )
-                )
+                Journal.trace("".join(("Payload application/javascript: ", __line_sep, __request_bodydata)))
             elif __content_type == "text/html":
-                Journal.trace(
-                    "".join(("Payload text/html: ", __line_sep, __request_bodydata))
-                )
+                Journal.trace("".join(("Payload text/html: ", __line_sep, __request_bodydata)))
             elif __content_type == "application/xml":
-                Journal.trace(
-                    "".join(
-                        ("Payload application/xml: ", __line_sep, __request_bodydata)
-                    )
-                )
+                Journal.trace("".join(("Payload application/xml: ", __line_sep, __request_bodydata)))
             elif __content_type == "application/json":
-                Journal.trace(
-                    f"Payload application/json: {json.loads(__request_bodydata)}"
-                )
+                Journal.trace(f"Payload application/json: {json.loads(__request_bodydata)}")
             Journal.trace(f"Payload file-stream: {request.FILES}")
 
         Journal.info(__end)
 
-    def process_exception(self, request, exception):
-        Journal.error(f"Unhandled exception: {exception}\n{traceback.format_exc()}")
+    def process_request(self, request: HttpRequest):
+        self.__request_logs(request)
+
+    def process_response(self, request: HttpRequest, response: HttpResponse):
+        return response
