@@ -24,7 +24,6 @@ if platform.system() == "Windows":
 import typing
 import types
 from typing import Union, Any, Callable, overload, List, Tuple, Dict
-from types import NoneType
 from abc import ABC, abstractmethod
 import pymysql
 from pymysql.connections import Connection
@@ -109,7 +108,7 @@ class BaseDataSourceUtils(ABC):
         Close the database cursor.
             关闭数据库游标。
         @return: None
-        @rtype: NoneType
+        @rtype: None
         """
         if self.cursor:
             self.cursor.close()
@@ -121,7 +120,7 @@ class BaseDataSourceUtils(ABC):
         Close the database connection.
             关闭数据库连接。
         @return: None
-        @rtype: NoneType
+        @rtype: None
         """
         if self.connection:
             self.connection.close()
@@ -133,7 +132,7 @@ class BaseDataSourceUtils(ABC):
         Reconnect to the database.
             重连数据库。
         @return: None
-        @rtype: NoneType
+        @rtype: None
         """
         if self.connection and not self.cursor:
             Journal.warning("Database is connected.")
@@ -150,7 +149,7 @@ class BaseDataSourceUtils(ABC):
         Completely close the database connection and cursor.
             完全关闭数据库连接和游标。
         @return: None
-        @rtype: NoneType
+        @rtype: None
         """
         if self.connection:
             self.__close_connect()
@@ -181,7 +180,7 @@ class BaseDataSourceUtils(ABC):
         @param parameters: Parameters to be substituted into the SQL statement. Default is None. 要替换到SQL语句中的参数。默认为None。
         @type parameters: Union[str, tuple, list, None]
         @return: None
-        @rtype: NoneType
+        @rtype: None
         """
         self.cursor.execute(query=statement, args=parameters)
 
@@ -249,7 +248,7 @@ class BaseDataSourceUtils(ABC):
         Close the database connection and cursor.
             关闭数据库连接和游标。
         @return: None
-        @rtype: NoneType
+        @rtype: None
         """
         self.__close()
 
