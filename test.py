@@ -15,12 +15,12 @@ import platform
 import asyncio
 
 sys.dont_write_bytecode = True
-warnings.filterwarnings('ignore')
-if platform.system() == 'Windows':
+warnings.filterwarnings("ignore")
+if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
 import setuptools
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     for i in setuptools.find_packages():
         print(i)

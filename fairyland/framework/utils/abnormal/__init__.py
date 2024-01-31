@@ -23,10 +23,12 @@ from ._exceptional import ProjectError
 from ._exceptional import ParameterError
 from ._exceptional import ReadFileError
 from ._exceptional import DataSourceError
+from ._exceptional import SQLExecutionError
 
 __all__ = [
     "ProjectError",
     "ParameterError",
     "ReadFileError",
     "DataSourceError",
+    "SQLExecutionError",
 ]

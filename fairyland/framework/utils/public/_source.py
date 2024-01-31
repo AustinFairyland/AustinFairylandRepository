@@ -27,9 +27,7 @@ if platform.system() == "Windows":
 class PublicUtils:
     """公共工具类"""
 
-    root_path = os.path.abspath(
-        os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    )
+    root_path = os.path.abspath(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
     @staticmethod
     def api_results():
