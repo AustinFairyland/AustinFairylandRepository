@@ -20,11 +20,5 @@ warnings.filterwarnings("ignore")
 if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-from typing import Union, Any, Callable
-from types import FunctionType, MethodType
-
-from . import django_middleware
-
-__all__: list = [
-    "django_middleware",
-]
+import typing
+import types
