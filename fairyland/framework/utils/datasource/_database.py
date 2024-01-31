@@ -31,7 +31,6 @@ from psycopg2.extensions import connection as PostgreSQLConnectionObject
 from psycopg2.extensions import cursor as PostgreSQLCursorObject
 
 from fairyland.framework.modules.journal import Journal
-from fairyland.framework.utils.abnormal import SQLExecutionError
 
 
 class BaseDataSourceUtils(ABC):
