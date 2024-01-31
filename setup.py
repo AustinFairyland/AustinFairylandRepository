@@ -21,6 +21,7 @@ if platform.system() == "Windows":
 
 import setuptools
 from datetime import datetime
+import subprocess
 
 # package name
 name = "PyFairyland"
@@ -29,11 +30,12 @@ name = "PyFairyland"
 major_number = 0
 sub_number = 0
 stage_number = 3
-revise_number = 34
+revise_number = 35
 
 # leng desctiption
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
+
 
 if revise_number.__str__().__len__() < 5:
     nbit = 5 - revise_number.__str__().__len__()
@@ -50,6 +52,21 @@ alpha_version = ".".join((release_version, "".join(("alpha", revise_after))))
 beta_version = ".".join((release_version, "".join(("beta", revise_after))))
 
 
+class InstallDependenciesCommand(setuptools.Command):
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        command = "python -m pip install --force git+https://github.com/imba-tjd/pip-autoremove@ups"
+        subprocess.call(command, shell=True)
+
+
+# version: (release_version, test_version, alpha_version, beta_version)
 setuptools.setup(
     name=name,
     fullname="".join((name, release_version)),
@@ -96,6 +113,8 @@ setuptools.setup(
     ],
     python_requires=">=3.7",
     install_requires=[
+        "pip-review",
+        "pip-autoremove",
         "python-dotenv",
         "loguru",
         "pymysql",
@@ -109,4 +128,7 @@ setuptools.setup(
         "djangorestframework",
         "django-cors-headers",
     ],
+    cmdclass={
+        "install_dependencies": InstallDependenciesCommand,
+    },
 )
