@@ -30,7 +30,7 @@ name = "PyFairyland"
 major_number = 0
 sub_number = 0
 stage_number = 3
-revise_number = 36
+revise_number = 37
 
 # leng desctiption
 with open("README.md", "r", encoding="utf-8") as fh:
