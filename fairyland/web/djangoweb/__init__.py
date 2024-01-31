@@ -25,7 +25,9 @@ from typing import List
 from django.utils.version import get_version
 
 from . import middleware
+from . import configuration
 
 __all__: List = [
     "middleware",
+    "configuration",
 ]
