@@ -71,7 +71,7 @@ setuptools.setup(
     name=name,
     fullname="".join((name, release_version)),
     keywords=["fairyland", "Fairyland", "pyfairyland", "PyFairyland", "fairy", "Fairy"],
-    version=test_version,
+    version=release_version,
     author="Austin D",
     author_email="fairylandhost@outlook.com",
     description="Austin personally developed Python library.",
