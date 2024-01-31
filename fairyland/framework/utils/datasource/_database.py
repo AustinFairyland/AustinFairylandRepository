@@ -9,8 +9,6 @@
 """
 from __future__ import annotations
 
-import abc
-import os
 import sys
 import warnings
 import platform
@@ -26,8 +24,11 @@ import types
 from typing import Union, Any, Callable, overload, List, Tuple, Dict
 from abc import ABC, abstractmethod
 import pymysql
-from pymysql.connections import Connection
-from pymysql.cursors import Cursor
+from pymysql.connections import Connection as MySQLConnectionObject
+from pymysql.cursors import Cursor as MySQLCursorObject
+import psycopg2
+from psycopg2.extensions import connection as PostgreSQLConnectionObject
+from psycopg2.extensions import cursor as PostgreSQLCursorObject
 
 from fairyland.framework.modules.journal import Journal
 from fairyland.framework.utils.abnormal import SQLExecutionError
@@ -67,11 +68,11 @@ class BaseDataSourceUtils(ABC):
         self.database = database
         self.charset = charset
         self.connect_timeout = connect_timeout
-        self.connection = self.connect()
+        self.connection = self.__connect()
         self.cursor = self.__create_cursor()
 
     @abstractmethod
-    def connect(self) -> Connection:
+    def connect(self):
         """
         Initialize datasource connection.
             初始化连接
@@ -94,7 +95,10 @@ class BaseDataSourceUtils(ABC):
             raise
         return connect
 
-    def __create_cursor(self) -> Cursor:
+    def __connect(self) -> Union[MySQLConnectionObject, PostgreSQLConnectionObject]:
+        return self.connect()
+
+    def __create_cursor(self) -> Union[MySQLCursorObject, PostgreSQLCursorObject]:
         """
         Create the database cursor.
             创建数据库游标
@@ -157,6 +161,15 @@ class BaseDataSourceUtils(ABC):
             self.__close_cursor()
         Journal.warning("Database has been disconnected completely.")
 
+    def close(self) -> None:
+        """
+        Close the database connection and cursor.
+            关闭数据库连接和游标。
+        @return: None
+        @rtype: None
+        """
+        self.__close()
+
     def __trace_sql_statement(self, statement: str, parameters: Union[tuple, list, None]) -> str:
         """
         Generate and return a debug SQL statement with parameters.
@@ -215,7 +228,6 @@ class BaseDataSourceUtils(ABC):
                 raise TypeError("Wrong SQL statements type.")
             self.connection.commit()
         except Exception as error:
-            # Provide more context information when logging an error
             Journal.warning("Failed to execute the rollback after an error occurred.")
             self.connection.rollback()
             Journal.error(f"Error occurred during SQL operation: {error}")
@@ -243,22 +255,12 @@ class BaseDataSourceUtils(ABC):
             parameters = tuple([None for _ in range(len(statements))])
         return self.__operation(statements=statements, parameters=parameters)
 
-    def close(self) -> None:
-        """
-        Close the database connection and cursor.
-            关闭数据库连接和游标。
-        @return: None
-        @rtype: None
-        """
-        self.__close()
-
 
 class MySQLUtils(BaseDataSourceUtils):
-
     def __init__(self, *args: Any, **kwargs: Any):
         super().__init__(*args, **kwargs)
 
-    def connect(self) -> Connection:
+    def connect(self):
         try:
             connect = pymysql.connect(
                 host=self.host,
@@ -277,3 +279,25 @@ class MySQLUtils(BaseDataSourceUtils):
 
     def execute(self, statement: str, parameters: Union[str, tuple, list, None] = None) -> None:
         self.cursor.execute(query=statement, args=parameters)
+
+
+class PostgreSQLUtils(BaseDataSourceUtils):
+    def __init__(self, *args: Any, **kwargs: Any):
+        super().__init__(*args, **kwargs)
+
+    def connect(self):
+        try:
+            connect = psycopg2.connect(
+                host=self.host,
+                port=self.port,
+                user=self.user,
+                password=self.password,
+                database=self.database,
+            )
+        except Exception as error:
+            Journal.error(error)
+            raise
+        return connect
+
+    def execute(self, statement: str, parameters: Union[str, tuple, list, None] = None) -> None:
+        self.cursor.execute(query=parameters, vars=parameters)

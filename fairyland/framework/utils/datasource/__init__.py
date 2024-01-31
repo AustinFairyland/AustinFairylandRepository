@@ -23,8 +23,10 @@ if platform.system() == "Windows":
 
 from ._database import BaseDataSourceUtils
 from ._database import MySQLUtils
+from ._database import PostgreSQLUtils
 
 __all__ = [
     "BaseDataSourceUtils",
     "MySQLUtils",
+    "PostgreSQLUtils",
 ]
