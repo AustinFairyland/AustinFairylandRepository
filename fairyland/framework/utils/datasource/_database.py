@@ -31,7 +31,6 @@ from psycopg2.extensions import connection as PostgreSQLConnectionObject
 from psycopg2.extensions import cursor as PostgreSQLCursorObject
 
 from fairyland.framework.modules.journal import Journal
-from fairyland.framework.utils.abnormal import SQLExecutionError
 
 
 class BaseDataSourceUtils(ABC):
@@ -138,12 +137,14 @@ class BaseDataSourceUtils(ABC):
         @return: None
         @rtype: None
         """
-        if self.connection and not self.cursor:
+        if self.connection and self.cursor:
+            Journal.warning("The database and cursor are connected.")
+        elif self.connection and not self.cursor:
             Journal.warning("Database is connected.")
             self.cursor = self.__create_cursor()
             Journal.warning("Database cursor has been reconnected.")
         else:
-            self.connection = self.connect()
+            self.connection = self.__connect()
             Journal.warning("Database has been reconnected.")
             self.cursor = self.__create_cursor()
             Journal.warning("Database cursor has been reconnected.")
