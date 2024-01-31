@@ -3,7 +3,7 @@
 dist
 build
 *.egg*
-deployment/upload-pypi/config/.pypirc
+deploy/upload-pypi/config/.pypirc
 config.yaml
 temp
 log[s]

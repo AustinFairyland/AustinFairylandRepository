@@ -85,14 +85,12 @@ class SQLStatement:
         select_str = "{}.{}.{}".format(self.database_name, table_name, field)
         results = " ".join(("select", select_str))
         return results
-    
+
     def select_clause_example(self):
         return self.__select_clause
 
     @staticmethod
-    def select_clause(
-        field_iterable: Union[str, list[str], tuple[str], set[str], None] = None
-    ) -> str:
+    def select_clause(field_iterable: Union[str, list[str], tuple[str], set[str], None] = None) -> str:
         if not field_iterable:
             results = "select *"
         else:
@@ -106,9 +104,7 @@ class SQLStatement:
         return results
 
     @staticmethod
-    def from_clause(
-        table: str, database: Union[str, None] = None, schema: Union[str, None] = None
-    ) -> str:
+    def from_clause(table: str, database: Union[str, None] = None, schema: Union[str, None] = None) -> str:
         if not database and not schema:
             raise ValueError
         if database and schema:
@@ -140,26 +136,18 @@ class SQLStatement:
             raise TypeError
         if isinstance(field_value, str):
             if field_operation in ("like", "ilike"):
-                results = "{} {} {} '%{}%'".format(
-                    filter_name, field_name, field_operation, field_value
-                )
+                results = "{} {} {} '%{}%'".format(filter_name, field_name, field_operation, field_value)
             else:
-                results = "{} {} {} '{}'".format(
-                    filter_name, field_name, field_operation, field_value
-                )
+                results = "{} {} {} '{}'".format(filter_name, field_name, field_operation, field_value)
         else:
             if field_operation in ("like", "ilike"):
                 raise SyntaxError
             else:
-                results = "{} {} {} {}".format(
-                    filter_name, field_name, field_operation, field_value
-                )
+                results = "{} {} {} {}".format(filter_name, field_name, field_operation, field_value)
         return results
 
     @staticmethod
-    def where_clause(
-        filter_iterable: Union[list[str], tuple[str], set[str], None] = None
-    ) -> str:
+    def where_clause(filter_iterable: Union[list[str], tuple[str], set[str], None] = None) -> str:
         if not filter_iterable:
             return str()
         if not isinstance(filter_iterable, (list, tuple, set)):
@@ -174,9 +162,7 @@ class SQLStatement:
         return results
 
     @staticmethod
-    def group_by_clause(
-        field: Union[str, list[str], tuple[str], set[str], None] = None
-    ) -> str:
+    def group_by_clause(field: Union[str, list[str], tuple[str], set[str], None] = None) -> str:
         if not field:
             return str()
         if not isinstance(field, (list, tuple, set)):
@@ -190,9 +176,7 @@ class SQLStatement:
         return results
 
     @staticmethod
-    def having_clause(
-        field: Union[str, list[str], tuple[str], set[str], None] = None
-    ) -> str:
+    def having_clause(field: Union[str, list[str], tuple[str], set[str], None] = None) -> str:
         if not field:
             return str()
         if not isinstance(field, (list, tuple, set)):

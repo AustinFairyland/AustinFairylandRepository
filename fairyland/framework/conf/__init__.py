@@ -23,8 +23,3 @@ if platform.system() == "Windows":
 from typing import Union, Any, Callable
 from types import FunctionType, MethodType
 
-from . import django_configuration
-
-__all__: list = [
-    "django_configuration",
-]

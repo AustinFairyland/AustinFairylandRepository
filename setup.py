@@ -21,6 +21,7 @@ if platform.system() == "Windows":
 
 import setuptools
 from datetime import datetime
+import subprocess
 
 # package name
 name = "PyFairyland"
@@ -28,12 +29,13 @@ name = "PyFairyland"
 # version
 major_number = 0
 sub_number = 0
-stage_number = 2
-revise_number = 15
+stage_number = 3
+revise_number = 37
 
 # leng desctiption
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
+
 
 if revise_number.__str__().__len__() < 5:
     nbit = 5 - revise_number.__str__().__len__()
@@ -44,19 +46,32 @@ date_number = datetime.now().date().__str__().replace("-", "")
 revise_after = "-".join((revise_number.__str__(), date_number))
 
 # version: (release_version, test_version, alpha_version, beta_version)
-release_version = ".".join(
-    (major_number.__str__(), sub_number.__str__(), stage_number.__str__())
-)
+release_version = ".".join((major_number.__str__(), sub_number.__str__(), stage_number.__str__()))
 test_version = ".".join((release_version, "".join(("rc", revise_after))))
 alpha_version = ".".join((release_version, "".join(("alpha", revise_after))))
 beta_version = ".".join((release_version, "".join(("beta", revise_after))))
 
 
+class InstallDependenciesCommand(setuptools.Command):
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        command = "python -m pip install --force git+https://github.com/imba-tjd/pip-autoremove@ups"
+        subprocess.call(command, shell=True)
+
+
+# version: (release_version, test_version, alpha_version, beta_version)
 setuptools.setup(
     name=name,
     fullname="".join((name, release_version)),
     keywords=["fairyland", "Fairyland", "pyfairyland", "PyFairyland", "fairy", "Fairy"],
-    version=alpha_version,
+    version=release_version,
     author="Austin D",
     author_email="fairylandhost@outlook.com",
     description="Austin personally developed Python library.",
@@ -67,21 +82,53 @@ setuptools.setup(
     include_package_data=True,
     classifiers=[
         "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: Implementation :: CPython",
+        "Programming Language :: Python :: Implementation :: PyPy",
+        "Programming Language :: SQL",
+        "Framework :: Django :: 2",
+        "Framework :: Django :: 3",
+        "Framework :: Django :: 4",
+        "Framework :: Flask",
+        "Framework :: FastAPI",
+        "Framework :: Flake8",
+        "Framework :: IPython",
+        "Framework :: Jupyter",
+        "Framework :: Scrapy",
         "Natural Language :: English",
         "Natural Language :: Chinese (Simplified)",
         "Operating System :: Microsoft :: Windows :: Windows 11",
+        "Operating System :: POSIX :: Linux",
+        "Operating System :: POSIX :: Linux",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Topic :: Software Development :: Libraries :: Application Frameworks",
         "Topic :: Software Development :: Version Control :: Git",
+        "Topic :: System :: Operating System Kernels :: Linux",
         "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
     ],
     python_requires=">=3.7",
     install_requires=[
+        "pip-review",
+        "pip-autoremove",
         "python-dotenv",
         "loguru",
         "pymysql",
         "psycopg2-binary",
-        "redis",
-        "sshtunnel",
+        "requests",
+        "tornado",
+        "pandas",
         "django",
+        # "django<5.0.0",
         "django-stubs",
+        "djangorestframework",
+        "django-cors-headers",
     ],
+    cmdclass={
+        "install_dependencies": InstallDependenciesCommand,
+    },
 )
