@@ -29,8 +29,8 @@ name = "PyFairyland"
 # version
 major_number = 0
 sub_number = 0
-stage_number = 3
-revise_number = 37
+stage_number = 4
+revise_number = 42
 
 # leng desctiption
 with open("README.md", "r", encoding="utf-8") as fh:
@@ -71,7 +71,7 @@ setuptools.setup(
     name=name,
     fullname="".join((name, release_version)),
     keywords=["fairyland", "Fairyland", "pyfairyland", "PyFairyland", "fairy", "Fairy"],
-    version=release_version,
+    version=test_version,
     author="Austin D",
     author_email="fairylandhost@outlook.com",
     description="Austin personally developed Python library.",

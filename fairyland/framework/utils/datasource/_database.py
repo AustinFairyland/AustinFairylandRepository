@@ -301,4 +301,4 @@ class PostgreSQLUtils(BaseDataSourceUtils):
         return connect
 
     def execute(self, statement: str, parameters: Union[str, tuple, list, None] = None) -> None:
-        self.cursor.execute(query=parameters, vars=parameters)
+        self.cursor.execute(query=statement, vars=parameters)

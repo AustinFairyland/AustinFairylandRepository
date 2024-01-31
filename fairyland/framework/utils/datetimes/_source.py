@@ -138,7 +138,5 @@ class DateTimeUtils:
         """
         if not isinstance(days, int):
             raise TypeError("The days argument must be of type int.")
-        current_date = datetime.now()
-        delta = timedelta(days=days)
-        relative_date = current_date + delta
+        relative_date = (datetime.now() + timedelta(days=days)).strftime("%Y-%m-%d %H:%M:%S")
         return relative_date
