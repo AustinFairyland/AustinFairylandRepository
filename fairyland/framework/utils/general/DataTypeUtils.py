@@ -1,6 +1,6 @@
 # coding: utf8
 """ 
-@ File: _source.py
+@ File: DataTypeUtils.py
 @ Editor: PyCharm
 @ Author: Austin (From Chengdu.China) https://fairy.host
 @ HomePage: https://github.com/AustinFairyland
@@ -24,10 +24,8 @@ if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
 
-class PublicUtils:
-    """公共工具类"""
-
-    root_path = os.path.abspath(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+class DataTypeUtils:
+    """DataTypeUtils"""
 
     @staticmethod
     def api_results():

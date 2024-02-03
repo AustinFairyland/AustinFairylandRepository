@@ -1,6 +1,6 @@
 # coding: utf8
 """ 
-@File: public_configuration.py
+@File: DjangoConfiguration.py
 @Editor: PyCharm
 @Author: Austin (From Chengdu.China) https://fairy.host
 @HomePage: https://github.com/AustinFairyland

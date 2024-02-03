@@ -19,11 +19,11 @@ warnings.filterwarnings("ignore")
 if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-from ._exceptional import ProjectError
-from ._exceptional import ParameterError
-from ._exceptional import ReadFileError
-from ._exceptional import DataSourceError
-from ._exceptional import SQLExecutionError
+from .AbnormalModules import ProjectError
+from .AbnormalModules import ParameterError
+from .AbnormalModules import ReadFileError
+from .AbnormalModules import DataSourceError
+from .AbnormalModules import SQLExecutionError
 
 __all__ = [
     "ProjectError",

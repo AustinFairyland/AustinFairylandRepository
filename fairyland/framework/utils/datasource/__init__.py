@@ -21,12 +21,12 @@ if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
 
-from ._database import BaseDataSourceUtils
-from ._database import MySQLUtils
-from ._database import PostgreSQLUtils
+from .DataBaseUtils import DataBaseSourceUtils
+from .DataBaseUtils import MySQLUtils
+from .DataBaseUtils import PostgreSQLUtils
 
 __all__ = [
-    "BaseDataSourceUtils",
+    "DataBaseSourceUtils",
     "MySQLUtils",
     "PostgreSQLUtils",
 ]

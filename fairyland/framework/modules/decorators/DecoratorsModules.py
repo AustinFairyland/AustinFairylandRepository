@@ -1,6 +1,6 @@
 # coding: utf8
 """
-@ File: _decorator.py
+@ File: DecoratorsModules.py
 @ Editor: PyCharm
 @ Author: Austin (From Chengdu.China) https://fairy.host
 @ HomePage: https://github.com/AustinFairyland
@@ -28,9 +28,9 @@ import time
 from ..journal import Journal
 
 
-class TimeDecorators:
+class MethodRunTimeDecorators:
     """
-    This class decorator is used for measuring and logging the execution time of functions.
+    This class decorators is used for measuring and logging the execution time of functions.
         类装饰器，用于测量和记录函数的运行时间。
     """
 
@@ -41,7 +41,7 @@ class TimeDecorators:
         **kwargs: Any,
     ) -> Callable[..., Any]:
         """
-        Called when the decorator is applied to a function. Creates and returns a wrapper function.
+        Called when the decorators is applied to a function. Creates and returns a wrapper function.
             当装饰器应用于函数时调用。创建并返回包装函数。
         @param function: The function to be decorated. | 被装饰的函数。
         @type function: Union[FunctionType, MethodType]
@@ -74,11 +74,11 @@ class TimeDecorators:
         return warpper
 
 
-class MethodDecorators:
+class MethodTipsDecorators:
     def __init__(self, annotation: str = "A method"):
         self.__annotation = annotation
 
-    # @TimeDecorators
+    # @MethodRunTimeDecorators
     def __call__(
         self,
         function: Union[FunctionType, MethodType],
@@ -86,7 +86,7 @@ class MethodDecorators:
         **kwargs: Any,
     ) -> Callable[..., Any]:
         """
-        The method decorator logic.
+        The method decorators logic.
             方法装饰器的逻辑。
         @param function: The function to be decorated. | 被装饰的函数。
         @type function: Union[FunctionType, MethodType]

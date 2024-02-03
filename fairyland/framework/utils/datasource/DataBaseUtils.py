@@ -1,6 +1,6 @@
 # coding: utf8
 """ 
-@File: _database.py
+@File: DataBaseUtils.py
 @Editor: PyCharm
 @Author: Austin (From Chengdu.China) https://fairy.host
 @HomePage: https://github.com/AustinFairyland
@@ -33,8 +33,8 @@ from psycopg2.extensions import cursor as PostgreSQLCursorObject
 from fairyland.framework.modules.journal import Journal
 
 
-class BaseDataSourceUtils(ABC):
-    """BaseDataSourceUtils"""
+class DataBaseSourceUtils(ABC):
+    """DataBaseSourceUtils"""
 
     def __init__(
         self,
@@ -257,7 +257,7 @@ class BaseDataSourceUtils(ABC):
         return self.__operation(statements=statements, parameters=parameters)
 
 
-class MySQLUtils(BaseDataSourceUtils):
+class MySQLUtils(DataBaseSourceUtils):
     def __init__(self, *args: Any, **kwargs: Any):
         super().__init__(*args, **kwargs)
 
@@ -282,7 +282,7 @@ class MySQLUtils(BaseDataSourceUtils):
         self.cursor.execute(query=statement, args=parameters)
 
 
-class PostgreSQLUtils(BaseDataSourceUtils):
+class PostgreSQLUtils(DataBaseSourceUtils):
     def __init__(self, *args: Any, **kwargs: Any):
         super().__init__(*args, **kwargs)
 

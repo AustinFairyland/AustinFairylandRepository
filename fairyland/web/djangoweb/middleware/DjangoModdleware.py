@@ -1,6 +1,6 @@
 # coding: utf8
 """ 
-@File: loguru_middleware.py
+@File: DjangoModdleware.py
 @Editor: PyCharm
 @Author: Austin (From Chengdu.China) https://fairy.host
 @HomePage: https://github.com/AustinFairyland
