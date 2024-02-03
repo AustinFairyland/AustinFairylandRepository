@@ -25,7 +25,7 @@ from . import datetimes
 from . import datasource
 
 __all__: list = [
-    "public",
+    "general",
     "datetimes",
     "datasource",
 ]

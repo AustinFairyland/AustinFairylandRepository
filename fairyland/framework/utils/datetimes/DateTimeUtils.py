@@ -28,11 +28,11 @@ from datetime import datetime, timedelta
 import time
 import re
 
-from fairyland.framework.utils.abnormal import ParameterError
+from fairyland.framework.modules.abnormal import ParameterError
 
 
 class DateTimeUtils:
-    """Date Time"""
+    """DateTimeUtils"""
 
     @staticmethod
     def normtimestamp():
@@ -96,7 +96,7 @@ class DateTimeUtils:
         return results
 
     @staticmethod
-    def datetime_ts(timestamp: Union[int, str, float, None] = None, fmt: str = "%Y-%m-%d %H:%M:%S") -> str:
+    def datetime_ts(timestamp: Union[int, float, None] = None, fmt: str = "%Y-%m-%d %H:%M:%S") -> str:
         """
         Timestamps to fmt datetime
         @param timestamp: timestamps: Integer | String
