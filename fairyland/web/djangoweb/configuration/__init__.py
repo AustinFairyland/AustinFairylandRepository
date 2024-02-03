@@ -23,7 +23,7 @@ if platform.system() == "Windows":
 import typing
 import types
 
-from .public_configuration import DjangoPublicConfiguration
+from .DjangoConfiguration import DjangoPublicConfiguration
 
 __all__: list = [
     "DjangoPublicConfiguration",

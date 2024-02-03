@@ -20,12 +20,12 @@ warnings.filterwarnings("ignore")
 if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
+from . import abnormal
 from . import journal
-from . import decorator
-from . import middleware
+from . import decorators
 
 __all__: list = [
+    "abnormal",
     "journal",
     "decorator",
-    "middleware",
 ]

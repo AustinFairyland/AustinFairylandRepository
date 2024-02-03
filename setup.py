@@ -30,7 +30,7 @@ name = "PyFairyland"
 major_number = 0
 sub_number = 0
 stage_number = 4
-revise_number = 42
+revise_number = 45
 
 # leng desctiption
 with open("README.md", "r", encoding="utf-8") as fh:
@@ -115,6 +115,7 @@ setuptools.setup(
     install_requires=[
         "pip-review",
         "pip-autoremove",
+        "black",
         "python-dotenv",
         "loguru",
         "pymysql",
