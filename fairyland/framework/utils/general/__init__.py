@@ -19,8 +19,13 @@ warnings.filterwarnings("ignore")
 if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-from .DataTypeUtils import DataTypeUtils
+from .DataType import DataTypeUtils
+from .TypeAnnotation import SQLConnectionType
+from .TypeAnnotation import SQLCursorType
+
 
 __all__: list = [
     "DataTypeUtils",
+    "SQLConnectionType",
+    "SQLCursorType",
 ]

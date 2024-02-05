@@ -30,7 +30,7 @@ name = "PyFairyland"
 major_number = 0
 sub_number = 0
 stage_number = 4
-revise_number = 45
+revise_number = 46
 
 # leng desctiption
 with open("README.md", "r", encoding="utf-8") as fh:
@@ -118,6 +118,7 @@ setuptools.setup(
         "black",
         "python-dotenv",
         "loguru",
+        "enums",
         "pymysql",
         "psycopg2-binary",
         "requests",

@@ -5,7 +5,7 @@
 @Author: Austin (From Chengdu.China) https://fairy.host
 @HomePage: https://github.com/AustinFairyland
 @OperatingSystem: Windows 11 Professional Workstation 23H2 Canary Channel
-@CreatedTime: 2024-01-27
+@CreatedTime: 2024-02-05
 """
 from __future__ import annotations
 
@@ -20,14 +20,12 @@ warnings.filterwarnings("ignore")
 if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-from . import abnormal
-from . import journal
-from . import decorators
-from . import enumeration
+from .EnumSourceInheritance import BaseEnum
+from .EnumSourceInheritance import StringEnum
+from .EnumSourceInheritance import IntegerEnum
 
 __all__: list = [
-    "abnormal",
-    "journal",
-    "decorator",
-    "enumeration",
+    "BaseEnum",
+    "StringEnum",
+    "IntegerEnum",
 ]
