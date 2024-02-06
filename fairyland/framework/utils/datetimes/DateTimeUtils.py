@@ -43,12 +43,58 @@ class DatetimeUtils:
         return time.time().__int__()
 
     @classmethod
-    def normdatetime(cls) -> str:
+    def normdatetime(cls) -> datetime:
         """
-        Formatting Date Time: format: "%Y-%m-%d %H:%M:%S"
-        @return: Format datetime: String
+        Get the current date and time.
+        @return: Current date and time
+        @rtype: datetime
+        """
+        return datetime.now()
+
+    @classmethod
+    def normnowtime(cls) -> datetime:
+        """
+        Get the current time.
+        @return: Current time
+        @rtype: datetime
+        """
+        return datetime.now().time()
+
+    @classmethod
+    def normnowdate(cls) -> datetime:
+        """
+        Get the current date.
+        @return: Current date
+        @rtype: datetime
+        """
+        return datetime.now().date()
+
+    @classmethod
+    def normdatetime_to_str(cls) -> str:
+        """
+        Get the current date and time as a formatted string.
+        @return: Formatted date and time string
+        @rtype: str
         """
         return datetime.now().strftime(DateTimeFormatEnum.datetime.value)
+
+    @classmethod
+    def normnowtime_to_str(cls) -> str:
+        """
+        Get the current time as a formatted string.
+        @return: Formatted time string
+        @rtype: str
+        """
+        return datetime.now().time().strftime(DateTimeFormatEnum.time.value)
+
+    @classmethod
+    def normnowdate_to_str(cls) -> str:
+        """
+        Get the current date as a formatted string.
+        @return: Formatted date string
+        @rtype: str
+        """
+        return datetime.now().date().strftime(DateTimeFormatEnum.date.value)
 
     @classmethod
     def timestamp_nbit(cls, n: int) -> str:
@@ -253,3 +299,21 @@ class DatetimeUtils:
             raise TypeError("The days argument must be of type int.")
         relative_date = (datetime.now() + timedelta(days=days)).strftime(DateTimeFormatEnum.datetime.value)
         return relative_date
+
+    @classmethod
+    def current_milliseconds(cls) -> int:
+        """
+        Get the current time in milliseconds.
+        @return: The current time in milliseconds
+        @rtype: int
+        """
+        return round(time.time() * 1000)
+
+    @classmethod
+    def today_timestamp(cls) -> int:
+        """
+        The timestamp of the day at 0:00
+        @return: Norm Timestamp
+        @rtype: int
+        """
+        return round(time.mktime(datetime.date.today().timetuple()))

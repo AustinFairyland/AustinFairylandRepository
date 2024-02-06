@@ -32,12 +32,8 @@ class InstallPackageSource:
     # version
     __major_number = 0
     __sub_number = 0
-    __stage_number = 4
-    __revise_number = 46
-
-    # leng desctiption
-    with open("README.md", "r", encoding="utf-8") as fh:
-        long_description = fh.read()
+    __stage_number = 5
+    __revise_number = 47
 
     if __revise_number.__str__().__len__() < 5:
         __nbit = 5 - __revise_number.__str__().__len__()

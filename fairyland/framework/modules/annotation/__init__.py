@@ -22,4 +22,10 @@ if platform.system() == "Windows":
 
 from typing import List
 
-__all__: List = []
+from .TypeAnnotation import SQLConnectionType
+from .TypeAnnotation import SQLCursorType
+
+__all__: List = [
+    "SQLConnectionType",
+    "SQLCursorType",
+]

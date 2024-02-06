@@ -28,8 +28,8 @@ import pymysql
 import psycopg2
 
 from fairyland.framework.modules.journal import Journal
-from fairyland.framework.utils.general import SQLConnectionType
-from fairyland.framework.utils.general import SQLCursorType
+from fairyland.framework.modules.annotation import SQLConnectionType
+from fairyland.framework.modules.annotation import SQLCursorType
 
 
 class DataBaseSource(ABC):
