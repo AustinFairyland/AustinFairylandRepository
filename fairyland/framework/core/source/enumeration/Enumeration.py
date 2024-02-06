@@ -38,4 +38,3 @@ class PackageEnum(StringEnum):
     test_version = InstallPackageSource.test_version
     alpha_version = InstallPackageSource.alpha_version
     beta_version = InstallPackageSource.beta_version
-    long_description = InstallPackageSource.long_description

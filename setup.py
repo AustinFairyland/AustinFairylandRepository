@@ -26,6 +26,10 @@ import subprocess
 
 from fairyland.framework.core.source.enumeration import PackageEnum
 
+# Long Description
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
+
 
 class InstallDependenciesCommand(setuptools.Command):
     user_options = []
@@ -46,11 +50,11 @@ setuptools.setup(
     name=PackageEnum.name.value,
     fullname="".join((PackageEnum.name.value, PackageEnum.release_version.value)),
     keywords=["fairyland", "Fairyland", "pyfairyland", "PyFairyland", "fairy", "Fairy"],
-    version=PackageEnum.test_version.value,
+    version=PackageEnum.release_version.value,
     author="Austin D",
     author_email="fairylandhost@outlook.com",
     description="Austin personally developed Python library.",
-    long_description=PackageEnum.long_description.value,
+    long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/AustinFairyland/AustinFairylandRepository",
     packages=setuptools.find_packages(),
