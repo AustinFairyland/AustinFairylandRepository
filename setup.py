@@ -19,37 +19,16 @@ warnings.filterwarnings("ignore")
 if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
+from typing import List
 import setuptools
 from datetime import datetime
 import subprocess
 
-# package name
-name = "PyFairyland"
+from fairyland.framework.core.source.enumeration import PackageEnum
 
-# version
-major_number = 0
-sub_number = 0
-stage_number = 3
-revise_number = 37
-
-# leng desctiption
+# Long Description
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
-
-
-if revise_number.__str__().__len__() < 5:
-    nbit = 5 - revise_number.__str__().__len__()
-    revise_number = "".join((("0" * nbit), revise_number.__str__()))
-else:
-    revise_number = revise_number.__str__()
-date_number = datetime.now().date().__str__().replace("-", "")
-revise_after = "-".join((revise_number.__str__(), date_number))
-
-# version: (release_version, test_version, alpha_version, beta_version)
-release_version = ".".join((major_number.__str__(), sub_number.__str__(), stage_number.__str__()))
-test_version = ".".join((release_version, "".join(("rc", revise_after))))
-alpha_version = ".".join((release_version, "".join(("alpha", revise_after))))
-beta_version = ".".join((release_version, "".join(("beta", revise_after))))
 
 
 class InstallDependenciesCommand(setuptools.Command):
@@ -68,10 +47,10 @@ class InstallDependenciesCommand(setuptools.Command):
 
 # version: (release_version, test_version, alpha_version, beta_version)
 setuptools.setup(
-    name=name,
-    fullname="".join((name, release_version)),
+    name=PackageEnum.name.value,
+    fullname="".join((PackageEnum.name.value, PackageEnum.release_version.value)),
     keywords=["fairyland", "Fairyland", "pyfairyland", "PyFairyland", "fairy", "Fairy"],
-    version=release_version,
+    version=PackageEnum.release_version.value,
     author="Austin D",
     author_email="fairylandhost@outlook.com",
     description="Austin personally developed Python library.",
@@ -115,8 +94,10 @@ setuptools.setup(
     install_requires=[
         "pip-review",
         "pip-autoremove",
+        "black",
         "python-dotenv",
         "loguru",
+        "enums",
         "pymysql",
         "psycopg2-binary",
         "requests",

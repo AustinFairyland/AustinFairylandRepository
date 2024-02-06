@@ -23,7 +23,7 @@ if platform.system() == "Windows":
 import typing
 import types
 
-from .loguru_middleware import DjangoLoguruMiddleware
+from .DjangoModdleware import DjangoLoguruMiddleware
 
 __all__: list = [
     "DjangoLoguruMiddleware",

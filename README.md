@@ -55,7 +55,7 @@ Tips: Wait fill up
 
 Others:
 
-[Tong](https://github.com/Zzw2001) · [AustinEngineer](https://github.com/AustinEngineer)
+· [AustinEngineer](https://github.com/AustinEngineer) 
 
 # License
 

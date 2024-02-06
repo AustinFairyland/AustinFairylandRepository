@@ -9,7 +9,6 @@
 """
 from __future__ import annotations
 
-import os
 import sys
 import warnings
 import platform
@@ -20,8 +19,11 @@ warnings.filterwarnings("ignore")
 if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-from .JournalModules import Journal
+from typing import List
 
-__all__ = [
-    "Journal",
+from .DataType import DataTypeUtils
+
+
+__all__: List = [
+    "DataTypeUtils",
 ]
