@@ -1,14 +1,15 @@
 # coding: utf8
-""" 
-@File: DataBaseUtils.py
+"""
+@File: DataSourceInheritance.py
 @Editor: PyCharm
-@Author: Austin (From Chengdu.China) https://fairy.host
+@Author: Austin (From Chengdu, China) https://fairy.host
 @HomePage: https://github.com/AustinFairyland
 @OperatingSystem: Windows 11 Professional Workstation 23H2 Canary Channel
-@CreatedTime: 2023-10-12
+@CreatedTime: 2024-02-05
 """
 from __future__ import annotations
 
+import os
 import sys
 import warnings
 import platform
@@ -21,20 +22,18 @@ if platform.system() == "Windows":
 
 import typing
 import types
-from typing import Union, Any, Callable, overload, List, Tuple, Dict
+from typing import Union, List, Tuple, Dict
 from abc import ABC, abstractmethod
 import pymysql
-from pymysql.connections import Connection as MySQLConnectionObject
-from pymysql.cursors import Cursor as MySQLCursorObject
 import psycopg2
-from psycopg2.extensions import connection as PostgreSQLConnectionObject
-from psycopg2.extensions import cursor as PostgreSQLCursorObject
 
 from fairyland.framework.modules.journal import Journal
+from fairyland.framework.utils.general import SQLConnectionType
+from fairyland.framework.utils.general import SQLCursorType
 
 
-class DataBaseSourceUtils(ABC):
-    """DataBaseSourceUtils"""
+class DataBaseSource(ABC):
+    """DataBaseSource"""
 
     def __init__(
         self,
@@ -48,16 +47,15 @@ class DataBaseSourceUtils(ABC):
     ):
         """
         Initialize datasource info.
-            初始化数据源信息。
-        @param host: Database host address. | 数据库主机地址
+        @param host: Database host address.
         @type host: str
-        @param port: Database port. | 数据库端口
+        @param port: Database port.
         @type port: int
-        @param user: Database username. | 数据库用户名
+        @param user: Database username.
         @type user: str
-        @param password: Database password. | 数据库密码
+        @param password: Database password.
         @type password: str
-        @param database: Database name to connect to. | 要连接的数据库名称
+        @param database: Database name to connect to.
         @type database: str
         """
         self.host = host
@@ -74,9 +72,8 @@ class DataBaseSourceUtils(ABC):
     def connect(self):
         """
         Initialize datasource connection.
-            初始化连接
-        @return: Database Connect Object. | 数据库连接对象
-        @rtype: DataBase Object. | 数据库连接对象
+        @return: Database Connect Object.
+        @rtype: DataBase Object.
         """
         try:
             connect = pymysql.connect(
@@ -94,22 +91,26 @@ class DataBaseSourceUtils(ABC):
             raise
         return connect
 
-    def __connect(self) -> Union[MySQLConnectionObject, PostgreSQLConnectionObject]:
+    def __connect(self) -> SQLConnectionType:
+        """
+        Initialize datasource connection.
+        @return: Database Connect Object.
+        @rtype: AnnotationUtils
+        """
+        # @rtype: DataBase Object.
         return self.connect()
 
-    def __create_cursor(self) -> Union[MySQLCursorObject, PostgreSQLCursorObject]:
+    def __create_cursor(self) -> SQLCursorType:
         """
         Create the database cursor.
-            创建数据库游标
-        @return: DataBase Cursor Object. | 数据库游标对象
-        @rtype: DataBase Cursor Object. | 数据库游标对象
+        @return: DataBase Cursor Object.
+        @rtype: DataBase Cursor Object.
         """
         return self.connection.cursor()
 
     def __close_cursor(self) -> None:
         """
         Close the database cursor.
-            关闭数据库游标。
         @return: None
         @rtype: None
         """
@@ -121,7 +122,6 @@ class DataBaseSourceUtils(ABC):
     def __close_connect(self) -> None:
         """
         Close the database connection.
-            关闭数据库连接。
         @return: None
         @rtype: None
         """
@@ -133,7 +133,6 @@ class DataBaseSourceUtils(ABC):
     def __reconnect(self) -> None:
         """
         Reconnect to the database.
-            重连数据库。
         @return: None
         @rtype: None
         """
@@ -152,7 +151,6 @@ class DataBaseSourceUtils(ABC):
     def __close(self) -> None:
         """
         Completely close the database connection and cursor.
-            完全关闭数据库连接和游标。
         @return: None
         @rtype: None
         """
@@ -165,7 +163,6 @@ class DataBaseSourceUtils(ABC):
     def close(self) -> None:
         """
         Close the database connection and cursor.
-            关闭数据库连接和游标。
         @return: None
         @rtype: None
         """
@@ -174,12 +171,11 @@ class DataBaseSourceUtils(ABC):
     def __trace_sql_statement(self, statement: str, parameters: Union[tuple, list, None]) -> str:
         """
         Generate and return a debug SQL statement with parameters.
-            生成并返回带参数的调试SQL语句。
-        @param statement: SQL statement. SQL查询语句
+        @param statement: SQL statement.
         @type statement: str
-        @param parameters: SQL statement parameters. SQL查询参数
+        @param parameters: SQL statement parameters.
         @type parameters: Union[tuple, list, None]
-        @return: Debug information. 调试信息
+        @return: Debug information.
         @rtype: str
         """
         return f"SQL Statement -> {statement} | Parameters -> {parameters}"
@@ -188,10 +184,9 @@ class DataBaseSourceUtils(ABC):
     def execute(self, statement: str, parameters: Union[str, tuple, list, None] = None) -> None:
         """
         Execute a SQL statement with optional parameters.
-            执行带有可选参数的 SQL 语句。
-        @param statement: SQL statement to be executed. SQL待执行语句。
+        @param statement: SQL statement to be executed.
         @type statement: str
-        @param parameters: Parameters to be substituted into the SQL statement. Default is None. 要替换到SQL语句中的参数。默认为None。
+        @param parameters: Parameters to be substituted into the SQL statement. Default is None.
         @type parameters: Union[str, tuple, list, None]
         @return: None
         @rtype: None
@@ -205,12 +200,11 @@ class DataBaseSourceUtils(ABC):
     ) -> Tuple:
         """
         Execute SQL operations.
-            执行 SQL 操作。
-        @param statements: SQL statement(s). SQL语句
+        @param statements: SQL statement(s).
         @type statements: Union[str, tuple, list, set]
-        @param parameters: SQL parameters. SQL参数
+        @param parameters: SQL parameters.
         @type parameters: Union[tuple, list, dict, None]
-        @return: Operation result. 操作结果
+        @return: Operation result.
         @rtype: Depends on the SQL operation
         """
         try:
@@ -244,61 +238,13 @@ class DataBaseSourceUtils(ABC):
     ) -> Tuple:
         """
         Execute single or multiple SQL statements.
-            执行单个或多个 SQL 语句。
-        @param statements: SQL statements or a set of statements. | SQL语句或语句集
+        @param statements: SQL statements or a set of statements.
         @type statements: Union[str, tuple, list, set]
-        @param parameters: Parameters for the SQL statements(s). | SQL语句的参数
+        @param parameters: Parameters for the SQL statements(s).
         @type parameters: Union[tuple, list, dict, None]
-        @return: Execution result. | 执行结果
+        @return: Execution result.
         @rtype: Depends on the SQL operation
         """
         if not isinstance(statements, str) and isinstance(statements, (list, tuple, set)) and not parameters:
             parameters = tuple([None for _ in range(len(statements))])
         return self.__operation(statements=statements, parameters=parameters)
-
-
-class MySQLUtils(DataBaseSourceUtils):
-    def __init__(self, *args: Any, **kwargs: Any):
-        super().__init__(*args, **kwargs)
-
-    def connect(self):
-        try:
-            connect = pymysql.connect(
-                host=self.host,
-                port=self.port,
-                user=self.user,
-                password=self.password,
-                database=self.database,
-                charset=self.charset,
-                connect_timeout=self.connect_timeout,
-            )
-            Journal.success("MySQL Connect: OK")
-        except Exception as error:
-            Journal.error(error)
-            raise
-        return connect
-
-    def execute(self, statement: str, parameters: Union[str, tuple, list, None] = None) -> None:
-        self.cursor.execute(query=statement, args=parameters)
-
-
-class PostgreSQLUtils(DataBaseSourceUtils):
-    def __init__(self, *args: Any, **kwargs: Any):
-        super().__init__(*args, **kwargs)
-
-    def connect(self):
-        try:
-            connect = psycopg2.connect(
-                host=self.host,
-                port=self.port,
-                user=self.user,
-                password=self.password,
-                database=self.database,
-            )
-        except Exception as error:
-            Journal.error(error)
-            raise
-        return connect
-
-    def execute(self, statement: str, parameters: Union[str, tuple, list, None] = None) -> None:
-        self.cursor.execute(query=statement, vars=parameters)

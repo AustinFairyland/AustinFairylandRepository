@@ -20,7 +20,16 @@ if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
 import setuptools
+import re
+
+from fairyland.framework.utils.datetimes import DatetimeUtils
+from fairyland.framework.modules.enumeration import DateTimeFormatEnum
+from fairyland.framework.core.source.enumeration import ProjectEnum
+from fairyland.framework.core.source.enumeration import PackageEnum
 
 if __name__ == "__main__":
+    print()
     for i in setuptools.find_packages():
         print(i)
+    print(PackageEnum.release_version.value)
+    print(PackageEnum.name.value)

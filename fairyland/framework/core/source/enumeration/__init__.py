@@ -5,7 +5,7 @@
 @Author: Austin (From Chengdu.China) https://fairy.host
 @HomePage: https://github.com/AustinFairyland
 @OperatingSystem: Windows 11 Professional Workstation 23H2 Canary Channel
-@CreatedTime: 2024-01-27
+@CreatedTime: 2024-02-06
 """
 from __future__ import annotations
 
@@ -20,10 +20,12 @@ warnings.filterwarnings("ignore")
 if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-from . import general
-from . import datetimes
+from typing import List
 
-__all__: list = [
-    "general",
-    "datetimes",
+from .Enumeration import ProjectEnum
+from .Enumeration import PackageEnum
+
+__all__: List = [
+    "ProjectEnum",
+    "PackageEnum",
 ]

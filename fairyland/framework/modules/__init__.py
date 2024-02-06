@@ -23,9 +23,11 @@ if platform.system() == "Windows":
 from . import abnormal
 from . import journal
 from . import decorators
+from . import enumeration
 
 __all__: list = [
     "abnormal",
     "journal",
     "decorator",
+    "enumeration",
 ]
