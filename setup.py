@@ -50,7 +50,7 @@ setuptools.setup(
     name=PackageEnum.name.value,
     fullname="".join((PackageEnum.name.value, PackageEnum.release_version.value)),
     keywords=["fairyland", "Fairyland", "pyfairyland", "PyFairyland", "fairy", "Fairy"],
-    version=PackageEnum.release_version.value,
+    version=PackageEnum.test_version.value,
     author="Austin D",
     author_email="fairylandhost@outlook.com",
     description="Austin personally developed Python library.",
