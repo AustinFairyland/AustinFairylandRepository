@@ -86,9 +86,7 @@ class DatetimeUtils:
         @return: Corresponding timestamp
         @rtype: float
         """
-        if not datetime_object:
-            datetime_object = datetime.now()
-        return datetime_object.timestamp()
+        return datetime_object.timestamp() if datetime_object else datetime.now().timestamp()
 
     @classmethod
     def datetime_to_str(cls, datetime_object: datetime, format: str = DateTimeFormatEnum.datetime.value) -> str:

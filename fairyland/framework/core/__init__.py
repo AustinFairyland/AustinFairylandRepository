@@ -20,10 +20,16 @@ warnings.filterwarnings("ignore")
 if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-from . import source
-from . import inheritance
+from typing import List
 
-__all__: list = [
-    "source",
+from . import general
+from . import inheritance
+from . import instantiation
+from . import source
+
+__all__: List = [
+    "general",
     "inheritance",
+    "instantiation",
+    "source",
 ]

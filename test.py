@@ -23,11 +23,13 @@ import setuptools
 import re
 
 from fairyland.framework.utils.datetimes import DatetimeUtils
-# from fairyland.framework.modules.enumeration import DateTimeFormatEnum
-# from fairyland.framework.core.source.ProjectEnum import ProjectBaseEnum
+from fairyland.framework.modules.enumeration import DateTimeFormatEnum
+from fairyland.framework.core.source.enumeration import ProjectEnum
+from fairyland.framework.core.source.enumeration import PackageEnum
 
 if __name__ == "__main__":
     print()
     for i in setuptools.find_packages():
         print(i)
-    # print(ProjectBaseEnum.version.value, type(ProjectBaseEnum.version.value))
+    print(PackageEnum.release_version.value)
+    print(PackageEnum.name.value)
