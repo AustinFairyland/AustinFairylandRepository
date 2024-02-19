@@ -20,13 +20,39 @@ warnings.filterwarnings("ignore")
 if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-import typing
-import types
+from typing import Union
+
+import pymysql
+import psycopg2
 
 from pymysql.connections import Connection as MySQLConnectionObject
 from pymysql.cursors import Cursor as MySQLCursorObject
 from psycopg2.extensions import connection as PostgreSQLConnectionObject
 from psycopg2.extensions import cursor as PostgreSQLCursorObject
 
-SQLConnectionType = typing.Union[MySQLConnectionObject, PostgreSQLConnectionObject]
-SQLCursorType = typing.Union[MySQLCursorObject, PostgreSQLCursorObject]
+SQLConnectionObject = Union[pymysql.connections.Connection, psycopg2.extensions.connection, ...]
+SQLCursorObject = Union[pymysql.cursors.Cursor.close(), psycopg2.extensions.cursor, ...]
+
+from typing import Protocol, overload, Any, Tuple, Optional, Union, List
+
+
+class DataBaseSourceConnectionProtocol(Protocol):
+    def cursor(self) -> CursorProtocol: ...
+
+    def commit(self) -> Any: ...
+
+    def close(self) -> None: ...
+
+
+class DataBaseSourceCursorProtocol(Protocol):
+    @overload
+    def execute(self, query: str, args: Optional[Tuple[Any, ...]] = None) -> int: ...
+
+    @overload
+    def execute(self, query: str, vars: Optional[Tuple[Any, ...]] = None) -> int: ...
+
+    def execute(self, *args: Any, **kwargs: Any) -> Any: ...
+
+    def fetchall(self) -> Union[List[Any, ...], Tuple[Any, ...]]: ...
+
+    def close(self) -> None: ...

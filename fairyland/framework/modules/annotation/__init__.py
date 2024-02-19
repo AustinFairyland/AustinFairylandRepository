@@ -22,10 +22,19 @@ if platform.system() == "Windows":
 
 from typing import List
 
-from .TypeAnnotation import SQLConnectionType
-from .TypeAnnotation import SQLCursorType
+from .TypeAnnotation import MySQLConnectionObject
+from .TypeAnnotation import MySQLCursorObject
+from .TypeAnnotation import PostgreSQLConnectionObject
+from .TypeAnnotation import PostgreSQLCursorObject
+
+from .TypeAnnotation import DataBaseSourceConnectionProtocol
+from .TypeAnnotation import DataBaseSourceCursorProtocol
 
 __all__: List = [
-    "SQLConnectionType",
-    "SQLCursorType",
+    "MySQLConnectionObject",
+    "MySQLCursorObject",
+    "PostgreSQLConnectionObject",
+    "PostgreSQLCursorObject",
+    "DataBaseSourceConnectionProtocol",
+    "DataBaseSourceCursorProtocol",
 ]

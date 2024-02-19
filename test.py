@@ -61,7 +61,7 @@ from fairyland.framework.modules.decorators import MethodRunTimeDecorators
 from fairyland.framework.modules.decorators import MethodTipsDecorators
 from fairyland.framework.modules.enumeration import DateTimeFormatEnum
 from fairyland.framework.modules.journal import Journal
-from fairyland.framework.utils.datetimes import DatetimeUtils
+from fairyland.framework.utils.datetimes import DateTimeUtils
 from fairyland.framework.utils.general import DataTypeUtils
 from fairyland.web.djangoweb import configuration
 from fairyland.web.djangoweb import middleware
@@ -70,8 +70,6 @@ from fairyland.web.djangoweb.middleware import DjangoLoguruMiddleware
 
 if __name__ == "__main__":
     print()
-    # for i in setuptools.find_packages():
-    #     print(i)
-    a = ""
-    print(a)
-    print(type(a))
+    for i in setuptools.find_packages():
+        print(i)
+

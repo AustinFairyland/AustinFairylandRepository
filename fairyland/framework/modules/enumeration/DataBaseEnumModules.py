@@ -1,29 +1,31 @@
 # coding: utf8
-""" 
-@ File: __init__.py
+"""
+@ File: DataBaseEnumModules.py
 @ Editor: PyCharm
 @ Author: Austin (From Chengdu.China) https://fairy.host
 @ HomePage: https://github.com/AustinFairyland
-@ OS: Windows 11 Professional Workstation 22H2
-@ CreatedTime: 2023-09-11
+@ OperatingSystem: Windows 11 Professional Workstation 23H2 Canary Channel
+@ CreatedTime: 2024/2/19
 """
 from __future__ import annotations
 
+import abc
+import os
 import sys
 import warnings
 import platform
 import asyncio
+from typing import Tuple
 
 sys.dont_write_bytecode = True
 warnings.filterwarnings("ignore")
 if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-from typing import List
-
-from .BasicUtils import DataTypeUtils
+from fairyland.framework.core.inheritance.enumsource import StringEnum
 
 
-__all__: List = [
-    "DataTypeUtils",
-]
+class DataBaseSourceDrive(StringEnum):
+
+    MySQL = "MySQL"
+    PostgreSQL = "PostgreSQL"

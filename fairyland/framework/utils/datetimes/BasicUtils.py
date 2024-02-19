@@ -1,6 +1,6 @@
 # coding: utf8
 """
-@ File: DateTimeUtils.py
+@ File: BasicUtils.py
 @ Editor: PyCharm
 @ Author: Austin (From Chengdu, China) https://fairy.host
 @ HomePage: https://github.com/AustinFairyland
@@ -31,8 +31,8 @@ from fairyland.framework.modules.abnormal import ParameterError
 from fairyland.framework.modules.enumeration import DateTimeFormatEnum
 
 
-class DatetimeUtils:
-    """DatetimeUtils"""
+class DateTimeUtils:
+    """DateTimeUtils"""
 
     @classmethod
     def normtimestamp(cls) -> int:

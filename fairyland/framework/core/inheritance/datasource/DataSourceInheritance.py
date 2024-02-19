@@ -20,51 +20,24 @@ warnings.filterwarnings("ignore")
 if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-import typing
-import types
-from typing import Union, List, Tuple, Dict
+from typing import Union, Tuple, Optional
 from abc import ABC, abstractmethod
-import pymysql
-import psycopg2
 
 from fairyland.framework.modules.journal import Journal
-from fairyland.framework.modules.annotation import SQLConnectionType
-from fairyland.framework.modules.annotation import SQLCursorType
+
+from fairyland.framework.modules.annotation import DataBaseSourceConnectionProtocol
+from fairyland.framework.modules.annotation import DataBaseSourceCursorProtocol
 
 
 class DataBaseSource(ABC):
     """DataBaseSource"""
 
-    def __init__(
-        self,
-        host: str = "127.0.0.1",
-        port: int = 3306,
-        user: str = "root",
-        password: str = "",
-        database: str = "",
-        charset: str = "utf8mb4",
-        connect_timeout: int = 10,
-    ):
+    def __init__(self, drive: Optional[str] = None):
         """
         Initialize datasource info.
-        @param host: Database host address.
-        @type host: str
-        @param port: Database port.
-        @type port: int
-        @param user: Database username.
-        @type user: str
-        @param password: Database password.
-        @type password: str
-        @param database: Database name to connect to.
-        @type database: str
         """
-        self.host = host
-        self.port = port
-        self.user = user
-        self.password = password
-        self.database = database
-        self.charset = charset
-        self.connect_timeout = connect_timeout
+        if not drive:
+            raise 
         self.connection = self.__connect()
         self.cursor = self.__create_cursor()
 
@@ -75,32 +48,17 @@ class DataBaseSource(ABC):
         @return: Database Connect Object.
         @rtype: DataBase Object.
         """
-        try:
-            connect = pymysql.connect(
-                host=self.host,
-                port=self.port,
-                user=self.user,
-                password=self.password,
-                database=self.database,
-                charset=self.charset,
-                connect_timeout=self.connect_timeout,
-            )
-            Journal.success("MySQL Connect: OK")
-        except Exception as error:
-            Journal.error(error)
-            raise
-        return connect
+        raise NotImplementedError
 
-    def __connect(self) -> SQLConnectionType:
+    def __connect(self) -> DataBaseSourceConnectionProtocol:
         """
         Initialize datasource connection.
         @return: Database Connect Object.
-        @rtype: AnnotationUtils
+        @rtype: DataBase Object.
         """
-        # @rtype: DataBase Object.
         return self.connect()
 
-    def __create_cursor(self) -> SQLCursorType:
+    def __create_cursor(self) -> DataBaseSourceCursorProtocol:
         """
         Create the database cursor.
         @return: DataBase Cursor Object.
@@ -191,7 +149,7 @@ class DataBaseSource(ABC):
         @return: None
         @rtype: None
         """
-        self.cursor.execute(query=statement, args=parameters)
+        raise NotImplementedError
 
     def __operation(
         self,
