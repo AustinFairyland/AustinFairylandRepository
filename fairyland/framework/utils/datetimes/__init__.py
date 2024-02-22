@@ -20,8 +20,10 @@ warnings.filterwarnings("ignore")
 if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
+from typing import List
+
 from .BasicUtils import DateTimeUtils
 
-__all__: list = [
+__all__: List = [
     "DateTimeUtils",
 ]

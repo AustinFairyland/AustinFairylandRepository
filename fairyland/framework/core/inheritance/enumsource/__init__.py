@@ -20,11 +20,13 @@ warnings.filterwarnings("ignore")
 if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
+from typing import List
+
 from .EnumSourceInheritance import BaseEnum
 from .EnumSourceInheritance import StringEnum
 from .EnumSourceInheritance import IntegerEnum
 
-__all__: list = [
+__all__: List = [
     "BaseEnum",
     "StringEnum",
     "IntegerEnum",

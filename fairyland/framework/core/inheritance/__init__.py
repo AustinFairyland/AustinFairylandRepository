@@ -20,10 +20,10 @@ warnings.filterwarnings("ignore")
 if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-from . import datasource
+from typing import List
+
 from . import enumsource
 
-__all__: list = [
-    "datasource",
+__all__: List = [
     "enumsource",
 ]

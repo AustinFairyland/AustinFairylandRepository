@@ -20,11 +20,10 @@ warnings.filterwarnings("ignore")
 if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-import typing
-import types
+from typing import List
 
 from .DjangoConfiguration import DjangoPublicConfiguration
 
-__all__: list = [
+__all__: List = [
     "DjangoPublicConfiguration",
 ]

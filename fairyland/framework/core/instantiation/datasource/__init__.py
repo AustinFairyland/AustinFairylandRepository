@@ -22,8 +22,8 @@ if platform.system() == "Windows":
 
 from typing import List
 
-from .DataBaseInstantiation import MySQLSource
-from .DataBaseInstantiation import PostgreSQLSource
+from .BasicInstantiation import MySQLSource
+from .BasicInstantiation import PostgreSQLSource
 
 __all__: List = [
     "MySQLSource",

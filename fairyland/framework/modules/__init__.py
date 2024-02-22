@@ -20,16 +20,18 @@ warnings.filterwarnings("ignore")
 if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
+from typing import List
+
 from . import abnormal
 from . import journal
 from . import decorators
 from . import enumeration
 from . import annotation
 
-__all__: list = [
+__all__: List = [
     "abnormal",
     "journal",
-    "decorator",
+    "decorators",
     "enumeration",
     "annotation",
 ]

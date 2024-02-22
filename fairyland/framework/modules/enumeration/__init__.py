@@ -20,11 +20,10 @@ warnings.filterwarnings("ignore")
 if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
+from typing import List
 
 from .DateTimeEnumModules import DateTimeFormatEnum
-from .DataBaseEnumModules import DataBaseSourceDrive
 
-__all__: list = [
+__all__: List = [
     "DateTimeFormatEnum",
-    "DataBaseSourceDrive",
 ]

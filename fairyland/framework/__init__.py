@@ -20,11 +20,13 @@ warnings.filterwarnings("ignore")
 if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
+from typing import List
+
 from . import core
 from . import modules
 from . import utils
 
-__all__: list = [
+__all__: List = [
     "core",
     "modules",
     "utils",
