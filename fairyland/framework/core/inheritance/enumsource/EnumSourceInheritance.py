@@ -20,16 +20,14 @@ warnings.filterwarnings("ignore")
 if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-import typing
-import types
-from typing import Union, List, Tuple, Any
+from typing import Union, List, Tuple
 from enum import Enum
 
 
 class BaseEnum(Enum):
     """Base class for custom Enum types."""
 
-    def describe(self) -> Tuple[str]:
+    def describe(self) -> Tuple[str, ...]:
         """
         Returns a tuple with the name and value of the Enum member.
         @return: Tuple with the name and value of the Enum member.
@@ -48,7 +46,7 @@ class BaseEnum(Enum):
         raise NotImplementedError("Implement it in a subclass.")
 
     @classmethod
-    def members(cls, exclude_enums: Union[List[str], None] = None, only_value: bool = False) -> Tuple[Union[BaseEnum, str, int, float, bool]]:
+    def members(cls, exclude_enums: Union[List[str], None] = None, only_value: bool = False) -> Tuple[BaseEnum, ...]:
         """
         Returns a tuple with all members of the Enum.
         @param exclude_enums: List of members to exclude from the result.
@@ -60,13 +58,13 @@ class BaseEnum(Enum):
         """
         member_list: List[cls] = list(cls)
         if exclude_enums:
-            member_list = tuple([member for member in member_list if member not in exclude_enums])
+            member_list = [member for member in member_list if member not in exclude_enums]
         if only_value:
-            member_list = tuple([member.value for member in member_list])
-        return member_list
+            member_list = [member.value for member in member_list]
+        return tuple(member_list)
 
     @classmethod
-    def names(cls) -> Tuple[str]:
+    def names(cls) -> Tuple[str, ...]:
         """
         Returns a tuple with the names of all members of the Enum.
         @return: Tuple with the names of all members of the Enum.
@@ -75,7 +73,7 @@ class BaseEnum(Enum):
         return tuple(cls._member_names_)
 
     @classmethod
-    def values(cls, exclude_enums: Union[List[str], None] = None) -> Tuple[str, int, float, bool]:
+    def values(cls, exclude_enums: Union[List[str], None] = None) -> Tuple[BaseEnum, ...]:
         """
         Returns a tuple with the values of all members of the Enum.
         @param exclude_enums: List of members to exclude from the result.
