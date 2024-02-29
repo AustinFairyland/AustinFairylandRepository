@@ -9,4 +9,4 @@ sub: 0
 stage: 7
 revise: 50
 # version: (release, test, alpha, beta)
-version: test
+version: release
