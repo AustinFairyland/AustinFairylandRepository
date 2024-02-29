@@ -1,0 +1,12 @@
+# @software: PyCharm
+# @author: Lionel Johnson
+# @contact: https://fairy.host
+# @organization: https://github.com/FairylandFuture
+# @since: 02 29, 2024
+---
+major: 0
+sub: 0
+stage: 7
+revise: 49
+# version: (release, test, alpha, beta)
+version: release
