@@ -25,6 +25,10 @@ from datetime import datetime
 
 class InstallPackageSource:
     """InstallPackageSource"""
+    
+    @classmethod
+    def read_config(cls):
+        publish_config_path = ""
 
     # package name
     name = "PyFairyland"
