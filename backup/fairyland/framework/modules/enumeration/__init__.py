@@ -1,14 +1,15 @@
 # coding: utf8
 """ 
-@File: test.py
+@File: __init__.py
 @Editor: PyCharm
 @Author: Austin (From Chengdu.China) https://fairy.host
 @HomePage: https://github.com/AustinFairyland
 @OperatingSystem: Windows 11 Professional Workstation 23H2 Canary Channel
-@CreatedTime: 2024-01-07
+@CreatedTime: 2024-02-05
 """
 from __future__ import annotations
 
+import os
 import sys
 import warnings
 import platform
@@ -19,12 +20,10 @@ warnings.filterwarnings("ignore")
 if platform.system() == "Windows":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-import setuptools
-import re
-import time
-from datetime import date, datetime
+from typing import List
 
-if __name__ == "__main__":
-    print()
-    for i in setuptools.find_packages():
-        print(i)
+from .DateTimeEnumModules import DateTimeFormatEnum
+
+__all__: List = [
+    "DateTimeFormatEnum",
+]

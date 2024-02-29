@@ -24,7 +24,7 @@ import setuptools
 from datetime import datetime
 import subprocess
 
-from fairyland.framework.core.source.enumeration import PackageEnum
+from fairyland.framework.utils.publish import PackageInfo
 
 # Long Description
 with open("README.md", "r", encoding="utf-8") as fh:
@@ -47,13 +47,13 @@ class InstallDependenciesCommand(setuptools.Command):
 
 # version: (release_version, test_version, alpha_version, beta_version)
 setuptools.setup(
-    name=PackageEnum.name.value,
-    fullname="".join((PackageEnum.name.value, PackageEnum.release_version.value)),
+    name=PackageInfo.name,
+    fullname="".join((PackageInfo.name, PackageInfo.version)),
     keywords=["fairyland", "Fairyland", "pyfairyland", "PyFairyland", "fairy", "Fairy"],
-    version=PackageEnum.test_version.value,
-    author="Austin D",
-    author_email="fairylandhost@outlook.com",
-    description="Austin personally developed Python library.",
+    version=PackageInfo.version,
+    author="Lionel Johnson",
+    author_email="fairylandfuture@outlook.com",
+    description="personally developed Python library.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/AustinFairyland/AustinFairylandRepository",
@@ -100,6 +100,7 @@ setuptools.setup(
         "enums",
         "pymysql",
         "psycopg2-binary",
+        "pyyaml",
         "requests",
         "tornado",
         "pandas",
