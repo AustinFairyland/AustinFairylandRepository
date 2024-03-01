@@ -8,8 +8,8 @@
 """
 
 
-class NoneDataUtils:
-    """NoneDataUtils"""
+class DefaultDataUtils:
+    """DefaultDataUtils"""
 
     @staticmethod
     def api_results():
