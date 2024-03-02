@@ -14,46 +14,61 @@ from fairyland.framework.modules.journals import Journal
 from fairyland.framework.core.abstracts.enumerate import BaseEnum
 from fairyland.framework.modules.generals import DateTimeFormatEnumModule
 from fairyland.framework.modules.exceptions import ProjectError
-from fairyland.framework.utils.generals import NoneDataUtils
+from fairyland.framework.utils.generals import DefaultConstantUtils
 from fairyland.framework.utils.generals import DatetimeUtils
 from fairyland.framework.utils.publish import PackageInfo
-
-
-class DatetimeEnum(BaseEnum):
-    data = {"a": 1}
+from fairyland.framework.utils.generals import DecoderUtils
+from fairyland.framework.utils.generals import DecoderConstantUtils
 
 
 class Test:
 
     @classmethod
     def run(cls) -> None:
+        cls.test_1()
+        cls.test_2()
+        cls.test_3()
+        cls.test_4()
+        cls.test_5()
+        cls.test_6()
         return
 
     @classmethod
-    def test_1(cls) -> None:
-        print(DatetimeEnum.values())
-        return
+    def test_1(cls):
+        class DatetimeEnum(BaseEnum):
+            data = {"a": 1}
+
+        Journal.debug(f"测试枚举继承方法: {DatetimeEnum.values()}")
 
     @classmethod
     def test_2(cls):
-        Journal.debug(DateTimeFormatEnumModule.values())
+        Journal.debug(f"日期时间格式化枚举值: {DateTimeFormatEnumModule.values()}")
 
     @classmethod
     def test_3(cls):
-        Journal.debug(DatetimeUtils.normtimestamp())
-        a = NoneDataUtils.data_dict()
-        a.update(AA="11")
-        Journal.debug(f"a = {a}")
+        Journal.debug(f"当前时间时间戳: {DatetimeUtils.normtimestamp()}")
+        a = DefaultConstantUtils.dict()
+        a.update(测试时间=DatetimeUtils.normdatetime_to_str())
+        Journal.debug(f"测试字典: {a}")
 
     @classmethod
     def test_4(cls):
-        Journal.debug(PackageInfo.name)
-        Journal.debug(PackageInfo.version)
+        Journal.debug(f"包名: {PackageInfo.name}")
+        Journal.debug(f"版本号: {PackageInfo.version}")
+
+    @classmethod
+    def test_5(cls):
+        b_str = b"\xd3\xd0\xb9\xd8\xc4\xb3\xb8\xf6\xc3\xfc\xc1\xee\xb5\xc4\xcf\xea\xcf\xb8\xd0\xc5\xcf\xa2\xa3\xac\xc7\xeb\xbc\xfc\xc8\xeb HELP \xc3\xfc\xc1\xee\xc3\xfb\r\nASSOC"
+        a = DecoderUtils.decode_binary_string(b_str, encodings=DecoderConstantUtils.encodings())
+        Journal.debug(f"解码: {a}")
+
+    @classmethod
+    def test_6(cls):
+        string = "big5, big5-hkscs, cesu-8, euc-jp, euc-kr, gb18030, gb2312, gbk, ibm-thai, ibm00858, ibm01140, ibm01141, ibm01142, ibm01143, ibm01144, ibm01145, ibm01146, ibm01147, ibm01148, ibm01149, ibm037, ibm1026, ibm1047, ibm273, ibm277, ibm278, ibm280, ibm284, ibm285, ibm290, ibm297, ibm420, ibm424, ibm437, ibm500, ibm775, ibm850, ibm852, ibm855, ibm857, ibm860, ibm861, ibm862, ibm863, ibm864, ibm865, ibm866, ibm868, ibm869, ibm870, ibm871, ibm918, iso-2022-cn, iso-2022-jp, iso-2022-jp-2, iso-2022-kr, iso-8859-1, iso-8859-13, iso-8859-15, iso-8859-2, iso-8859-3, iso-8859-4, iso-8859-5, iso-8859-6, iso-8859-7, iso-8859-8, iso-8859-9, jis_x0201, jis_x0212-1990, koi8-r, koi8-u, shift_jis, tis-620, us-ascii, utf-16, utf-16be, utf-16le, utf-32, utf-32be, utf-32le, utf-8, windows-1250, windows-1251, windows-1252, windows-1253, windows-1254, windows-1255, windows-1256, windows-1257, windows-1258, windows-31j, x-big5-hkscs-2001, x-big5-solaris, x-euc-jp-linux, x-euc-tw, x-eucjp-open, x-ibm1006, x-ibm1025, x-ibm1046, x-ibm1097, x-ibm1098, x-ibm1112, x-ibm1122, x-ibm1123, x-ibm1124, x-ibm1166, x-ibm1364, x-ibm1381, x-ibm1383, x-ibm300, x-ibm33722, x-ibm737, x-ibm833, x-ibm834, x-ibm856, x-ibm874, x-ibm875, x-ibm921, x-ibm922, x-ibm930, x-ibm933, x-ibm935, x-ibm937, x-ibm939, x-ibm942, x-ibm942c, x-ibm943, x-ibm943c, x-ibm948, x-ibm949, x-ibm949c, x-ibm950, x-ibm964, x-ibm970, x-iscii91, x-iso-2022-cn-cns, x-iso-2022-cn-gb, x-iso-8859-11, x-jis0208, x-jisautodetect, x-johab, x-macarabic, x-maccentraleurope, x-maccroatian, x-maccyrillic, x-macdingbat, x-macgreek, x-machebrew, x-maciceland, x-macroman, x-macromania, x-macsymbol, x-macthai, x-macturkish, x-macukraine, x-ms932_0213, x-ms950-hkscs, x-ms950-hkscs-xp, x-mswin-936, x-pck, x-sjis_0213, x-utf-16le-bom, x-utf-32be-bom, x-utf-32le-bom, x-windows-50220, x-windows-50221, x-windows-874, x-windows-949, x-windows-950, x-windows-iso2022jp"
+        string_tuple = tuple([item for item in string.replace(" ", "").split(",")])
+        Journal.debug(f"字符集: {string_tuple}")
+        Journal.debug(f"字符集数量: {string_tuple.__len__()}")
 
 
 if __name__ == "__main__":
     Test.run()
-    Test.test_1()
-    Test.test_2()
-    Test.test_3()
-    Test.test_4()

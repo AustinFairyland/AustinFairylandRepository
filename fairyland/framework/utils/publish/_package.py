@@ -52,13 +52,14 @@ class PackageInfo:
 
     # version: (release_version, test_version, alpha_version, beta_version)
     __version = __config.get("version")
+    __release_version = ".".join((__major_number.__str__(), __sub_number.__str__(), __stage_number.__str__()))
     if __version == "release":
-        version = ".".join((__major_number.__str__(), __sub_number.__str__(), __stage_number.__str__()))
+        version = __release_version
     elif __version == "test":
-        version = ".".join((release_version, "".join(("rc", __revise_after))))
+        version = ".".join((__release_version, "".join(("rc", __revise_after))))
     elif __version == "alpha":
-        version = ".".join((release_version, "".join(("alpha", __revise_after))))
+        version = ".".join((__release_version, "".join(("alpha", __revise_after))))
     elif __version == "beta":
-        version = ".".join((release_version, "".join(("beta", __revise_after))))
+        version = ".".join((__release_version, "".join(("beta", __revise_after))))
     else:
-        version = ".".join((release_version, "".join(("rc", __revise_after))))
+        version = ".".join((__release_version, "".join(("rc", __revise_after))))
