@@ -9,10 +9,10 @@
 from typing import List, Optional, Iterable, Dict, Any
 
 from fairyland.framework.modules.journals import Journal
-from fairyland.framework.utils.generals import DefaultDataUtils
+from fairyland.framework.utils.generals import DefaultConstantUtils
 
 
-class DecodingUtils:
+class DecoderUtils:
 
     @classmethod
     def decode_binary_string(
@@ -51,7 +51,8 @@ class DecodingUtils:
                 binary_data = bytes.fromhex(binary_data)
             except ValueError:
                 raise ValueError("The provided data format is incorrect. Please provide a valid hexadecimal encoded string or byte sequence.")
-        results = DefaultDataUtils.data_dict()
+        results = DefaultConstantUtils.dict()
+        error_encodings = DefaultConstantUtils.list()
         for encoding in encodings:
             try:
                 decoded_data = binary_data.decode(encoding)
@@ -59,7 +60,12 @@ class DecodingUtils:
                 results.update({encoding: decoded_data})
             except UnicodeDecodeError:
                 continue
+            except LookupError:
+                error_encodings.append(encoding)
+        error_encodings = tuple(error_encodings)
         if not results:
             Journal.warning(f"Encodeing format: {', '.join(encodings)}")
             Journal.warning("Unable to decode, tried all predefined encoding formats.")
+        if error_encodings:
+            Journal.warning(f"Wrong encoding: {', '.join(error_encodings)}")
         return results
