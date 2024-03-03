@@ -12,13 +12,15 @@ sys.dont_write_bytecode = True
 
 from fairyland.framework.modules.journals import Journal
 from fairyland.framework.core.abstracts.enumerate import BaseEnum
-from fairyland.framework.modules.generals import DateTimeFormatEnumModule
+from fairyland.framework.utils.constants import DateTimeFormatEnumModule
 from fairyland.framework.modules.exceptions import ProjectError
 from fairyland.framework.utils.generals import DefaultConstantUtils
 from fairyland.framework.utils.generals import DatetimeUtils
 from fairyland.framework.utils.publish import PackageInfo
 from fairyland.framework.utils.generals import DecoderUtils
 from fairyland.framework.utils.generals import DecoderConstantUtils
+from fairyland.framework.modules.decorators.patterns import SingletonPattern
+from fairyland.framework.core.abstracts.metaclass import SingletonPatternMetaclass
 
 
 class Test:
@@ -31,6 +33,8 @@ class Test:
         cls.test_4()
         cls.test_5()
         cls.test_6()
+        cls.test_7()
+        cls.test_8()
         return
 
     @classmethod
@@ -68,6 +72,31 @@ class Test:
         string_tuple = tuple([item for item in string.replace(" ", "").split(",")])
         Journal.debug(f"字符集: {string_tuple}")
         Journal.debug(f"字符集数量: {string_tuple.__len__()}")
+
+    @classmethod
+    def test_7(cls):
+        a = A()
+        aa = A()
+        if a == aa:
+            Journal.debug(True)
+        else:
+            Journal.debug(False)
+
+    @classmethod
+    def test_8(cls):
+        b = B()
+        bb = B()
+        if b == bb:
+            Journal.debug(True)
+        else:
+            Journal.debug(False)
+
+
+@SingletonPattern
+class A: ...
+
+
+class B(metaclass=SingletonPatternMetaclass): ...
 
 
 if __name__ == "__main__":

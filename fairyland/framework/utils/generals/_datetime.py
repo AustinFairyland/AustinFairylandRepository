@@ -10,7 +10,7 @@ from typing import Union, Any
 from datetime import datetime
 import time
 
-from fairyland.framework.modules.generals import DateTimeFormatEnumModule
+from fairyland.framework.utils.constants import DateTimeFormatEnumModule
 
 
 class DatetimeUtils:
