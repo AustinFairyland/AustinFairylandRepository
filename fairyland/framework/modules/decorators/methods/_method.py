@@ -11,7 +11,7 @@ from typing import Union, Any, Callable
 
 import time
 
-from fairyland.framework.modules.journals import Journal
+from fairyland.framework.modules.journals import journal
 
 
 class MethodRunTimeDecorators:
@@ -49,7 +49,7 @@ class MethodRunTimeDecorators:
             result = function(*args, **kwargs)
             end_time = time.time()
             elapsed_time = end_time - start_time
-            Journal.success(f"This method ran for {elapsed_time} seconds")
+            journal.success(f"This method ran for {elapsed_time} seconds")
             return result
 
         return warpper
@@ -90,11 +90,11 @@ class MethodTipsDecorators:
             :rtype: Any
             """
             try:
-                Journal.debug(f"Action Running {self.__annotation}")
+                journal.debug(f"Action Running {self.__annotation}")
                 results = function(*args, **kwargs)
-                Journal.success(f"Success Running {self.__annotation}")
+                journal.success(f"Success Running {self.__annotation}")
             except Exception as error:
-                Journal.error(f"Failure Running {self.__annotation}")
+                journal.error(f"Failure Running {self.__annotation}")
                 raise
             return results
 
