@@ -8,5 +8,13 @@
 """
 
 from typing import Literal
+from typing import Union
+from pymysql.connections import Connection
+from pymysql.cursors import Cursor
+from psycopg2.extensions import connection
+from psycopg2.extensions import cursor
 
 TypeLogLevel = Literal["TRACE", "DEBUG", "INFO", "SUCCESS", "WARNING", "ERROR", "CRITICAL"]
+
+TypeSQLConnection = Union[Connection, connection]
+TypeSQLCursor = Union[Cursor, Connection]

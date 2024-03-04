@@ -9,4 +9,4 @@
 
 from ._constants import DefaultConstantUtils
 from ._constants import APIConstantUtils
-from ._constants import DecoderConstantUtils
+from ._constants import EncodingConstantUtils

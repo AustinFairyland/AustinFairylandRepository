@@ -56,7 +56,7 @@ class DecoderUtils:
         for encoding in encodings:
             try:
                 decoded_data = binary_data.decode(encoding)
-                journal.info(f"Decode successful using {encoding}: {repr(decoded_data)}")
+                journal.debug(f"Decode successful using {encoding}: {repr(decoded_data)}")
                 results.update({encoding: decoded_data})
             except UnicodeDecodeError:
                 continue

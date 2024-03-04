@@ -10,7 +10,7 @@ import sys
 
 sys.dont_write_bytecode = True
 
-from fairyland.framework.modules.journals import journal, logger
+from fairyland.framework.modules.journals import journal
 from fairyland.framework.core.abstracts.enumerate import BaseEnum
 from fairyland.framework.constants.enum import DateTimeFormat
 from fairyland.framework.modules.exceptions import ProjectError
@@ -18,15 +18,19 @@ from fairyland.framework.utils.generals.constants import DefaultConstantUtils
 from fairyland.framework.utils.generals.datetime import DatetimeUtils
 from fairyland.framework.utils.publish import PackageInfo
 from fairyland.framework.utils.generals.decoder import DecoderUtils
-from fairyland.framework.utils.generals.constants import DecoderConstantUtils
+from fairyland.framework.utils.generals.constants import EncodingConstantUtils
 from fairyland.framework.modules.decorators.patterns import SingletonPattern
 from fairyland.framework.core.abstracts.metaclass import SingletonPatternMetaclass
+from fairyland.framework.modules.decorators.methods import MethodTipsDecorator
+from fairyland.framework.modules.decorators.methods import MethodTimingDecorator
+from fairyland.framework.modules.datasource import MySQLModule
 
 
 class Test:
 
     @classmethod
-    @logger.catch()
+    @MethodTimingDecorator
+    @MethodTipsDecorator("测试主方法")
     def run(cls) -> None:
         cls.test_1()
         cls.test_2()
@@ -36,6 +40,7 @@ class Test:
         cls.test_6()
         cls.test_7()
         cls.test_8()
+        cls.test_9()
         return
 
     @classmethod
@@ -67,7 +72,7 @@ class Test:
     @classmethod
     def test_5(cls):
         b_str = b"\xd3\xd0\xb9\xd8\xc4\xb3\xb8\xf6\xc3\xfc\xc1\xee\xb5\xc4\xcf\xea\xcf\xb8\xd0\xc5\xcf\xa2\xa3\xac\xc7\xeb\xbc\xfc\xc8\xeb HELP \xc3\xfc\xc1\xee\xc3\xfb\r\nASSOC"
-        a = DecoderUtils.decode_binary_string(b_str, encodings=DecoderConstantUtils.encodings())
+        a = DecoderUtils.decode_binary_string(b_str, encodings=EncodingConstantUtils.encodings())
         journal.debug(f"解码: {a}")
 
     @classmethod
@@ -94,6 +99,14 @@ class Test:
             journal.debug(True)
         else:
             journal.debug(False)
+
+    @classmethod
+    def test_9(cls):
+        db = MySQLModule(host="mapping.fairy.host", port=51001, user="austin", password="Austin.pwd:112#.", database="public_db_test")
+        query_tuple = ("select version();", "select * from myapp_myinfo where nid > %s;")
+        param_tuple = (None, 0)
+        a = db.operate(query_tuple, param_tuple)
+        journal.debug(a)
 
 
 @SingletonPattern
