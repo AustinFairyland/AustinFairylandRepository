@@ -6,5 +6,3 @@
 @organization: https://github.com/FairylandFuture
 @since: 02 29, 2024
 """
-
-from ._enumerate import DateTimeFormatEnumModule
