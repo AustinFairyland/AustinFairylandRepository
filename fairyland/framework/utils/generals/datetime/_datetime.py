@@ -10,7 +10,7 @@ from typing import Union, Any
 from datetime import datetime
 import time
 
-from fairyland.framework.modules.generals import DateTimeFormatEnumModule
+from fairyland.framework.constants.enum import DateTimeFormat
 
 
 class DatetimeUtils:
@@ -64,7 +64,7 @@ class DatetimeUtils:
         :return: Formatted date and time string
         :rtype: str
         """
-        return datetime.now().strftime(DateTimeFormatEnumModule.datetime.value)
+        return datetime.now().strftime(DateTimeFormat.DATETIME.value)
 
     @classmethod
     def normnowtime_to_str(cls) -> str:
@@ -74,7 +74,7 @@ class DatetimeUtils:
         :return: Formatted time string
         :rtype: str
         """
-        return datetime.now().time().strftime(DateTimeFormatEnumModule.time.value)
+        return datetime.now().time().strftime(DateTimeFormat.TIME.value)
 
     @classmethod
     def normnowdate_to_str(cls) -> str:
@@ -84,7 +84,7 @@ class DatetimeUtils:
         :return: Formatted date string
         :rtype: str
         """
-        return datetime.now().date().strftime(DateTimeFormatEnumModule.date.value)
+        return datetime.now().date().strftime(DateTimeFormat.DATE.value)
 
     @classmethod
     def timestamp_nbit(cls, n: int) -> str:
@@ -129,7 +129,7 @@ class DatetimeUtils:
         return datetime_object.timestamp() if datetime_object else datetime.now().timestamp()
 
     @classmethod
-    def datetime_to_str(cls, datetime_object: datetime, format: str = DateTimeFormatEnumModule.datetime.value) -> str:
+    def datetime_to_str(cls, datetime_object: datetime, format: str = DateTimeFormat.DATETIME.value) -> str:
         """
         Convert datetime to string
 
@@ -143,7 +143,7 @@ class DatetimeUtils:
         return datetime_object.strftime(format)
 
     @classmethod
-    def str_to_datetime(cls, datatime_str: str, format: str = DateTimeFormatEnumModule.datetime.value) -> datetime:
+    def str_to_datetime(cls, datatime_str: str, format: str = DateTimeFormat.DATETIME.value) -> datetime:
         """
         Convert string to datetime
 
@@ -157,7 +157,7 @@ class DatetimeUtils:
         return datetime.strptime(datatime_str, format)
 
     @classmethod
-    def timestamp_to_str(cls, timestamp: Union[int, float] = None, format: str = DateTimeFormatEnumModule.datetime.value) -> str:
+    def timestamp_to_str(cls, timestamp: Union[int, float] = None, format: str = DateTimeFormat.DATETIME.value) -> str:
         """
         Convert timestamp to formatted string
 
@@ -171,7 +171,7 @@ class DatetimeUtils:
         return datetime.fromtimestamp(timestamp).strftime(format)
 
     @classmethod
-    def str_to_timestamp(cls, string: str, format: str = DateTimeFormatEnumModule.datetime.value) -> float:
+    def str_to_timestamp(cls, string: str, format: str = DateTimeFormat.DATETIME.value) -> float:
         """
         Convert string to timestamp
 
@@ -289,7 +289,7 @@ class DatetimeUtils:
         if not isinstance(normdatetime, str):
             raise TypeError("The normdatetime argument must be of type str.")
         try:
-            given_date = datetime.strptime(normdatetime, DateTimeFormatEnumModule.date.value)
+            given_date = datetime.strptime(normdatetime, DateTimeFormat.DATE.value)
         except Exception:
             raise ValueError("Invalid date format. The date should be in the format 'YYYY-MM-DD'.")
         delta = datetime.now() - given_date
@@ -307,7 +307,7 @@ class DatetimeUtils:
         """
         if not isinstance(days, int):
             raise TypeError("The days argument must be of type int.")
-        relative_date = (datetime.now() + timedelta(days=days)).strftime(DateTimeFormatEnumModule.datetime.value)
+        relative_date = (datetime.now() + timedelta(days=days)).strftime(DateTimeFormat.DATETIME.value)
         return relative_date
 
     @classmethod

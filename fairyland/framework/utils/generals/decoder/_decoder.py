@@ -8,8 +8,8 @@
 """
 from typing import List, Optional, Iterable, Dict, Any
 
-from fairyland.framework.modules.journals import Journal
-from fairyland.framework.utils.generals import DefaultConstantUtils
+from fairyland.framework.modules.journals import journal
+from fairyland.framework.utils.generals.constants import DefaultConstantUtils
 
 
 class DecoderUtils:
@@ -56,7 +56,7 @@ class DecoderUtils:
         for encoding in encodings:
             try:
                 decoded_data = binary_data.decode(encoding)
-                Journal.info(f"Decode successful using {encoding}: {repr(decoded_data)}")
+                journal.debug(f"Decode successful using {encoding}: {repr(decoded_data)}")
                 results.update({encoding: decoded_data})
             except UnicodeDecodeError:
                 continue
@@ -64,8 +64,8 @@ class DecoderUtils:
                 error_encodings.append(encoding)
         error_encodings = tuple(error_encodings)
         if not results:
-            Journal.warning(f"Encodeing format: {', '.join(encodings)}")
-            Journal.warning("Unable to decode, tried all predefined encoding formats.")
+            journal.warning(f"Encodeing format: {', '.join(encodings)}")
+            journal.warning("Unable to decode, tried all predefined encoding formats.")
         if error_encodings:
-            Journal.warning(f"Wrong encoding: {', '.join(error_encodings)}")
+            journal.warning(f"Wrong encoding: {', '.join(error_encodings)}")
         return results

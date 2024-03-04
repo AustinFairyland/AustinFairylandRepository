@@ -25,7 +25,7 @@ from enum import Enum
 
 
 class BaseEnum(Enum):
-    """Base class for custom Enum types."""
+    """Base class for custom Enum typing."""
 
     def describe(self) -> Tuple[str, ...]:
         """
