@@ -7,8 +7,9 @@
 @since: 02 29, 2024
 """
 from typing import Union, Any
-from datetime import datetime
+from datetime import datetime, timedelta
 import time
+from dateutil.relativedelta import relativedelta
 
 from fairyland.framework.constants.enum import DateTimeFormat
 
@@ -114,6 +115,8 @@ class DatetimeUtils:
         :return: Corresponding datetime
         :rtype: datetime
         """
+        if isinstance(timestamp, int):
+            timestamp = float(timestamp)
         return datetime.fromtimestamp(timestamp)
 
     @classmethod
