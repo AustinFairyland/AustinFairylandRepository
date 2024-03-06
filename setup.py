@@ -102,6 +102,7 @@ setuptools.setup(
         "psycopg2-binary",
         "pyyaml",
         "requests",
+        "fake-useragent",
         "tornado",
         "pandas",
         "django",
