@@ -23,7 +23,8 @@ from fairyland.framework.core.abstracts.metaclass import SingletonPatternMetacla
 from fairyland.framework.modules.decorators.methods import MethodTipsDecorator
 from fairyland.framework.modules.decorators.methods import MethodTimingDecorator
 from fairyland.framework.modules.datasource import MySQLModule
-from fairyland.framework.utils.requests import Requests
+from fairyland.framework.modules.static.requests import Requests
+from fairyland.framework.utils.tools.requests import RequestsUtils
 
 from fairyland.framework.test.simulation import TestReturn
 
@@ -48,6 +49,8 @@ class Test:
         # cls.test_9()
         cls.test_10()
         cls.test_11()
+        cls.test_12()
+        cls.test_13()
         return
 
     @classmethod
@@ -118,11 +121,11 @@ class Test:
 
     @classmethod
     def test_10(cls):
-        # response = Requests.get(
-        #     url="https://api.threatbook.cn/v3/scene/ip_reputation",
-        #     params={"apikey": "25702dcf45db4f4c95dac98cabe0b6f9", "resource": "159.203.93.255"},
-        # )
-        response = TestReturn.Threat.ip_reputation()
+        response = Requests.get(
+            url="https://api.threatbook.cn/v3/scene/ip_reputation",
+            params={"apikey": "25702dcf45db4f4c95dac98cabe0b6f9", "resource": "159.203.93.255"},
+        )
+        # response = TestReturn.Threat.ip_reputation()
         journal.debug(f"Response: {response}")
         journal.debug(f"Type: {type(response)}")
 
@@ -134,6 +137,24 @@ class Test:
         # journal.debug(f"{DatetimeUtils.timestamp_to_datetime(1709636127)}")
         journal.debug(f"{DatetimeUtils.timestamp_to_datetime(1709626749)}")
         journal.debug(f"{DatetimeUtils.timestamp_to_datetime(1709626758)}")
+
+    @classmethod
+    def test_12(cls):
+        journal.debug(f"{RequestsUtils.user_agent()}, type: {type(RequestsUtils.user_agent())}")
+        journal.debug(f"{RequestsUtils.chrome_user_agent()}")
+        journal.debug(f"{RequestsUtils.edge_user_agent()}")
+        journal.debug(f"{RequestsUtils.firefox_user_agent()}")
+        journal.debug(f"{RequestsUtils.safari_user_agent()}")
+
+    @classmethod
+    def test_13(cls):
+        # a = Requests.get("https://baidu.com")
+        b = Requests.get("https://douban.api.fairy.host")
+        # b = Requests.get("https://ttime.v1.timerecord.cn/asdqwefac")
+        # journal.debug(f"Type a: {type(a)}")
+        journal.debug(f"b: {b}, Type b: {type(b)}")
+        if isinstance(b, dict):
+            journal.debug(f"b -> code: {b.get('code')}")
 
 
 @SingletonPattern
