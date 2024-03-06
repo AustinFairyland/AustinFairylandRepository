@@ -80,7 +80,7 @@ class APIConstantUtils(DefaultConstantUtils):
         return results
 
 
-class DecoderConstantUtils(DefaultConstantUtils):
+class EncodingConstantUtils(DefaultConstantUtils):
 
     @staticmethod
     def encodings() -> Tuple[str, ...]:
