@@ -41,27 +41,27 @@ class MethodRunTimeDecorators:
         **kwargs: Any,
     ) -> Callable[..., Any]:
         """
-        Called when the decorators is applied to a function. Creates and returns a wrapper function.
+        Called when the decorators is applied to a __method. Creates and returns a wrapper __method.
             当装饰器应用于函数时调用。创建并返回包装函数。
-        @param function: The function to be decorated. | 被装饰的函数。
+        @param function: The __method to be decorated. | 被装饰的函数。
         @type function: Union[FunctionType, MethodType]
-        @param args: Positional arguments for the decorated function. | 被装饰函数的位置参数。
+        @param args: Positional arguments for the decorated __method. | 被装饰函数的位置参数。
         @type args: Any
-        @param kwargs: Keyword arguments for the decorated function. | 被装饰函数的关键字参数。
+        @param kwargs: Keyword arguments for the decorated __method. | 被装饰函数的关键字参数。
         @type kwargs: Any
-        @return: The wrapper function. | 包装后的函数。
+        @return: The wrapper __method. | 包装后的函数。
         @rtype: Callable[..., Any]
         """
 
         def warpper(*args: Any, **kwargs: Any) -> Any:
             """
-            Wrapper function that logs the execution time of the decorated function.
+            Wrapper __method that logs the execution time of the decorated __method.
                 包装函数，记录被装饰函数的执行时间。
-            @param args: Positional arguments for the decorated function. | 被装饰函数的位置参数。
+            @param args: Positional arguments for the decorated __method. | 被装饰函数的位置参数。
             @type args: Any
-            @param kwargs: Keyword arguments for the decorated function. | 被装饰函数的关键字参数。
+            @param kwargs: Keyword arguments for the decorated __method. | 被装饰函数的关键字参数。
             @type kwargs: Any
-            @return: The return value of the decorated function. | 被装饰函数的返回值。
+            @return: The return value of the decorated __method. | 被装饰函数的返回值。
             @rtype: Any
             """
             start_time = time.time()
@@ -88,25 +88,25 @@ class MethodTipsDecorators:
         """
         The method decorators logic.
             方法装饰器的逻辑。
-        @param function: The function to be decorated. | 被装饰的函数。
+        @param function: The __method to be decorated. | 被装饰的函数。
         @type function: Union[FunctionType, MethodType]
-        @param args: Positional arguments for the decorated function. | 被装饰函数的位置参数。
+        @param args: Positional arguments for the decorated __method. | 被装饰函数的位置参数。
         @type args: Any
-        @param kwargs: Keyword arguments for the decorated function. | 被装饰函数的关键字参数。
+        @param kwargs: Keyword arguments for the decorated __method. | 被装饰函数的关键字参数。
         @type kwargs: Any
-        @return: The wrapper function. | 包装后的函数。
+        @return: The wrapper __method. | 包装后的函数。
         @rtype: Callable[..., Any]
         """
 
         def wrapper(*args: Any, **kwargs: Any) -> Any:
             """
-            Wrapper function that logs the execution status of the decorated function.
+            Wrapper __method that logs the execution status of the decorated __method.
                 包装函数，记录被装饰函数的执行状态。
-            @param args: Positional arguments for the decorated function. | 被装饰函数的位置参数。
+            @param args: Positional arguments for the decorated __method. | 被装饰函数的位置参数。
             @type args: Any
-            @param kwargs: Keyword arguments for the decorated function. | 被装饰函数的关键字参数。
+            @param kwargs: Keyword arguments for the decorated __method. | 被装饰函数的关键字参数。
             @type kwargs: Any
-            @return: The return value of the decorated function. | 被装饰函数的返回值。
+            @return: The return value of the decorated __method. | 被装饰函数的返回值。
             @rtype: Any
             """
             try:

@@ -6,134 +6,173 @@
 @organization: https://github.com/FairylandFuture
 @since: 02 29, 2024
 """
+
 import os
 import sys
 from loguru import logger
 
+from fairyland.framework.constants.typing import TypeLogLevel
+from fairyland.framework.modules.decorators.patterns import SingletonPattern
+from fairyland.framework.constants.enum import EncodingFormat
+from fairyland.framework.constants.enum import LogLevelFormat
 
-class Journal:
+
+@SingletonPattern
+class JournalSingleton:
     """Log Module"""
 
-    logger.remove()
-    logger.add(
-        sink=os.path.normpath("logs/services.log"),
-        rotation="10 MB",
-        retention="60 days",
-        # format="[{time:YYYY-MM-DD HH:mm:ss} | {elapsed} | {level:<8}]: {message}",
-        format="[{time:YYYY-MM-DD HH:mm:ss} | {level:<8}]: {message}",
-        compression="gz",
-        encoding="utf-8",
-        # level: TRACE, DEBUG, INFO, SUCCESS, WARNING, ERROR, CRITICAL
-        level="INFO",
-        enqueue=True,
-        colorize=True,
-        backtrace=True,
-    )
-    logger.add(
-        sink=sys.stdout,
-        format="[<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level:<8}</level>]: {message}",
-        level="TRACE",
-        colorize=True,
-    )
-    __logs = logger
-    __logs.critical(
-        """
-
-                                 _____       _               _                    _     _____        _                      
-                                |  ___|__ _ (_) _ __  _   _ | |  __ _  _ __    __| |   |  ___|_   _ | |_  _   _  _ __  ___  
-                                | |_  / _` || || '__|| | | || | / _` || '_ \  / _` |   | |_  | | | || __|| | | || '__|/ _ \ 
-                                |  _|| (_| || || |   | |_| || || (_| || | | || (_| |   |  _| | |_| || |_ | |_| || |  |  __/ 
-                                |_|   \__,_||_||_|    \__, ||_| \__,_||_| |_| \__,_|   |_|    \__,_| \__| \__,_||_|   \___| 
-                                                      |___/                                                                 
+    def __init__(self):
+        self.__fairyland_logo = """
+                                         _____       _               _                    _     _____        _                      
+                                        |  ___|__ _ (_) _ __  _   _ | |  __ _  _ __    __| |   |  ___|_   _ | |_  _   _  _ __  ___  
+                                        | |_  / _` || || '__|| | | || | / _` || '_ \  / _` |   | |_  | | | || __|| | | || '__|/ _ \ 
+                                        |  _|| (_| || || |   | |_| || || (_| || | | || (_| |   |  _| | |_| || |_ | |_| || |  |  __/ 
+                                        |_|   \__,_||_||_|    \__, ||_| \__,_||_| |_| \__,_|   |_|    \__,_| \__| \__,_||_|   \___| 
+                                                              |___/                                                                 
 """
-    )
 
-    @classmethod
-    def trace(cls, msg, *args, **kwargs) -> None:
+        self.__init_logger()
+
+    def __init_logger(self):
+
+        def write_log(_sink: str) -> None:
+            with open(_sink, "w", encoding="UTF-8") as log_file:
+                log_file.write(self.__fairyland_logo)
+            return
+
+        logger.remove()
+
+        logger.add(
+            sink="logs/service.log",
+            rotation="10 MB",
+            retention="60 days",
+            # format="[{time:YYYY-MM-DD HH:mm:ss} | {elapsed} | {level:<8}]: {message}",
+            format="[{time:YYYY-MM-DD HH:mm:ss} | {level:<8}]: {message}",
+            compression="gz",
+            encoding=EncodingFormat.default(),
+            level=LogLevelFormat.default(),
+            enqueue=True,
+            colorize=False,
+            backtrace=True,
+        )
+
+        logger.add(
+            sink="logs/service.serialize.log",
+            rotation="10 MB",
+            retention="60 days",
+            format="[{time:YYYY-MM-DD HH:mm:ss} | {level:<8}]: {message}",
+            compression="gz",
+            encoding=EncodingFormat.default(),
+            level=LogLevelFormat.default(),
+            enqueue=True,
+            colorize=False,
+            backtrace=True,
+            serialize=True,
+        )
+
+        logger.add(
+            sink="logs/service.debug.log",
+            rotation="10 MB",
+            retention="60 days",
+            format="[{time:YYYY-MM-DD HH:mm:ss} | {level:<8}]: {message}",
+            compression="gz",
+            encoding=EncodingFormat.default(),
+            level=LogLevelFormat.default_debug(),
+            enqueue=True,
+            colorize=False,
+            backtrace=True,
+        )
+
+        logger.add(
+            sink=sys.stdout,
+            format="[<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level:<8}</level>]: <level>{message}</level>",
+            level=LogLevelFormat.default_debug(),
+            colorize=True,
+        )
+
+        write_log("logs/service.log")
+        write_log("logs/service.debug.log")
+        print(self.__fairyland_logo)
+
+    def trace(self, msg, *args, **kwargs) -> None:
         """
         Inherits the trace method from loguru.
-        @param msg: Log messages: String
-        @param args: Tuple
-        @param kwargs: Dict
-        @return: loguru.logger.trace
+        :param msg: Log messages: String
+        :param args: Tuple
+        :param kwargs: Dict
+        :return: loguru.logger.trace
         """
-        return cls.__logs.trace(msg, *args, **kwargs)
+        return logger.trace(msg, *args, **kwargs)
 
-    @classmethod
-    def debug(cls, msg, *args, **kwargs) -> None:
+    def debug(self, msg, *args, **kwargs) -> None:
         """
         Inherits the debug method from loguru.logger
-        @param msg: Debug Log messages: String
-        @param args: Tuple
-        @param kwargs: Dict
-        @return: loguru.logger.debug
+        :param msg: Debug Log messages: String
+        :param args: Tuple
+        :param kwargs: Dict
+        :return: loguru.logger.debug
         :rtype: object
         """
-        return cls.__logs.debug(msg, *args, **kwargs)
+        return logger.debug(msg, *args, **kwargs)
 
-    @classmethod
-    def info(cls, msg, *args, **kwargs) -> None:
+    def info(self, msg, *args, **kwargs) -> None:
         """
         Inherits the info method from loguru.
-        @param msg: Info Log messages: String
-        @param args: Tuple
-        @param kwargs: Dict
-        @return: loguru.logger.info
+        :param msg: Info Log messages: String
+        :param args: Tuple
+        :param kwargs: Dict
+        :return: loguru.logger.info
         :rtype: object
         """
-        return cls.__logs.info(msg, *args, **kwargs)
+        return logger.info(msg, *args, **kwargs)
 
-    @classmethod
-    def success(cls, msg, *args, **kwargs) -> None:
+    def success(self, msg, *args, **kwargs) -> None:
         """
         Inherits the success method from loguru.
-        @param msg: Success Log messages: String
-        @param args: Tuple
-        @param kwargs: Dict
-        @return: loguru.logger.success
+        :param msg: Success Log messages: String
+        :param args: Tuple
+        :param kwargs: Dict
+        :return: loguru.logger.success
         """
-        return cls.__logs.success(msg, *args, **kwargs)
+        return logger.success(msg, *args, **kwargs)
 
-    @classmethod
-    def warning(cls, msg, *args, **kwargs) -> None:
+    def warning(self, msg, *args, **kwargs) -> None:
         """
         Inherits the warning method from loguru.
-        @param msg: Warning Log messages: String
-        @param args: Tuple
-        @param kwargs: Dict
-        @return: loguru.logger.warning
+        :param msg: Warning Log messages: String
+        :param args: Tuple
+        :param kwargs: Dict
+        :return: loguru.logger.warning
         """
-        return cls.__logs.warning(msg, *args, **kwargs)
+        return logger.warning(msg, *args, **kwargs)
 
-    @classmethod
-    def error(cls, msg, *args, **kwargs) -> None:
+    def error(self, msg, *args, **kwargs) -> None:
         """
         Inherits the error method from loguru.
-        @param msg: Error Log messages: String
-        @param args: Tuple
-        @param kwargs: Dict
-        @return: loguru.logger.error
+        :param msg: Error Log messages: String
+        :param args: Tuple
+        :param kwargs: Dict
+        :return: loguru.logger.error
         """
-        return cls.__logs.error(msg, *args, **kwargs)
+        return logger.error(msg, *args, **kwargs)
 
-    @classmethod
-    def critical(cls, msg, *args, **kwargs) -> None:
+    def critical(self, msg, *args, **kwargs) -> None:
         """
         Inherits the critical method from loguru.
-        @param msg: Critical Log messages: String
-        @param args: Tuple
-        @param kwargs: Dict
-        @return: loguru.logger.critical
+        :param msg: Critical Log messages: String
+        :param args: Tuple
+        :param kwargs: Dict
+        :return: loguru.logger.critical
         """
-        return cls.__logs.critical(msg, *args, **kwargs)
+        return logger.critical(msg, *args, **kwargs)
 
-    @classmethod
-    def exception(cls, msg, *args, **kwargs) -> None:
+    def exception(self, msg, *args, **kwargs) -> None:
         """
         Inherits the exception method from loguru.
-        @param msg: Exception Log messages: String
-        @param args: Tuple
-        @param kwargs: Dict
-        @return: loguru.logger.exception
+
+        :param msg: Exception Log messages: String
+        :param args: Tuple
+        :param kwargs: Dict
+        :return: loguru.logger.exception
         """
-        return cls.__logs.exception(msg, *args, **kwargs)
+        return logger.exception(msg, *args, **kwargs)
