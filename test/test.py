@@ -7,8 +7,7 @@
 @since: 02 29, 2024
 """
 import sys
-
-sys.dont_write_bytecode = True
+import warnings
 
 from fairyland.framework.modules.journals import journal
 from fairyland.framework.core.abstracts.enumerate import BaseEnum
@@ -24,23 +23,31 @@ from fairyland.framework.core.abstracts.metaclass import SingletonPatternMetacla
 from fairyland.framework.modules.decorators.methods import MethodTipsDecorator
 from fairyland.framework.modules.decorators.methods import MethodTimingDecorator
 from fairyland.framework.modules.datasource import MySQLModule
+from fairyland.framework.utils.requests import Requests
+
+from fairyland.framework.test.simulation import TestReturn
+
+sys.dont_write_bytecode = True
+warnings.filterwarnings("ignore")
 
 
 class Test:
 
     @classmethod
     @MethodTimingDecorator
-    @MethodTipsDecorator("测试主方法")
+    @MethodTipsDecorator("Test Main Method.")
     def run(cls) -> None:
         cls.test_1()
         cls.test_2()
         cls.test_3()
         cls.test_4()
-        cls.test_5()
-        cls.test_6()
-        cls.test_7()
-        cls.test_8()
-        cls.test_9()
+        # cls.test_5()
+        # cls.test_6()
+        # cls.test_7()
+        # cls.test_8()
+        # cls.test_9()
+        cls.test_10()
+        cls.test_11()
         return
 
     @classmethod
@@ -102,11 +109,31 @@ class Test:
 
     @classmethod
     def test_9(cls):
+        pass
         db = MySQLModule(host="mapping.fairy.host", port=51001, user="austin", password="Austin.pwd:112#.", database="public_db_test")
         query_tuple = ("select version();", "select * from myapp_myinfo where nid > %s;")
         param_tuple = (None, 0)
         a = db.operate(query_tuple, param_tuple)
         journal.debug(a)
+
+    @classmethod
+    def test_10(cls):
+        # response = Requests.get(
+        #     url="https://api.threatbook.cn/v3/scene/ip_reputation",
+        #     params={"apikey": "25702dcf45db4f4c95dac98cabe0b6f9", "resource": "159.203.93.255"},
+        # )
+        response = TestReturn.Threat.ip_reputation()
+        journal.debug(f"Response: {response}")
+        journal.debug(f"Type: {type(response)}")
+
+    @classmethod
+    def test_11(cls):
+        journal.debug(f"当前时间戳: {DatetimeUtils.normtimestamp()}")
+        # 1709636127
+        # journal.debug(f"{DatetimeUtils.timestamp_to_datetime(1709626679000)}")
+        # journal.debug(f"{DatetimeUtils.timestamp_to_datetime(1709636127)}")
+        journal.debug(f"{DatetimeUtils.timestamp_to_datetime(1709626749)}")
+        journal.debug(f"{DatetimeUtils.timestamp_to_datetime(1709626758)}")
 
 
 @SingletonPattern
