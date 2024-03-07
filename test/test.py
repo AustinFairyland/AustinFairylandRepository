@@ -9,21 +9,21 @@
 import sys
 import warnings
 
-from fairyland.framework.modules.journals import journal
-from fairyland.framework.core.abstracts.enumerate import BaseEnum
+from fairyland.framework.modules.journals.journal import journal
+from fairyland.framework.core.abstracts.enumerate.enumerate import BaseEnum
 from fairyland.framework.constants.enum import DateTimeFormat
 from fairyland.framework.modules.exceptions import ProjectError
-from fairyland.framework.utils.generals.constants import DefaultConstantUtils
-from fairyland.framework.utils.generals.datetime import DatetimeUtils
-from fairyland.framework.utils.publish import PackageInfo
-from fairyland.framework.utils.generals.decoder import DecoderUtils
-from fairyland.framework.utils.generals.constants import EncodingConstantUtils
-from fairyland.framework.modules.decorators.patterns import SingletonPattern
-from fairyland.framework.core.abstracts.metaclass import SingletonPatternMetaclass
-from fairyland.framework.modules.decorators.methods import MethodTipsDecorator
-from fairyland.framework.modules.decorators.methods import MethodTimingDecorator
-from fairyland.framework.modules.datasource import MySQLModule
-from fairyland.framework.modules.static.requests import Requests
+from fairyland.framework.utils.generals.constants.constants import DefaultConstantUtils
+from fairyland.framework.utils.generals.datetime.datetime import DatetimeUtils
+from fairyland.framework.utils.publish.package import PackageInfo
+from fairyland.framework.utils.generals.decoder.decoder import DecoderUtils
+from fairyland.framework.utils.generals.constants.constants import EncodingConstantUtils
+from fairyland.framework.modules.decorators.patterns.design import SingletonPattern
+from fairyland.framework.core.abstracts.metaclass.metaclass import SingletonPatternMetaclass
+from fairyland.framework.modules.decorators.methods.method import MethodTipsDecorator
+from fairyland.framework.modules.decorators.methods.method import MethodTimingDecorator
+from fairyland.framework.modules.datasource.mysql import MySQLModule
+from fairyland.framework.modules.static.requests.requests import Requests
 from fairyland.framework.utils.tools.requests import RequestsUtils
 
 from fairyland.framework.test.simulation import TestReturn
@@ -51,6 +51,7 @@ class Test:
         cls.test_11()
         cls.test_12()
         cls.test_13()
+        cls.test_14()
         return
 
     @classmethod
@@ -155,6 +156,12 @@ class Test:
         journal.debug(f"b: {b}, Type b: {type(b)}")
         if isinstance(b, dict):
             journal.debug(f"b -> code: {b.get('code')}")
+
+    @classmethod
+    def test_14(cls):
+        for i in range(100, 3662, 100):
+            journal.debug(i)
+            break
 
 
 @SingletonPattern

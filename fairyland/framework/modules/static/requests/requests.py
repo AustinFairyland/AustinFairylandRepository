@@ -10,7 +10,7 @@ from typing import Optional, Dict, Union, Any
 
 import requests
 
-from fairyland.framework.modules.journals import journal
+from fairyland.framework.modules.journals.journal import journal
 from fairyland.framework.utils.tools.requests import RequestsUtils
 
 

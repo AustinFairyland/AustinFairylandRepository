@@ -11,7 +11,7 @@ from datetime import datetime
 import yaml
 import os
 
-from fairyland.framework.modules.journals import journal
+from fairyland.framework.modules.journals.journal import journal
 
 
 class PackageConfig:

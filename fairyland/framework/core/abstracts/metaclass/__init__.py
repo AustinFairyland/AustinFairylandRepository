@@ -6,5 +6,3 @@
 @organization: https://github.com/FairylandFuture
 @since: 03 03, 2024
 """
-
-from ._metaclass import SingletonPatternMetaclass
