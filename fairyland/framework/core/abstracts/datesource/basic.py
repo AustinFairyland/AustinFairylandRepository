@@ -13,7 +13,7 @@ from datetime import datetime
 
 from fairyland.framework.constants.typing import TypeSQLConnection
 from fairyland.framework.constants.typing import TypeSQLCursor
-from fairyland.framework.modules.journals import journal
+from fairyland.framework.modules.journals.journal import journal
 
 
 class DataSource:

@@ -6,7 +6,3 @@
 @organization: https://github.com/FairylandFuture
 @since: 02 29, 2024
 """
-from ._journal import JournalSingleton
-from ._journal import logger
-
-journal: JournalSingleton = JournalSingleton()

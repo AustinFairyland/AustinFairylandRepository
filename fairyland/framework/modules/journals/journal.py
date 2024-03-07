@@ -176,3 +176,6 @@ class JournalSingleton:
         :return: loguru.logger.exception
         """
         return logger.exception(msg, *args, **kwargs)
+
+
+journal: JournalSingleton = JournalSingleton()

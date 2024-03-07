@@ -9,8 +9,8 @@
 
 from typing import Any
 
-from fairyland.framework.core.abstracts.enumerate import StringEnum
-from fairyland.framework.core.abstracts.enumerate import BaseEnum
+from fairyland.framework.core.abstracts.enumerate.enumerate import StringEnum
+from fairyland.framework.core.abstracts.enumerate.enumerate import BaseEnum
 
 
 class DateTimeFormat(StringEnum):

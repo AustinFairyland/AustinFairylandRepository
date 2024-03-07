@@ -6,5 +6,3 @@
 @organization: https://github.com/FairylandFuture
 @since: 03 05, 2024
 """
-
-from ._requests import Requests

@@ -11,7 +11,7 @@ from typing import Union, Any, Callable
 
 import time
 
-from fairyland.framework.modules.journals import journal, logger
+from fairyland.framework.modules.journals.journal import journal, logger
 
 
 class MethodTimingDecorator:
