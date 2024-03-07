@@ -22,13 +22,13 @@ class JournalSingleton:
     """Log Module"""
 
     def __init__(self):
-        self.__fairyland_logo = """
-                                         _____       _               _                    _     _____        _                      
-                                        |  ___|__ _ (_) _ __  _   _ | |  __ _  _ __    __| |   |  ___|_   _ | |_  _   _  _ __  ___  
-                                        | |_  / _` || || '__|| | | || | / _` || '_ \  / _` |   | |_  | | | || __|| | | || '__|/ _ \ 
-                                        |  _|| (_| || || |   | |_| || || (_| || | | || (_| |   |  _| | |_| || |_ | |_| || |  |  __/ 
-                                        |_|   \__,_||_||_|    \__, ||_| \__,_||_| |_| \__,_|   |_|    \__,_| \__| \__,_||_|   \___| 
-                                                              |___/                                                                 
+        self.__fairyland_logo = """                                                                 高山仰止,景行行止.虽不能至,心向往之。
+                                     _____       _               _                    _     _____        _                      
+                                    |  ___|__ _ (_) _ __  _   _ | |  __ _  _ __    __| |   |  ___|_   _ | |_  _   _  _ __  ___  
+                                    | |_  / _` || || '__|| | | || | / _` || '_ \  / _` |   | |_  | | | || __|| | | || '__|/ _ \ 
+                                    |  _|| (_| || || |   | |_| || || (_| || | | || (_| |   |  _| | |_| || |_ | |_| || |  |  __/ 
+                                    |_|   \__,_||_||_|    \__, ||_| \__,_||_| |_| \__,_|   |_|    \__,_| \__| \__,_||_|   \___| 
+                                                          |___/                                                                 
 """
 
         self.__init_logger()
@@ -46,27 +46,28 @@ class JournalSingleton:
             sink="logs/service.log",
             rotation="10 MB",
             retention="60 days",
-            # format="[{time:YYYY-MM-DD HH:mm:ss} | {elapsed} | {level:<8}]: {message}",
-            format="[{time:YYYY-MM-DD HH:mm:ss} | {level:<8}]: {message}",
+            format="[{time:YYYY-MM-DD HH:mm:ss} | Process ID: {process:<8} | Thread ID: {thread:<8} | {level:<8}]: {message}",
             compression="gz",
             encoding=EncodingFormat.default(),
             level=LogLevelFormat.default(),
             enqueue=True,
             colorize=False,
             backtrace=True,
+            diagnose=True,
         )
 
         logger.add(
             sink="logs/service.serialize.log",
             rotation="10 MB",
             retention="60 days",
-            format="[{time:YYYY-MM-DD HH:mm:ss} | {level:<8}]: {message}",
+            format="[{time:YYYY-MM-DD HH:mm:ss} | Process ID: {process:<8} | Thread ID: {thread:<8} | {level:<8}]: {message}",
             compression="gz",
             encoding=EncodingFormat.default(),
             level=LogLevelFormat.default(),
             enqueue=True,
             colorize=False,
             backtrace=True,
+            diagnose=True,
             serialize=True,
         )
 
@@ -74,20 +75,22 @@ class JournalSingleton:
             sink="logs/service.debug.log",
             rotation="10 MB",
             retention="60 days",
-            format="[{time:YYYY-MM-DD HH:mm:ss} | {level:<8}]: {message}",
+            format="[{time:YYYY-MM-DD HH:mm:ss} | Process ID: {process:<8} | Thread ID: {thread:<8} | {level:<8}]: {message}",
             compression="gz",
             encoding=EncodingFormat.default(),
             level=LogLevelFormat.default_debug(),
             enqueue=True,
             colorize=False,
             backtrace=True,
+            diagnose=True,
         )
 
         logger.add(
             sink=sys.stdout,
-            format="[<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level:<8}</level>]: <level>{message}</level>",
+            format="<level>[{time:YYYY-MM-DD HH:mm:ss} | Process ID: {process:<8} | Thread ID: {thread:<8} | {level:<8}]: {message}</level>",
             level=LogLevelFormat.default_debug(),
             colorize=True,
+            enqueue=True,
         )
 
         write_log("logs/service.log")
@@ -97,6 +100,7 @@ class JournalSingleton:
     def trace(self, msg, *args, **kwargs) -> None:
         """
         Inherits the trace method from loguru.
+
         :param msg: Log messages: String
         :param args: Tuple
         :param kwargs: Dict
@@ -107,6 +111,7 @@ class JournalSingleton:
     def debug(self, msg, *args, **kwargs) -> None:
         """
         Inherits the debug method from loguru.logger
+
         :param msg: Debug Log messages: String
         :param args: Tuple
         :param kwargs: Dict
@@ -118,6 +123,7 @@ class JournalSingleton:
     def info(self, msg, *args, **kwargs) -> None:
         """
         Inherits the info method from loguru.
+
         :param msg: Info Log messages: String
         :param args: Tuple
         :param kwargs: Dict
@@ -129,6 +135,7 @@ class JournalSingleton:
     def success(self, msg, *args, **kwargs) -> None:
         """
         Inherits the success method from loguru.
+
         :param msg: Success Log messages: String
         :param args: Tuple
         :param kwargs: Dict
@@ -139,6 +146,7 @@ class JournalSingleton:
     def warning(self, msg, *args, **kwargs) -> None:
         """
         Inherits the warning method from loguru.
+
         :param msg: Warning Log messages: String
         :param args: Tuple
         :param kwargs: Dict
@@ -149,6 +157,7 @@ class JournalSingleton:
     def error(self, msg, *args, **kwargs) -> None:
         """
         Inherits the error method from loguru.
+
         :param msg: Error Log messages: String
         :param args: Tuple
         :param kwargs: Dict
@@ -159,6 +168,7 @@ class JournalSingleton:
     def critical(self, msg, *args, **kwargs) -> None:
         """
         Inherits the critical method from loguru.
+
         :param msg: Critical Log messages: String
         :param args: Tuple
         :param kwargs: Dict
