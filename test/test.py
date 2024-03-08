@@ -9,6 +9,7 @@
 import sys
 import warnings
 import threading
+from concurrent.futures import ThreadPoolExecutor
 
 from fairyland.framework.modules.journals.journal import journal, logger
 from fairyland.framework.core.abstracts.enumerate.enumerate import BaseEnum
@@ -54,7 +55,9 @@ class Test:
         cls.test_13()
         cls.test_14()
         cls.test_15()
-        cls.test_16()
+        cls.test_16(10, "1")
+        cls.test_17()
+        cls.test_18()
         return
 
     @classmethod
@@ -189,20 +192,50 @@ class Test:
 
     @classmethod
     @MethodTipsDecorator("Test 16")
-    def test_16(cls):
+    def test_16(cls, total, msg):
 
         def inner_1(total, _tips):
             for index in range(total):
-                journal.debug(f"Inner 1 | {_tips}: {index}")
+                # journal.debug(f"Inner 1 | {_tips}: {index}")
+                print(f"Inner 1 | {_tips}: {index}")
 
-        a = threading.Thread(target=inner_1, args=(20, "Thread 1"))
-        b = threading.Thread(target=inner_1, args=(10, "Thread 2"))
+        for index in range(total):
+            journal.debug(f"Test 16 -> {msg} : {index}")
 
-        a.start()
-        b.start()
+        # a = threading.Thread(target=inner_1, args=(20, "Thread 1"))
+        # b = threading.Thread(target=inner_1, args=(10, "Thread 2"))
 
-        a.join()
-        journal.success("Done")
+        # a.start()
+        # b.start()
+
+        # journal.success("Done")
+
+    @classmethod
+    def get_thread_pool(cls) -> ThreadPoolExecutor:
+        return ThreadPoolExecutor(max_workers=10)
+
+    @classmethod
+    @MethodTimingDecorator
+    @MethodTipsDecorator("Test 17")
+    def test_17(cls):
+        def inner(total=10):
+            a = 0
+            for i in range(total):
+                a += i
+
+            return a
+
+        thread_pool = cls.get_thread_pool()
+        results = thread_pool.submit(inner).result()
+        # results = inner() 
+        thread_pool.shutdown()
+        journal.debug(f"Results = {results}")
+        
+    @classmethod
+    @MethodTipsDecorator("Test 18")
+    def test_18(cls):
+        a = TestEnum.get_enum("a").value
+        journal.debug(f"Test Enum: {a}, Type: {type(a)}")
 
 
 @SingletonPattern
@@ -212,5 +245,28 @@ class A: ...
 class B(metaclass=SingletonPatternMetaclass): ...
 
 
+class TestEnum(BaseEnum):
+    a = "12138"
+    
+    @classmethod
+    def get_enum(cls, __value) -> "TestEnum":
+        return getattr(cls, __value)
+
+
+def thread_test():
+    def inner_1(total, _tips):
+        for index in range(total):
+            print(f"Inner 1 | {_tips}: {index}")
+
+    a = threading.Thread(target=inner_1, args=(20, "Thread 1"))
+    b = threading.Thread(target=inner_1, args=(10, "Thread 2"))
+
+    a.start()
+    b.start()
+
+    print("Done")
+
+
 if __name__ == "__main__":
     Test.run()
+    # thread_test()
