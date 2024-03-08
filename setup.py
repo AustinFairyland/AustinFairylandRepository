@@ -24,7 +24,7 @@ import setuptools
 from datetime import datetime
 import subprocess
 
-from fairyland.framework.utils.publish import PackageInfo
+from fairyland.framework.utils.publish.package import PackageInfo
 
 # Long Description
 with open("README.md", "r", encoding="utf-8") as fh:
@@ -102,6 +102,7 @@ setuptools.setup(
         "psycopg2-binary",
         "pyyaml",
         "requests",
+        "fake-useragent",
         "tornado",
         "pandas",
         "django",

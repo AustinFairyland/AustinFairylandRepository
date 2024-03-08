@@ -7,4 +7,4 @@
 @since: 03 03, 2024
 """
 
-from ._design import SingletonPattern
+from .design import SingletonPattern
