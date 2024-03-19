@@ -9,7 +9,7 @@
 
 from typing import Any
 
-from fairyland.framework.utils.generals.constants.constants import DefaultConstantUtils
+from fairyland.framework.utils.generals.constants.Constants import DefaultConstantUtils
 
 
 class SingletonPattern:

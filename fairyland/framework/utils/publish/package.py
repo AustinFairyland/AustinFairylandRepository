@@ -11,7 +11,7 @@ from datetime import datetime
 import yaml
 import os
 
-from fairyland.framework.modules.journals.journal import journal
+from fairyland.framework.modules.journals.Journal import journal
 
 
 class PackageConfig:
@@ -53,6 +53,7 @@ class PackageInfo:
     # version: (release_version, test_version, alpha_version, beta_version)
     __version = __config.get("version")
     __release_version = ".".join((__major_number.__str__(), __sub_number.__str__(), __stage_number.__str__()))
+
     if __version == "release":
         version = __release_version
     elif __version == "test":

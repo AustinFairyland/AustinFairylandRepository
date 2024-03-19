@@ -11,7 +11,7 @@ from typing import Union, Any, Callable
 
 import time
 
-from fairyland.framework.modules.journals.journal import journal, logger
+from fairyland.framework.modules.journals.Journal import journal, logger
 
 
 class MethodTimingDecorator:
@@ -19,21 +19,21 @@ class MethodTimingDecorator:
 
     def __init__(self, __method: Union[FunctionType, MethodType]):
         """
-        Initialize the decorator with the method to be wrapped.
+        Initialize the decorator with a method.
 
-        :param __method: The method/__method to be timed.
+        :param __method: The method to be decorated.
         :type __method: Union[FunctionType, MethodType]
         """
         self.__method = __method
 
-    def __call__(self, *args, **kwargs):
+    def __call__(self, *args: Any, **kwargs: Any) -> Any:
         """
         Execute the wrapped method and calculate its execution time.
 
         :param args: Positional arguments passed to the method.
-        :type args: tuple
+        :type args: Any
         :param kwargs: Keyword arguments passed to the method.
-        :type kwargs: dict
+        :type kwargs: Any
         :return: The result of the method execution.
         :rtype: Any
         """
@@ -51,33 +51,33 @@ class MethodTimingDecorator:
         return results
 
 
-class MethodTipsDecorator:
-    """Decorator to log method execution tips (start, success, failure)."""
+# class MethodTipsDecorator:
+class MethodActionDecorator:
+    """
+    Decorator to log method execution tips (start, success, failure).
 
-    def __init__(self, __name: str = "A Method"):
-        """
-        Initialize the decorator with an optional method name.
+    :param name: The name of the method for logging purposes. Defaults to "A Method".
+    :type name: str
+    """
 
-        :param __name: The name of the method for logging purposes. Defaults to "A Method".
-        :type __name: str
-        """
-        self.__name = __name
+    def __init__(self, name: str = "A Method"):
+        self.__name = name
 
     def __call__(self, __method: Union[FunctionType, MethodType], *args: Any, **kwargs: Any) -> Callable[..., Any]:
         """
         The decorator's logic to wrap around the given method.
 
         :param __method: The function or method to be decorated.
-        :type __method: Union[FunctionType, MethodType]
+        :type __method: FunctionType or MethodType
         :param args: args
         :type args: Any
         :param kwargs: kwargs
         :type kwargs: Any
         :return: The wrapper function around the original method.
-        :rtype: Callable[..., Any]
+        :rtype: Callable
         """
 
-        @logger.catch()
+        # @logger.catch()
         def wrapper(*args: Any, **kwargs: Any) -> Any:
             """
             Wrapper function that logs the execution status (start, success, failure) of the decorated method.
@@ -95,8 +95,65 @@ class MethodTipsDecorator:
                 journal.success(f"Success Running {self.__name}")
                 return results
             except Exception as error:
-                journal.error(error)
+                journal.exception(error)
                 journal.error(f"Failure Running {self.__name}")
-                raise
+                raise error
 
         return wrapper
+
+
+class MethodTryCatch:
+    """
+    A decorator to catch exceptions thrown by the method it decorates.
+    """
+
+    def __init__(self, __method: Union[FunctionType, MethodType]):
+        """
+        Initialize the decorator with a method.
+
+        :param __method: The method to be decorated.
+        :type __method: Union[FunctionType, MethodType]
+        """
+        self.__method = __method
+
+    def __call__(self, *args, **kwargs):
+        """
+        Execute the decorated method and catch any exceptions.
+
+        :param args: Positional arguments for the method.
+        :param kwargs: Keyword arguments for the method.
+        :return: The result of the method if no exceptions are raised.
+        """
+        try:
+            results = self.__method(*args, **kwargs)
+        except Exception as error:
+            journal.exception("An error occurred: %s", error)
+            raise
+        return results
+
+
+class MethodTipsDecorator:
+    """
+    A decorator to log the start of a method execution.
+    """
+
+    def __init__(self, __method: Union[FunctionType, MethodType]):
+        """
+        Initialize the decorator with a method.
+
+        :param __method: The method to be decorated.
+        :type __method: Union[FunctionType, MethodType]
+        """
+        self.__method = __method
+
+    def __call__(self, *args, **kwargs):
+        """
+        Log the method execution and then execute the method.
+
+        :param args: Positional arguments for the method.
+        :param kwargs: Keyword arguments for the method.
+        :return: The result of the method.
+        """
+        journal.info(f"Running {self.__method.__name__}")
+        results = self.__method(*args, **kwargs)
+        return results

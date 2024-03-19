@@ -12,7 +12,7 @@ import time
 from dateutil.relativedelta import relativedelta
 
 from fairyland.framework.constants.enum import DateTimeFormat
-from fairyland.framework.modules.decorators.patterns import SingletonPattern
+from fairyland.framework.modules.decorators.patterns.Design import SingletonPattern
 
 class DatetimeUtils:
     """DateTimeUtils"""
