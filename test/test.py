@@ -62,6 +62,7 @@ class Test:
         cls.test_18()
         cls.test_19()
         cls.test_20()
+
         return
 
     @classmethod
@@ -85,7 +86,7 @@ class Test:
     def test_3(cls):
         journal.debug(f"当前时间时间戳: {DatetimeUtils.normtimestamp()}")
         a = DefaultConstantUtils.dict()
-        a.update(测试时间=DatetimeUtils.normdatetime_to_str())
+        a.update(测试时间=DatetimeUtils.normdatetime_to_string())
         journal.debug(f"测试字典: {a}")
 
     @classmethod
@@ -254,10 +255,16 @@ class Test:
 
     @classmethod
     @MethodTimingDecorator
-    @MethodActionDecorator("Test 20")
+    # @MethodActionDecorator("Test 20")
     @MethodTryCatch
     def test_20(cls):
         # try:
+        aa = (1, 2, 3)
+        journal.debug(aa.__getitem__(0))
+        journal.debug(aa.__getitem__(1))
+        journal.debug(aa.__getitem__(2))
+        journal.debug(aa.__getitem__(slice(0, 2)))
+
         a = 2 / 0
         journal.debug(a)
         # except Exception as error:

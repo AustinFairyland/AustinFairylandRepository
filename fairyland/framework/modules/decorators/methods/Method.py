@@ -97,6 +97,7 @@ class MethodActionDecorator:
             except Exception as error:
                 journal.exception(error)
                 journal.error(f"Failure Running {self.__name}")
+                journal.error(error.args.__getitem__(0))
                 raise error
 
         return wrapper
@@ -127,7 +128,7 @@ class MethodTryCatch:
         try:
             results = self.__method(*args, **kwargs)
         except Exception as error:
-            journal.exception("An error occurred: %s", error)
+            journal.exception(f"An error occurred: {error}")
             raise
         return results
 
