@@ -11,8 +11,6 @@ from datetime import datetime
 import yaml
 import os
 
-from fairyland.framework.modules.journals.Journal import journal
-
 
 class PackageConfig:
     """package config"""
@@ -24,8 +22,7 @@ class PackageConfig:
             with open(_path, mode="r") as publish_file:
                 publish_config = yaml.safe_load(publish_file)
         except Exception as error:
-            journal.error(error)
-            raise
+            raise error
         return publish_config
 
 
