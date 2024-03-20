@@ -83,7 +83,7 @@ class APIConstantUtils(DefaultConstantUtils):
 class EncodingConstantUtils(DefaultConstantUtils):
 
     @staticmethod
-    def encodings() -> Tuple[str, ...]:
+    def encodings() -> Tuple[str]:
         results = (
             "big5",
             "big5-hkscs",

@@ -10,8 +10,8 @@
 from typing import Optional
 import pymysql
 
-from fairyland.framework.modules.journals.journal import journal
-from fairyland.framework.core.abstracts.datesource.basic import DataSource
+from fairyland.framework.modules.journals.Journal import journal
+from fairyland.framework.core.abstracts.datesource.Basic import DataSource
 
 
 class MySQLModule(DataSource):

@@ -12,7 +12,7 @@ import sys
 from loguru import logger
 
 from fairyland.framework.constants.typing import TypeLogLevel
-from fairyland.framework.modules.decorators.patterns import SingletonPattern
+from fairyland.framework.modules.decorators.patterns.Design import SingletonPattern
 from fairyland.framework.constants.enum import EncodingFormat
 from fairyland.framework.constants.enum import LogLevelFormat
 
