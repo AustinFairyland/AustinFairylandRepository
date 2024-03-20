@@ -29,15 +29,15 @@ class DecoderUtils:
         :param binary_data: The binary data to decode, either as a hexadecimal string or a byte sequence.
         :type binary_data: str
         :param encodings: An optional list of string encodings to try decoding the binary data with.
-                            If not provided, a default list of encodings is used.
-                            This allows for customization of the decoding process.
-        :type encodings: Optional[Iterable[str]]
+            If not provided, a default list of encodings is used. This allows for customization of the decoding process.
+        :type encodings: Iterable
         :param excludes: An optional list of encodings to exclude from the decoding process.
-                            This is useful when certain encodings are known to cause issues or are not relevant.
-        :type excludes: Optional[Iterable[str]]
-        :return: A dictionary where each key is an encoding that successfully decoded the binary data and the corresponding value is the decoded string.
-                    If no encoding was successful, the dictionary will be empty.
-        :rtype: Dict[str, Any]
+            This is useful when certain encodings are known to cause issues or are not relevant.
+        :type excludes: Iterable
+        :return: A dictionary where each key is an encoding that successfully
+            decoded the binary data and the corresponding value is the decoded string.
+            If no encoding was successful, the dictionary will be empty.
+        :rtype: dict
         """
         default_encodings = ("utf-8", "gb2312", "gbk", "iso-8859-1", "utf-16", "ascii")
         if encodings:

@@ -15,15 +15,11 @@ from fairyland.framework.modules.journals.Journal import journal, logger
 
 
 class MethodTimingDecorator:
-    """Calculate running time"""
+    """
+    Calculate running time
+    """
 
     def __init__(self, __method: Union[FunctionType, MethodType]):
-        """
-        Initialize the decorator with a method.
-
-        :param __method: The method to be decorated.
-        :type __method: Union[FunctionType, MethodType]
-        """
         self.__method = __method
 
     def __call__(self, *args: Any, **kwargs: Any) -> Any:
@@ -35,19 +31,26 @@ class MethodTimingDecorator:
         :param kwargs: Keyword arguments passed to the method.
         :type kwargs: Any
         :return: The result of the method execution.
-        :rtype: Any
+        :rtype: ...
         """
         start_time = time.time()
         results = self.__method(*args, **kwargs)
         end_time = time.time()
         elapsed_time = end_time - start_time
         if elapsed_time.__lt__(60):
-            elapsed_time_format_str = f"00:00:{elapsed_time:.3f}"
+            hour, minute, second = 0, 0, elapsed_time
         elif elapsed_time.__ge__(60) and elapsed_time.__lt__(3600):
-            elapsed_time_format_str = f"00:{(elapsed_time / 60).__int__():02d}:{elapsed_time % 60:06.3f}"
+            hour = 0
+            minute = (elapsed_time / 60).__int__()
+            second = elapsed_time % 60
         else:
-            elapsed_time_format_str = f"{(elapsed_time / 3600).__int__():02d}:{((elapsed_time - (elapsed_time / 3600).__int__() * 3600) / 60).__int__():02d}:{elapsed_time % 60:06.3f}"
+            hour = (elapsed_time / 3600).__int__()
+            minute = ((elapsed_time - (hour * 3600)) / 60).__int__()
+            second = elapsed_time % 60
+
+        elapsed_time_format_str = f"{hour:02d}:{minute:02d}:{second:06.3f}"
         journal.success(f"This method ran for {elapsed_time_format_str}")
+
         return results
 
 
@@ -87,18 +90,19 @@ class MethodActionDecorator:
             :param kwargs: Keyword arguments for the decorated method.
             :type kwargs: Any
             :return: The return value of the decorated method.
-            :rtype: Any
+            :rtype: ...
             """
             try:
                 journal.info(f"Action Running {self.__name}")
                 results = __method(*args, **kwargs)
                 journal.success(f"Success Running {self.__name}")
-                return results
             except Exception as error:
                 journal.exception(error)
                 journal.error(f"Failure Running {self.__name}")
                 journal.error(error.args.__getitem__(0))
                 raise error
+
+            return results
 
         return wrapper
 
@@ -109,12 +113,6 @@ class MethodTryCatch:
     """
 
     def __init__(self, __method: Union[FunctionType, MethodType]):
-        """
-        Initialize the decorator with a method.
-
-        :param __method: The method to be decorated.
-        :type __method: Union[FunctionType, MethodType]
-        """
         self.__method = __method
 
     def __call__(self, *args, **kwargs):
@@ -129,7 +127,8 @@ class MethodTryCatch:
             results = self.__method(*args, **kwargs)
         except Exception as error:
             journal.exception(f"An error occurred: {error}")
-            raise
+            raise error
+
         return results
 
 
@@ -139,12 +138,6 @@ class MethodTipsDecorator:
     """
 
     def __init__(self, __method: Union[FunctionType, MethodType]):
-        """
-        Initialize the decorator with a method.
-
-        :param __method: The method to be decorated.
-        :type __method: Union[FunctionType, MethodType]
-        """
         self.__method = __method
 
     def __call__(self, *args, **kwargs):
@@ -157,4 +150,5 @@ class MethodTipsDecorator:
         """
         journal.info(f"Running {self.__method.__name__}")
         results = self.__method(*args, **kwargs)
+
         return results

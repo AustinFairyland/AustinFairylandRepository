@@ -12,7 +12,7 @@ import threading
 from concurrent.futures import ThreadPoolExecutor
 
 from fairyland.framework.modules.journals.Journal import journal, logger
-from fairyland.framework.core.abstracts.enumerate.Enumerate import BaseEnum
+from fairyland.framework.core.abstracts.enumerate.Enumerate import BaseEnum, StringEnum
 from fairyland.framework.constants.enum import DateTimeFormat
 from fairyland.framework.modules.exceptions import ProjectError
 from fairyland.framework.utils.generals.constants.Constants import DefaultConstantUtils
@@ -27,12 +27,48 @@ from fairyland.framework.modules.decorators.methods.Method import MethodTimingDe
 from fairyland.framework.modules.datasource.Mysql import MySQLModule
 from fairyland.framework.modules.static.requests.Requests import Requests
 from fairyland.framework.utils.tools.requests import RequestsUtils
-from fairyland.framework.modules.decorators.methods.Method import MethodTryCatch
+from fairyland.framework.modules.decorators.methods.Method import MethodTryCatch, MethodTipsDecorator
 
 from fairyland.framework.test.simulation import TestReturn
 
 sys.dont_write_bytecode = True
 warnings.filterwarnings("ignore")
+
+
+@SingletonPattern
+class A: ...
+
+
+class B(metaclass=SingletonPatternMetaclass): ...
+
+
+class TestEnum(StringEnum):
+    a = "12138"
+
+
+class TestBase:
+
+    _version = "1.0.0"
+
+
+class TestVersion(TestBase):
+
+    def __init__(self):
+        self.version = self._version
+
+
+def thread_test():
+    def inner_1(total, _tips):
+        for index in range(total):
+            print(f"Inner 1 | {_tips}: {index}")
+
+    a = threading.Thread(target=inner_1, args=(20, "Thread 1"))
+    b = threading.Thread(target=inner_1, args=(10, "Thread 2"))
+
+    a.start()
+    b.start()
+
+    print("Done")
 
 
 class Test:
@@ -62,6 +98,9 @@ class Test:
         cls.test_18()
         cls.test_19()
         cls.test_20()
+        cls.test_21()
+        cls.test_22()
+        cls.test_23()
 
         return
 
@@ -239,7 +278,7 @@ class Test:
     @classmethod
     @MethodActionDecorator("Test 18")
     def test_18(cls):
-        a = TestEnum.get_enum("a").value
+        a = TestEnum.get("a")
         journal.debug(f"Test Enum: {a}, Type: {type(a)}")
 
     @classmethod
@@ -255,8 +294,8 @@ class Test:
 
     @classmethod
     @MethodTimingDecorator
-    # @MethodActionDecorator("Test 20")
-    @MethodTryCatch
+    @MethodActionDecorator("Test 20")
+    # @MethodTryCatch
     def test_20(cls):
         # try:
         aa = (1, 2, 3)
@@ -265,41 +304,48 @@ class Test:
         journal.debug(aa.__getitem__(2))
         journal.debug(aa.__getitem__(slice(0, 2)))
 
-        a = 2 / 0
-        journal.debug(a)
+        try:
+            a = 2 / 0
+            journal.debug(a)
+        except ZeroDivisionError as error:
+            journal.error(error)
+
         # except Exception as error:
         #     journal.warning(error)
 
         return
 
+    @classmethod
+    # @MethodTimingDecorator
+    # @MethodActionDecorator(name="测试12")
+    @MethodTryCatch
+    @MethodTipsDecorator
+    def test_21(cls):
+        a: str = TestEnum.get("a")
+        journal.debug(f"a -> {a}, type a -> {type(a)}")
+        aa = TestEnum.a
+        journal.debug(f"aa -> {aa}, type aa -> {type(aa)}")
+        aaa = TestEnum.members()
+        journal.debug(f"aaa -> {aaa}, type aaa -> {type(aaa)}")
+        journal.debug(f"element 1 -> {aaa.__getitem__(0)}, element 1 type -> {type(aaa.__getitem__(0))}")
 
-@SingletonPattern
-class A: ...
-
-
-class B(metaclass=SingletonPatternMetaclass): ...
-
-
-class TestEnum(BaseEnum):
-    a = "12138"
+        return
 
     @classmethod
-    def get_enum(cls, __value) -> "TestEnum":
-        return getattr(cls, __value)
+    @MethodTryCatch
+    @MethodTipsDecorator
+    def test_22(cls):
+        a = (1, 2, 3)
+        for v in a:
+            if v not in [3, 4, 5]:
+                journal.debug(f"Not in: {v}")
 
-
-def thread_test():
-    def inner_1(total, _tips):
-        for index in range(total):
-            print(f"Inner 1 | {_tips}: {index}")
-
-    a = threading.Thread(target=inner_1, args=(20, "Thread 1"))
-    b = threading.Thread(target=inner_1, args=(10, "Thread 2"))
-
-    a.start()
-    b.start()
-
-    print("Done")
+    @classmethod
+    @MethodTryCatch
+    @MethodTipsDecorator
+    def test_23(cls):
+        # a = range(0, 10)
+        journal.debug(ord("a"))
 
 
 if __name__ == "__main__":

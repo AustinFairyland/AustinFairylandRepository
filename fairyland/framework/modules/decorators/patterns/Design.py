@@ -40,7 +40,7 @@ class SingletonPattern:
         :param kwargs: kwargs
         :type kwargs: Any
         :return: Singleton instance
-        :rtype: Any
+        :rtype: ...
         """
         if not self.__instance:
             self.__instance.update(__instance=self.__cls(*args, **kwargs))
