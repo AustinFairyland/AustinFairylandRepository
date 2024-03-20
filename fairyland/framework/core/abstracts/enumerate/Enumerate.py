@@ -46,7 +46,7 @@ class BaseEnum(Enum):
         return data.value
 
     @classmethod
-    def members(cls, exclude_enums: Union[List[str], Tuple[str], Set[str]] = None, only_value: bool = False) -> Tuple[_TypeBaseEnum, str]:
+    def members(cls, exclude_enums: Union[List[str], Tuple[str], Set[str]] = None, only_value: bool = False) -> Union[Tuple[_TypeBaseEnum], Union[Tuple[Any]]]:
         """
         Returns a tuple with all members of the Enum.
 
@@ -62,11 +62,11 @@ class BaseEnum(Enum):
 
         member_list: List[_TypeBaseEnum] = list(cls)
         if exclude_enums:
-            member_list = [member for member in member_list if member not in exclude_enums]
+            member_list: List[_TypeBaseEnum] = [member for member in member_list if member not in exclude_enums]
         if only_value:
-            member_list = [member.value for member in member_list]
-
-        return tuple(member_list)
+            return tuple(member.value for member in member_list)
+        else:
+            return tuple(member_list)
 
     @classmethod
     def names(cls) -> Tuple[str]:

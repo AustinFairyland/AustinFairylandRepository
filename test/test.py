@@ -27,7 +27,7 @@ from fairyland.framework.modules.decorators.methods.Method import MethodTimingDe
 from fairyland.framework.modules.datasource.Mysql import MySQLModule
 from fairyland.framework.modules.static.requests.Requests import Requests
 from fairyland.framework.utils.tools.requests import RequestsUtils
-from fairyland.framework.modules.decorators.methods.Method import MethodTryCatch, MethodTipsDecorator
+from fairyland.framework.modules.decorators.methods.Method import MethodTryCatchDecorator, MethodTipsDecorator
 
 from fairyland.framework.test.simulation import TestReturn
 
@@ -47,7 +47,6 @@ class TestEnum(StringEnum):
 
 
 class TestBase:
-
     _version = "1.0.0"
 
 
@@ -101,6 +100,7 @@ class Test:
         cls.test_21()
         cls.test_22()
         cls.test_23()
+        cls.test_24()
 
         return
 
@@ -295,7 +295,7 @@ class Test:
     @classmethod
     @MethodTimingDecorator
     @MethodActionDecorator("Test 20")
-    # @MethodTryCatch
+    # @MethodTryCatchDecorator
     def test_20(cls):
         # try:
         aa = (1, 2, 3)
@@ -318,7 +318,7 @@ class Test:
     @classmethod
     # @MethodTimingDecorator
     # @MethodActionDecorator(name="测试12")
-    @MethodTryCatch
+    @MethodTryCatchDecorator
     @MethodTipsDecorator
     def test_21(cls):
         a: str = TestEnum.get("a")
@@ -332,7 +332,7 @@ class Test:
         return
 
     @classmethod
-    @MethodTryCatch
+    @MethodTryCatchDecorator
     @MethodTipsDecorator
     def test_22(cls):
         a = (1, 2, 3)
@@ -341,7 +341,7 @@ class Test:
                 journal.debug(f"Not in: {v}")
 
     @classmethod
-    @MethodTryCatch
+    @MethodTryCatchDecorator
     @MethodTipsDecorator
     def test_23(cls):
         # a = range(0, 10)
@@ -351,6 +351,13 @@ class Test:
         a = [[1, 2]]
         ((a_1, _),) = a
         journal.debug((a_1,))
+
+    @classmethod
+    @MethodTryCatchDecorator
+    @MethodTipsDecorator
+    def test_24(cls):
+        journal.debug(tuple(i for i in range(1, 11)))
+        journal.debug(tuple([i for i in range(1, 11)]))
 
 
 if __name__ == "__main__":

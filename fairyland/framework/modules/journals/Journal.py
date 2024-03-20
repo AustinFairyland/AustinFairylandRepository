@@ -7,7 +7,6 @@
 @since: 02 29, 2024
 """
 
-import os
 import sys
 from loguru import logger
 

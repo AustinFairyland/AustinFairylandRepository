@@ -6,7 +6,7 @@
 @organization: https://github.com/FairylandFuture
 @since: 02 29, 2024
 """
-from typing import Optional, Dict, List, Tuple, Any, Set
+from typing import Dict, List, Tuple, Any, Set, Union
 
 
 class DefaultConstantUtils:
@@ -33,22 +33,22 @@ class DefaultConstantUtils:
         return results
 
     @staticmethod
-    def list() -> List[None]:
+    def list() -> List[Any]:
         results = []
         return results
 
     @staticmethod
-    def tuple() -> Tuple[None]:
+    def tuple() -> Tuple:
         results = ()
         return results
 
     @staticmethod
-    def set() -> Set[None]:
+    def set() -> Set[Any]:
         results = set()
         return results
 
     @staticmethod
-    def dict() -> Dict[None, None]:
+    def dict() -> Dict[Union[str, int], Any]:
         results = {}
         return results
 

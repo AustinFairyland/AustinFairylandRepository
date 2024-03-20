@@ -11,7 +11,7 @@ from typing import Union, Any, Callable
 
 import time
 
-from fairyland.framework.modules.journals.Journal import journal, logger
+from fairyland.framework.modules.journals.Journal import journal
 
 
 class MethodTimingDecorator:
@@ -27,9 +27,9 @@ class MethodTimingDecorator:
         Execute the wrapped method and calculate its execution time.
 
         :param args: Positional arguments passed to the method.
-        :type args: Any
+        :type args: ...
         :param kwargs: Keyword arguments passed to the method.
-        :type kwargs: Any
+        :type kwargs: ...
         :return: The result of the method execution.
         :rtype: ...
         """
@@ -80,7 +80,6 @@ class MethodActionDecorator:
         :rtype: Callable
         """
 
-        # @logger.catch()
         def wrapper(*args: Any, **kwargs: Any) -> Any:
             """
             Wrapper function that logs the execution status (start, success, failure) of the decorated method.
@@ -107,7 +106,7 @@ class MethodActionDecorator:
         return wrapper
 
 
-class MethodTryCatch:
+class MethodTryCatchDecorator:
     """
     A decorator to catch exceptions thrown by the method it decorates.
     """

@@ -8,8 +8,7 @@
 """
 
 from abc import abstractmethod
-from typing import Iterable, Optional, Tuple, Union, List, Set, Dict, Any
-from datetime import datetime
+from typing import Iterable, Optional, Tuple, Union
 
 from fairyland.framework.constants.typing import TypeSQLConnection
 from fairyland.framework.constants.typing import TypeSQLCursor
@@ -18,46 +17,33 @@ from fairyland.framework.modules.journals.Journal import journal
 
 class DataSource:
 
-    def __init__(self) -> None:
-
+    def __init__(self):
         self.__init_connect()
-
-        return
 
     @abstractmethod
     def connect(self):
-
         raise NotImplemented
 
-    def __connect(self) -> TypeSQLCursor:
-
+    def __connect(self) -> TypeSQLConnection:
         return self.connect()
 
-    def __init_connect(self) -> None:
-
+    def __init_connect(self):
         self.__connection: TypeSQLConnection = self.__connect()
         self.cursor: TypeSQLCursor = self.__connection.cursor()
 
-        return
-
-    def __close_cursor(self) -> None:
-
+    def __close_cursor(self):
         if self.cursor:
             self.cursor.close()
             self.cursor = None
             journal.warning("Database has disconnected the cursor.")
 
-        return
-
-    def __close_connection(self) -> None:
+    def __close_connection(self):
 
         self.__close_cursor()
 
         if self.__connection:
             self.__connection.close()
             self.__connection = None
-
-        return
 
     def __reconnect(self):
         if not self.__connection:
