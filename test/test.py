@@ -346,6 +346,11 @@ class Test:
     def test_23(cls):
         # a = range(0, 10)
         journal.debug(ord("a"))
+        a = [v for v in range(1, 11)]
+        journal.debug(a.__getitem__(slice(None, None, 2)))
+        a = [[1, 2]]
+        ((a_1, _),) = a
+        journal.debug((a_1,))
 
 
 if __name__ == "__main__":
