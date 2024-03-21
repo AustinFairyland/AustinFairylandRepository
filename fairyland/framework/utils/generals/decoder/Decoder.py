@@ -10,7 +10,6 @@ from typing import List, Optional, Iterable, Dict, Any
 
 from fairyland.framework.modules.journals.Journal import journal
 from fairyland.framework.utils.generals.constants.Constants import DefaultConstantUtils
-from fairyland.framework.modules.decorators.patterns.Design import SingletonPattern
 
 
 class DecoderUtils:
