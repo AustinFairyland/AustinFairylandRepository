@@ -12,7 +12,7 @@ import threading
 from concurrent.futures import ThreadPoolExecutor
 
 from fairyland.framework.modules.journals.Journal import journal, logger
-from fairyland.framework.core.abstracts.enumerate.Enumerate import BaseEnum, StringEnum
+from fairyland.framework.core.abstracts.enumerate.Enumerate import BaseEnum, StringEnum, IntegerEnum
 from fairyland.framework.constants.enum import DateTimeFormat
 from fairyland.framework.modules.exceptions import ProjectError
 from fairyland.framework.utils.generals.constants.Constants import DefaultConstantUtils
@@ -28,6 +28,7 @@ from fairyland.framework.modules.datasource.Mysql import MySQLModule
 from fairyland.framework.modules.static.requests.Requests import Requests
 from fairyland.framework.utils.tools.requests import RequestsUtils
 from fairyland.framework.modules.decorators.methods.Method import MethodTryCatchDecorator, MethodTipsDecorator
+from fairyland.framework.modules.decorators.methods.Method import MethodDeprecatedDecorator
 
 from fairyland.framework.test.simulation import TestReturn
 
@@ -42,8 +43,8 @@ class A: ...
 class B(metaclass=SingletonPatternMetaclass): ...
 
 
-class TestEnum(StringEnum):
-    a = "12138"
+class TestEnum(IntegerEnum):
+    a = 12138
 
 
 class TestBase:
@@ -101,6 +102,7 @@ class Test:
         cls.test_22()
         cls.test_23()
         cls.test_24()
+        cls.test_25()
 
     @classmethod
     @MethodActionDecorator("Test 1")
@@ -325,8 +327,6 @@ class Test:
         journal.debug(f"aaa -> {aaa}, type aaa -> {type(aaa)}")
         journal.debug(f"element 1 -> {aaa.__getitem__(0)}, element 1 type -> {type(aaa.__getitem__(0))}")
 
-        return
-
     @classmethod
     @MethodTryCatchDecorator
     @MethodTipsDecorator
@@ -355,6 +355,14 @@ class Test:
         journal.debug(tuple([i for i in range(1, 11)]))
         aa = (1, 2, 3)
         journal.debug(tuple(filter(lambda x: x not in aa, range(0, 6))))
+        if TestEnum.a == 12138:
+            journal.debug("Yes")
+        journal.debug((TestEnum.a.value, type(TestEnum.a.value)))
+
+    @classmethod
+    @MethodDeprecatedDecorator(alternative="Test 24")
+    def test_25(cls):
+        journal.debug("Deprecated Method")
 
 
 if __name__ == "__main__":
