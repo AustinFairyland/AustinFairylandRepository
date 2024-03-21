@@ -1,5 +1,5 @@
 # coding: utf8
-""" 
+"""
 @software: PyCharm
 @author: Lionel Johnson
 @contact: https://fairy.host
@@ -23,6 +23,7 @@ class PackageConfig:
             with open(_path, mode="r") as publish_file:
                 publish_config = yaml.safe_load(publish_file)
         except Exception as error:
+            print(error)
             raise error
         return publish_config
 

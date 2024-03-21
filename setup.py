@@ -1,5 +1,5 @@
 # coding: utf8
-""" 
+"""
 @File: setup.py
 @Editor: PyCharm
 @Author: Austin (From Chengdu.China) https://fairy.host

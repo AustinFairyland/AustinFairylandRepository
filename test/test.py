@@ -1,5 +1,5 @@
 # coding: utf8
-""" 
+"""
 @software: PyCharm
 @author: Lionel Johnson
 @contact: https://fairy.host
@@ -102,8 +102,6 @@ class Test:
         cls.test_23()
         cls.test_24()
 
-        return
-
     @classmethod
     @MethodActionDecorator("Test 1")
     def test_1(cls):
@@ -172,7 +170,6 @@ class Test:
     @classmethod
     @MethodActionDecorator("Test 9")
     def test_9(cls):
-        pass
         db = MySQLModule(host="mapping.fairy.host", port=51001, user="austin", password="Austin.pwd:112#.", database="public_db_test")
         query_tuple = ("select version();", "select * from myapp_myinfo where nid > %s;")
         param_tuple = (None, 0)
@@ -186,7 +183,6 @@ class Test:
             url="https://api.threatbook.cn/v3/scene/ip_reputation",
             params={"apikey": "25702dcf45db4f4c95dac98cabe0b6f9", "resource": "159.203.93.255"},
         )
-        # response = TestReturn.Threat.ip_reputation()
         journal.debug(f"Response: {response}")
         journal.debug(f"Type: {type(response)}")
 
@@ -344,7 +340,6 @@ class Test:
     @MethodTryCatchDecorator
     @MethodTipsDecorator
     def test_23(cls):
-        # a = range(0, 10)
         journal.debug(ord("a"))
         a = [v for v in range(1, 11)]
         journal.debug(a.__getitem__(slice(None, None, 2)))
@@ -358,6 +353,8 @@ class Test:
     def test_24(cls):
         journal.debug(tuple(i for i in range(1, 11)))
         journal.debug(tuple([i for i in range(1, 11)]))
+        aa = (1, 2, 3)
+        journal.debug(tuple(filter(lambda x: x not in aa, range(0, 6))))
 
 
 if __name__ == "__main__":

@@ -1,5 +1,5 @@
 # coding: utf8
-""" 
+"""
 @software: PyCharm
 @author: Lionel Johnson
 @contact: https://fairy.host
@@ -65,6 +65,6 @@ class Requests:
                 results = response.text
         except Exception as error:
             journal.error(error)
-            raise Exception("Failed to get response")
+            raise error
 
         return results

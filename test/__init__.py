@@ -1,5 +1,5 @@
 # coding: utf8
-""" 
+"""
 @File: __init__.py
 @Editor: PyCharm
 @Author: Lionel Johnson

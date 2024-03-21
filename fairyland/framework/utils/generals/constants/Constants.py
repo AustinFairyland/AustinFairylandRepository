@@ -1,5 +1,5 @@
 # coding: utf8
-""" 
+"""
 @software: PyCharm
 @author: Lionel Johnson
 @contact: https://fairy.host
@@ -38,7 +38,7 @@ class DefaultConstantUtils:
         return results
 
     @staticmethod
-    def tuple() -> Tuple:
+    def tuple() -> Tuple[Any, ...]:
         results = ()
         return results
 
@@ -83,7 +83,7 @@ class APIConstantUtils(DefaultConstantUtils):
 class EncodingConstantUtils(DefaultConstantUtils):
 
     @staticmethod
-    def encodings() -> Tuple[str]:
+    def encodings() -> Tuple[str, ...]:
         results = (
             "big5",
             "big5-hkscs",
