@@ -1,5 +1,5 @@
 # coding: utf8
-""" 
+"""
 @File: setup.py
 @Editor: PyCharm
 @Author: Austin (From Chengdu.China) https://fairy.host
@@ -98,6 +98,7 @@ setuptools.setup(
         "python-dotenv",
         "loguru",
         "enums",
+        "deprecated",
         "pymysql",
         "psycopg2-binary",
         "pyyaml",

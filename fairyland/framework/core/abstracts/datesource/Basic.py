@@ -1,5 +1,5 @@
 # coding: utf8
-""" 
+"""
 @software: PyCharm
 @author: Lionel Johnson
 @contact: https://fairy.host
@@ -8,7 +8,7 @@
 """
 
 from abc import abstractmethod
-from typing import Iterable, Optional, Tuple, Union
+from typing import Optional, Tuple, Union, List, Any
 
 from fairyland.framework.constants.typing import TypeSQLConnection
 from fairyland.framework.constants.typing import TypeSQLCursor
@@ -16,36 +16,73 @@ from fairyland.framework.modules.journals.Journal import journal
 
 
 class DataSource:
+    """
+    Abstract/Base class for database connection and operation.
+    """
 
     def __init__(self):
         self.__init_connect()
 
     @abstractmethod
     def connect(self):
-        raise NotImplemented
+        """
+        Connect to the database.
+
+        :return: ...
+        :rtype: ...
+        """
+        raise NotImplementedError("The method 'connect' must be implemented in the subclass.")
 
     def __connect(self) -> TypeSQLConnection:
+        """
+        Connect to the database.
+
+        :return: ...
+        :rtype: ...
+        """
         return self.connect()
 
-    def __init_connect(self):
+    def __init_connect(self) -> None:
+        """
+        Initialize the database connection and cursor.
+
+        :return: ...
+        :rtype: ...
+        """
         self.__connection: TypeSQLConnection = self.__connect()
         self.cursor: TypeSQLCursor = self.__connection.cursor()
 
-    def __close_cursor(self):
+    def __close_cursor(self) -> None:
+        """
+        Close the database cursor.
+
+        :return: ...
+        :rtype: ...
+        """
         if self.cursor:
             self.cursor.close()
             self.cursor = None
             journal.warning("Database has disconnected the cursor.")
 
-    def __close_connection(self):
+    def __close_connection(self) -> None:
+        """
+        Close the database connection.
 
+        :return: ...
+        :rtype: ...
+        """
         self.__close_cursor()
-
         if self.__connection:
             self.__connection.close()
             self.__connection = None
 
-    def __reconnect(self):
+    def __reconnect(self) -> None:
+        """
+        Reconnect the database and cursor.
+
+        :return: ...
+        :rtype: ...
+        """
         if not self.__connection:
             self.__connection = self.__connect()
             journal.warning("Database has been reconnected.")
@@ -58,9 +95,32 @@ class DataSource:
 
     @abstractmethod
     def execute(self, query, params) -> None:
-        raise NotImplemented
+        """
+        Execute the SQL query.
+            MySQL: self.cursor.execute(query=query, args=params)
 
-    def __operate(self, sqls: Union[str, Iterable], params: Optional[Iterable] = None) -> Tuple:
+            PostgreSQL: self.cursor.execute(query=query, vars=params)
+
+        :param query: query statement
+        :type query: ...
+        :param params: query parameters
+        :type params: ...
+        :return: None
+        :rtype: ...
+        """
+        raise NotImplementedError("The method 'execute' must be implemented in the subclass.")
+
+    def __operate(self, sqls: Union[str, List[str], Tuple[str, ...]], params: Optional[Tuple[str, ...]] = None) -> Tuple[Any, ...]:
+        """
+        Execute the SQL query and return the results.
+
+        :param sqls: SQL statement
+        :type sqls: str or list or tuple
+        :param params: SQL parameters
+        :type params: tuple
+        :return: Query results
+        :rtype: tuple
+        """
         try:
             self.__reconnect()
             if isinstance(sqls, str):
@@ -76,20 +136,36 @@ class DataSource:
                 results = tuple(tmp_list)
             else:
                 raise TypeError("Wrong SQL statements type.")
+
             self.__connection.commit()
         except Exception as error:
             journal.warning("Failed to execute the rollback after an error occurred.")
             self.__connection.rollback()
             journal.error(f"Error occurred during SQL operation: {error}")
-            raise
+            raise error
         finally:
             self.__close_cursor()
+
         return results
 
-    def operate(self, query: Union[str, Iterable], params: Optional[Iterable] = None) -> Tuple:
+    def operate(self, query: Union[str, List[str], Tuple[str, ...]], params: Optional[Tuple[str, ...]] = None) -> Tuple[Any, ...]:
+        """
+        Execute the SQL query and return the results.
 
+        :param query: SQL statement
+        :type query: str or list or tuple
+        :param params: SQL parameters
+        :type params: tuple
+        :return: Query results
+        :rtype: tuple
+        """
         return self.__operate(query, params)
 
-    def close(self):
+    def close(self) -> None:
+        """
+        Close the database connection.
 
+        :return: ...
+        :rtype: ...
+        """
         self.__close_connection()

@@ -1,5 +1,5 @@
 # coding: utf8
-""" 
+"""
 @software: PyCharm
 @author: Lionel Johnson
 @contact: https://fairy.host
@@ -41,12 +41,16 @@ class BaseEnum(Enum):
         if not isinstance(value, str):
             raise TypeError("The value must be a string.")
 
-        data: cls = getattr(cls, value)
+        value_object: _TypeBaseEnum = getattr(cls, value)
 
-        return data.value
+        return value_object.value
 
     @classmethod
-    def members(cls, exclude_enums: Union[List[str], Tuple[str], Set[str]] = None, only_value: bool = False) -> Union[Tuple[_TypeBaseEnum], Union[Tuple[Any]]]:
+    def members(
+        cls,
+        exclude_enums: Union[List[str], Tuple[str, ...], Set[str]] = None,
+        only_value: bool = False,
+    ) -> Union[Tuple[_TypeBaseEnum, ...], Tuple[Any, ...]]:
         """
         Returns a tuple with all members of the Enum.
 
@@ -61,15 +65,17 @@ class BaseEnum(Enum):
             raise TypeError("The exclude_enums must be a list, tuple or set.")
 
         member_list: List[_TypeBaseEnum] = list(cls)
+
         if exclude_enums:
             member_list: List[_TypeBaseEnum] = [member for member in member_list if member not in exclude_enums]
+
         if only_value:
             return tuple(member.value for member in member_list)
         else:
             return tuple(member_list)
 
     @classmethod
-    def names(cls) -> Tuple[str]:
+    def names(cls) -> Tuple[str, ...]:
         """
         Returns a tuple with the names of all members of the Enum.
         :return: Tuple with the names of all members of the Enum.
@@ -78,7 +84,7 @@ class BaseEnum(Enum):
         return tuple(cls._member_names_)
 
     @classmethod
-    def values(cls, exclude_enums: Union[List[str], Tuple[str], Set[str]] = None) -> Tuple[Any]:
+    def values(cls, exclude_enums: Union[List[str], Tuple[str, ...], Set[str]] = None) -> Tuple[Any, ...]:
         """
         Returns a tuple with the values of all members of the Enum.
 
@@ -93,12 +99,12 @@ class BaseEnum(Enum):
 class StringEnum(str, BaseEnum):
 
     @classmethod
-    def values(cls, exclude_enums: Union[List[str], Tuple[str], Set[str]] = None) -> Tuple[str]:
+    def values(cls, exclude_enums: Union[List[str], Tuple[str, ...], Set[str]] = None) -> Tuple[str, ...]:
         return cls.members(exclude_enums, True)
 
 
 class IntegerEnum(int, BaseEnum):
 
     @classmethod
-    def values(cls, exclude_enums: Union[List[str], Tuple[str], Set[str]] = None) -> Tuple[int]:
+    def values(cls, exclude_enums: Union[List[str], Tuple[str, ...], Set[str]] = None) -> Tuple[int, ...]:
         return cls.members(exclude_enums, True)

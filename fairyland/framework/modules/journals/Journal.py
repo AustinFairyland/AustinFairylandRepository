@@ -1,5 +1,5 @@
 # coding: utf8
-""" 
+"""
 @software: PyCharm
 @author: Lionel Johnson
 @contact: https://fairy.host
@@ -30,6 +30,10 @@ class JournalSingleton:
                                                           |___/                                                                 
 """
 
+        self.__log_level: TypeLogLevel = "DEBUG"
+        self.__log_rotation: str = "10 MB"
+        self.__log_retention: str = "60 days"
+        self.__log_format: str = "[{time:YYYY-MM-DD HH:mm:ss} | Process ID: {process:<8} | Thread ID: {thread:<8} | {level:<8}]: {message}"
         self.__init_logger()
 
     def __init_logger(self):
@@ -37,15 +41,14 @@ class JournalSingleton:
         def write_log(_sink: str) -> None:
             with open(_sink, "w", encoding="UTF-8") as log_file:
                 log_file.write(self.__fairyland_logo)
-            return
 
         logger.remove()
 
         logger.add(
             sink="logs/service.log",
-            rotation="10 MB",
-            retention="60 days",
-            format="[{time:YYYY-MM-DD HH:mm:ss} | Process ID: {process:<8} | Thread ID: {thread:<8} | {level:<8}]: {message}",
+            rotation=self.__log_rotation,
+            retention=self.__log_retention,
+            format=self.__log_format,
             compression="gz",
             encoding=EncodingFormat.default(),
             level=LogLevelFormat.default(),
@@ -57,9 +60,9 @@ class JournalSingleton:
 
         logger.add(
             sink="logs/service.serialize.log",
-            rotation="10 MB",
-            retention="60 days",
-            format="[{time:YYYY-MM-DD HH:mm:ss} | Process ID: {process:<8} | Thread ID: {thread:<8} | {level:<8}]: {message}",
+            rotation=self.__log_rotation,
+            retention=self.__log_retention,
+            format=self.__log_format,
             compression="gz",
             encoding=EncodingFormat.default(),
             level=LogLevelFormat.default(),
@@ -72,9 +75,9 @@ class JournalSingleton:
 
         logger.add(
             sink="logs/service.debug.log",
-            rotation="10 MB",
-            retention="60 days",
-            format="[{time:YYYY-MM-DD HH:mm:ss} | Process ID: {process:<8} | Thread ID: {thread:<8} | {level:<8}]: {message}",
+            rotation=self.__log_rotation,
+            retention=self.__log_retention,
+            format=self.__log_format,
             compression="gz",
             encoding=EncodingFormat.default(),
             level=LogLevelFormat.default_debug(),

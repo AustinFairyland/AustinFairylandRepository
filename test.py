@@ -1,5 +1,5 @@
 # coding: utf8
-""" 
+"""
 @File: test.py
 @Editor: PyCharm
 @Author: Austin (From Chengdu.China) https://fairy.host
