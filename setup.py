@@ -98,6 +98,7 @@ setuptools.setup(
         "python-dotenv",
         "loguru",
         "enums",
+        "deprecated",
         "pymysql",
         "psycopg2-binary",
         "pyyaml",

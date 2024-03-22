@@ -10,6 +10,7 @@ import sys
 import warnings
 import threading
 from concurrent.futures import ThreadPoolExecutor
+from deprecated import deprecated
 
 from fairyland.framework.modules.journals.Journal import journal, logger
 from fairyland.framework.core.abstracts.enumerate.Enumerate import BaseEnum, StringEnum, IntegerEnum
@@ -28,7 +29,6 @@ from fairyland.framework.modules.datasource.Mysql import MySQLModule
 from fairyland.framework.modules.static.requests.Requests import Requests
 from fairyland.framework.utils.tools.requests import RequestsUtils
 from fairyland.framework.modules.decorators.methods.Method import MethodTryCatchDecorator, MethodTipsDecorator
-from fairyland.framework.modules.decorators.methods.Method import MethodDeprecatedDecorator
 
 from fairyland.framework.test.simulation import TestReturn
 
@@ -311,7 +311,6 @@ class Test:
         # except Exception as error:
         #     journal.warning(error)
 
-        return
 
     @classmethod
     # @MethodTimingDecorator
@@ -360,7 +359,7 @@ class Test:
         journal.debug((TestEnum.a.value, type(TestEnum.a.value)))
 
     @classmethod
-    @MethodDeprecatedDecorator(alternative="Test 24")
+    @deprecated(reason="Deprecated Method")
     def test_25(cls):
         journal.debug("Deprecated Method")
 

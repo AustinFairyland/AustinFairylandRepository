@@ -154,21 +154,3 @@ class MethodTipsDecorator:
         results = self.__method(*args, **kwargs)
 
         return results
-
-
-class MethodDeprecatedDecorator:
-
-    def __init__(self, alternative):
-        self.alternative = alternative
-
-    def __call__(self, func):
-        @functools.wraps(func)
-        def wrapper(*args, **kwargs):
-            message = f"{func.__name__} is deprecated"
-            if self.alternative:
-                message += f"; use {self.alternative} instead"
-            message += "."
-            journal.warning(message)
-            warnings.warn(message, DeprecationWarning, stacklevel=2)
-
-        return wrapper
