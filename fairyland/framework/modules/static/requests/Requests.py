@@ -68,3 +68,38 @@ class Requests:
             raise error
 
         return results
+
+    @staticmethod
+    def post(
+        url: str,
+        data: Dict[str, Any],
+        headers: Optional[Dict[str, str]] = None,
+        verify: bool = False,
+        timeout: int = 10,
+    ) -> Union[Dict[str, Any], str]:
+        if not headers:
+            headers = {
+                "Content-Type": "application/json",
+                "User-Agent": RequestsUtils.user_agent(),
+            }
+        try:
+            response = requests.post(
+                url=url,
+                json=data,
+                headers=headers,
+                verify=verify,
+                timeout=timeout,
+            )
+            if response.status_code == 200:
+                try:
+                    results = response.json()
+                except Exception as error:
+                    journal.warning(f"Failed to parse response as JSON, {error}")
+                    results = response.text
+            else:
+                results = response.text
+        except Exception as error:
+            journal.error(error)
+            raise error
+
+        return results
