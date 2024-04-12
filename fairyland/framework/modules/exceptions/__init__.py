@@ -8,30 +8,46 @@
 """
 
 
-class ProjectError(Exception):
-    def __init__(self, message: str = "Internal error."):
+class ProgramError(Exception):
+
+    def __init__(self, message: str = "Internal program error."):
         self.__prompt = f"{self.__class__.__name__}: {message}"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.__prompt
 
 
-class ParameterError(ProjectError):
-    def __init__(self, message: str = "Invalid parameter."):
+class ParameterError(ProgramError):
+
+    def __init__(self, message: str = "Parameter error."):
+        super().__init__(message)
+
+
+class ParameterTypeError(ProgramError):
+
+    def __init__(self, message: str = "Parameter type error."):
+        super().__init__(message)
+
+
+class ParameterValueError(ProgramError):
+
+    def __init__(self, message: str = "Parameter value error."):
+        super().__init__(message)
+
+
+class FileReadError(ProgramError):
+
+    def __init__(self, message: str = "File read error."):
         super().__init__(message=message)
 
 
-class ReadFileError(ProjectError):
-    def __init__(self, message: str = "Reading file error."):
+class ConfigReadError(ProgramError):
+
+    def __init__(self, message: str = "Config read error."):
         super().__init__(message=message)
 
 
-class DataSourceError(ProjectError):
-    def __init__(self, message: str = "Data source error."):
-        super().__init__(message=message)
+class SQLExecutionError(ProgramError):
 
-
-class SQLExecutionError(ProjectError):
-
-    def __init__(self, message: str = "SQL exection error."):
+    def __init__(self, message: str = "SQL execution error."):
         super().__init__(message=message)

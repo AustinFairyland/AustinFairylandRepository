@@ -15,7 +15,7 @@ from deprecated import deprecated
 from fairyland.framework.modules.journals.Journal import journal, logger
 from fairyland.framework.core.abstracts.enumerate.Enumerate import BaseEnum, StringEnum, IntegerEnum
 from fairyland.framework.constants.enum import DateTimeFormat
-from fairyland.framework.modules.exceptions import ProjectError
+from fairyland.framework.modules.exceptions import ProgramError
 from fairyland.framework.utils.generals.constants.Constants import DefaultConstantUtils
 from fairyland.framework.utils.generals.datetime.DateTime import DatetimeUtils
 from fairyland.framework.utils.publish.package import PackageInfo
@@ -29,6 +29,7 @@ from fairyland.framework.modules.datasource.Mysql import MySQLModule
 from fairyland.framework.modules.static.requests.Requests import Requests
 from fairyland.framework.utils.tools.requests import RequestsUtils
 from fairyland.framework.modules.decorators.methods.Method import MethodTryCatchDecorator, MethodTipsDecorator
+from fairyland.framework.utils.tools import VariableTools
 
 from fairyland.framework.test.simulation import TestReturn
 
@@ -103,6 +104,7 @@ class Test:
         cls.test_23()
         cls.test_24()
         cls.test_25()
+        cls.test_26()
 
     @classmethod
     @MethodActionDecorator("Test 1")
@@ -311,7 +313,6 @@ class Test:
         # except Exception as error:
         #     journal.warning(error)
 
-
     @classmethod
     # @MethodTimingDecorator
     # @MethodActionDecorator(name="测试12")
@@ -363,7 +364,13 @@ class Test:
     def test_25(cls):
         journal.debug("Deprecated Method")
 
+    @classmethod
+    @MethodActionDecorator(name="test 26")
+    def test_26(cls):
+        a = 123123
+        journal.debug(VariableTools.get_var_name(a, locals()))
+
 
 if __name__ == "__main__":
-    Test.run()
-    # thread_test()
+    # Test.run()
+    Test.test_26()
